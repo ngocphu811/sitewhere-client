@@ -34,25 +34,11 @@ public interface IUser {
 	public String getUsername();
 
 	/**
-	 * Set the username.
-	 * 
-	 * @param username
-	 */
-	public void setUsername(String username);
-
-	/**
 	 * Get the password.
 	 * 
 	 * @return
 	 */
 	public String getHashedPassword();
-
-	/**
-	 * Set the password.
-	 * 
-	 * @param password
-	 */
-	public void setHashedPassword(String password);
 
 	/**
 	 * Get the common name.
@@ -62,25 +48,11 @@ public interface IUser {
 	public String getFirstName();
 
 	/**
-	 * Set the common name.
-	 * 
-	 * @param first
-	 */
-	public void setFirstName(String first);
-
-	/**
 	 * Get the surname.
 	 * 
 	 * @return
 	 */
 	public String getLastName();
-
-	/**
-	 * Set the surname.
-	 * 
-	 * @param last
-	 */
-	public void setLastName(String last);
 
 	/**
 	 * Get the last login date.
@@ -90,23 +62,9 @@ public interface IUser {
 	public Calendar getLastLogin();
 
 	/**
-	 * Set the last login date.
-	 * 
-	 * @param value
-	 */
-	public void setLastLogin(Calendar value);
-
-	/**
 	 * Get the account status.
 	 * 
 	 * @return
 	 */
 	public AccountStatus getStatus();
-
-	/**
-	 * Set the account status.
-	 * 
-	 * @param status
-	 */
-	public void setStatus(AccountStatus status);
 }

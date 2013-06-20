@@ -32,23 +32,9 @@ public interface IGrantedAuthority {
 	public String getAuthority();
 
 	/**
-	 * Set the authority name.
-	 * 
-	 * @param name
-	 */
-	public void setAuthority(String name);
-
-	/**
 	 * Get the description.
 	 * 
 	 * @return
 	 */
 	public String getDescription();
-
-	/**
-	 * Set the description.
-	 * 
-	 * @param description
-	 */
-	public void setDescription(String description);
 }

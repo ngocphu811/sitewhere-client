@@ -25,25 +25,11 @@ public interface IGroup {
 	public long getId();
 
 	/**
-	 * Set the group name.
-	 * 
-	 * @param name
-	 */
-	public void setName(String name);
-
-	/**
 	 * Get the group name.
 	 * 
 	 * @return
 	 */
 	public String getName();
-
-	/**
-	 * Set the group description.
-	 * 
-	 * @param description
-	 */
-	public void setDescription(String description);
 
 	/**
 	 * Get the group description.
