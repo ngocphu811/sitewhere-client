@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sitewhere.rest.model.JsonCalendarSerializer;
 import com.sitewhere.spi.device.IDeviceEvent;
 

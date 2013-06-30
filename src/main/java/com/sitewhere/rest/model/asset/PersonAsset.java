@@ -10,8 +10,7 @@
 
 package com.sitewhere.rest.model.asset;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.asset.IPersonAsset;
 

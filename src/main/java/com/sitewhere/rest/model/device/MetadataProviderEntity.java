@@ -12,8 +12,7 @@ package com.sitewhere.rest.model.device;
 
 import java.util.Calendar;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sitewhere.rest.model.JsonCalendarSerializer;
 import com.sitewhere.spi.device.IMetadataProviderEntity;
 
