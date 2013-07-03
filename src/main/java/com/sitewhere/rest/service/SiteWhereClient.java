@@ -1,12 +1,12 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.service;
 
@@ -34,6 +34,7 @@ import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.DeviceLocationSearchResults;
 import com.sitewhere.rest.service.search.DeviceMeasurementsSearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
+import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
 
 /**
@@ -41,7 +42,7 @@ import com.sitewhere.spi.SiteWhereException;
  * 
  * @author dadams
  */
-public class SiteWhereClient {
+public class SiteWhereClient implements ISiteWhereClient {
 
 	/** Default base url for calling REST services */
 	private static final String DEFAULT_BASE_URL = "http://localhost:8080/sitewhere/api/";
@@ -64,12 +65,10 @@ public class SiteWhereClient {
 		this.baseUrl = url;
 	}
 
-	/**
-	 * Get a device by its unique hardware id.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param hardwareId
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#getDeviceByHardwareId(java.lang.String)
 	 */
 	public Device getDeviceByHardwareId(String hardwareId) throws SiteWhereException {
 		try {
@@ -85,13 +84,11 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Update the metadata for an existing device.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param hardwareId
-	 * @param metadata
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#updateDeviceMetadata(java.lang.String,
+	 * com.sitewhere.rest.model.device.MetadataProvider)
 	 */
 	public Device updateDeviceMetadata(String hardwareId, MetadataProvider metadata)
 			throws SiteWhereException {
@@ -107,12 +104,10 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Get the history of device assignments for a given hardware id.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param hardwareId
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceAssignmentHistory(java.lang.String)
 	 */
 	public DeviceAssignmentSearchResults listDeviceAssignmentHistory(String hardwareId)
 			throws SiteWhereException {
@@ -126,15 +121,10 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Find device assignments within a given distance of the given point.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param latitude
-	 * @param longitude
-	 * @param maxDistance
-	 * @param maxResults
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#findDeviceAssignmentsNear(double, double, double, int)
 	 */
 	public DeviceAssignmentSearchResults findDeviceAssignmentsNear(double latitude, double longitude,
 			double maxDistance, int maxResults) throws SiteWhereException {
@@ -153,13 +143,11 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Update the metadata for an existing device assignment.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param token
-	 * @param metadata
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#updateDeviceAssignmentMetadata(java.lang.String,
+	 * com.sitewhere.rest.model.device.MetadataProvider)
 	 */
 	public DeviceAssignment updateDeviceAssignmentMetadata(String token, MetadataProvider metadata)
 			throws SiteWhereException {
@@ -175,13 +163,11 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Update the location for an existing device assignment.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param token
-	 * @param location
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#updateDeviceAssignmentLocation(java.lang.String,
+	 * com.sitewhere.rest.model.device.DeviceLocation)
 	 */
 	public void updateDeviceAssignmentLocation(String token, DeviceLocation location)
 			throws SiteWhereException {
@@ -194,11 +180,11 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Create device measurements.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param measurements
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceMeasurements(com.sitewhere.rest.model.device.
+	 * DeviceMeasurements)
 	 */
 	public DeviceMeasurements createDeviceMeasurements(DeviceMeasurements measurements)
 			throws SiteWhereException {
@@ -212,13 +198,10 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Get most recent device measurements for a given assignment.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param assignmentToken
-	 * @param maxCount
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceMeasurements(java.lang.String, int)
 	 */
 	public DeviceMeasurementsSearchResults listDeviceMeasurements(String assignmentToken, int maxCount)
 			throws SiteWhereException {
@@ -233,11 +216,11 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Create device location.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param location
-	 * @throws SiteWhereException
+	 * @see
+	 * com.sitewhere.spi.ISiteWhereClient#createDeviceLocation(com.sitewhere.rest.model.device.DeviceLocation)
 	 */
 	public DeviceLocation createDeviceLocation(DeviceLocation location) throws SiteWhereException {
 		try {
@@ -251,13 +234,10 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Get most recent device locations for a given assignment.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param assignmentToken
-	 * @param maxCount
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceLocations(java.lang.String, int)
 	 */
 	public DeviceLocationSearchResults listDeviceLocations(String assignmentToken, int maxCount)
 			throws SiteWhereException {
@@ -272,13 +252,11 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Create an alert an associate it with a device location.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param locationId
-	 * @param alert
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#createAlertForDeviceLocation(java.lang.String,
+	 * com.sitewhere.rest.model.device.DeviceAlert)
 	 */
 	public DeviceAlert createAlertForDeviceLocation(String locationId, DeviceAlert alert)
 			throws SiteWhereException {
@@ -293,11 +271,10 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Create device alert.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param alert
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceAlert(com.sitewhere.rest.model.device.DeviceAlert)
 	 */
 	public DeviceAlert createDeviceAlert(DeviceAlert alert) throws SiteWhereException {
 		try {
@@ -311,13 +288,10 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Get most recent device alerts for a given assignment.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param assignmentToken
-	 * @param maxCount
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceAlerts(java.lang.String, int)
 	 */
 	public DeviceAlertSearchResults listDeviceAlerts(String assignmentToken, int maxCount)
 			throws SiteWhereException {
@@ -332,12 +306,10 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * Create a new zone.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param zone
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#createZone(com.sitewhere.rest.model.device.Zone)
 	 */
 	public Zone createZone(Zone zone) throws SiteWhereException {
 		try {
@@ -347,19 +319,17 @@ public class SiteWhereClient {
 		}
 	}
 
-	/**
-	 * List zones associated with a given site.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param siteToken
-	 * @return
-	 * @throws SiteWhereException
+	 * @see com.sitewhere.spi.ISiteWhereClient#listZonesForSite(java.lang.String)
 	 */
 	public ZoneSearchResults listZonesForSite(String siteToken) throws SiteWhereException {
 		try {
 			Map<String, String> vars = new HashMap<String, String>();
 			vars.put("siteToken", siteToken);
-			return getClient().getForObject(getBaseUrl() + "sites/{siteToken}/zones", ZoneSearchResults.class,
-					vars);
+			return getClient().getForObject(getBaseUrl() + "sites/{siteToken}/zones",
+					ZoneSearchResults.class, vars);
 		} catch (RestClientException e) {
 			throw new SiteWhereException(e);
 		}
