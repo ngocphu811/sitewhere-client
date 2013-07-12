@@ -18,7 +18,7 @@ import com.sitewhere.spi.device.IMetadataProvider;
  * 
  * @author Derek
  */
-public interface IDeviceEventCreateRequest {
+public interface IDeviceEventCreateRequest extends IMetadataProvider {
 
 	/**
 	 * Get the date on which the event occurred.
@@ -26,11 +26,4 @@ public interface IDeviceEventCreateRequest {
 	 * @return
 	 */
 	public Calendar getEventDate();
-
-	/**
-	 * Get the associated metadata.
-	 * 
-	 * @return
-	 */
-	public IMetadataProvider getMetadata();
 }

@@ -18,13 +18,10 @@ import com.sitewhere.spi.device.request.IDeviceEventCreateRequest;
  * 
  * @author Derek
  */
-public class DeviceEventCreateRequest implements IDeviceEventCreateRequest {
+public class DeviceEventCreateRequest extends MetadataProvider implements IDeviceEventCreateRequest {
 
 	/** Date event occurred */
 	private Calendar eventDate;
-
-	/** Associated metadata */
-	private MetadataProvider metadata = new MetadataProvider();
 
 	/*
 	 * (non-Javadoc)
@@ -37,18 +34,5 @@ public class DeviceEventCreateRequest implements IDeviceEventCreateRequest {
 
 	public void setEventDate(Calendar eventDate) {
 		this.eventDate = eventDate;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.device.request.IDeviceEventCreateRequest#getMetadata()
-	 */
-	public MetadataProvider getMetadata() {
-		return metadata;
-	}
-
-	public void setMetadata(MetadataProvider metadata) {
-		this.metadata = metadata;
 	}
 }
