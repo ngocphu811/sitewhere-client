@@ -1,16 +1,16 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.model.device;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
@@ -57,10 +57,10 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	private DeviceAssignmentStatus status;
 
 	/** Assignment start date */
-	private Calendar activeDate;
+	private Date activeDate;
 
 	/** Assignment end date */
-	private Calendar releasedDate;
+	private Date releasedDate;
 
 	/** Last known location */
 	private DeviceLocation lastLocation;
@@ -179,11 +179,11 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getActiveDate()
 	 */
 	@JsonSerialize(using = JsonDateSerializer.class)
-	public Calendar getActiveDate() {
+	public Date getActiveDate() {
 		return activeDate;
 	}
 
-	public void setActiveDate(Calendar activeDate) {
+	public void setActiveDate(Date activeDate) {
 		this.activeDate = activeDate;
 	}
 
@@ -193,11 +193,11 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getReleasedDate()
 	 */
 	@JsonSerialize(using = JsonDateSerializer.class)
-	public Calendar getReleasedDate() {
+	public Date getReleasedDate() {
 		return releasedDate;
 	}
 
-	public void setReleasedDate(Calendar releasedDate) {
+	public void setReleasedDate(Date releasedDate) {
 		this.releasedDate = releasedDate;
 	}
 

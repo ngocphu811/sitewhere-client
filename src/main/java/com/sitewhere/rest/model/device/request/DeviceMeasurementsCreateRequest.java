@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
+import com.sitewhere.rest.model.device.MetadataEntry;
 import com.sitewhere.rest.model.device.MetadataProvider;
 import com.sitewhere.spi.device.IMetadataEntry;
 import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
@@ -67,5 +68,17 @@ public class DeviceMeasurementsCreateRequest extends DeviceEventCreateRequest im
 	 */
 	public List<IMetadataEntry> getMeasurements() {
 		return measurementsMetadata.getMetadata();
+	}
+
+	/**
+	 * Needed for JSON marshaling.
+	 * 
+	 * @param entries
+	 */
+	public void setMeasurements(List<MetadataEntry> entries) {
+		this.measurementsMetadata = new MetadataProvider();
+		for (MetadataEntry entry : entries) {
+			measurementsMetadata.addOrReplaceMetadata(entry.getName(), entry.getValue());
+		}
 	}
 }

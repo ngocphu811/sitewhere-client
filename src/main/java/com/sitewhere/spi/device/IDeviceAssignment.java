@@ -10,7 +10,7 @@
 
 package com.sitewhere.spi.device;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.common.ISiteWhereEntity;
@@ -70,14 +70,14 @@ public interface IDeviceAssignment extends IMetadataProvider, ISiteWhereEntity {
 	 * 
 	 * @return
 	 */
-	public Calendar getActiveDate();
+	public Date getActiveDate();
 
 	/**
 	 * Get the date/time at which the assignment was released.
 	 * 
 	 * @return
 	 */
-	public Calendar getReleasedDate();
+	public Date getReleasedDate();
 
 	/**
 	 * Get the last known location of the assignment.
