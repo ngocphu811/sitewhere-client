@@ -7,8 +7,10 @@
  */
 package com.sitewhere.rest.model.device.request;
 
-import java.util.Calendar;
+import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.sitewhere.rest.model.datatype.JsonDateSerializer;
 import com.sitewhere.rest.model.device.DeviceEvent;
 import com.sitewhere.rest.model.device.MetadataProvider;
 import com.sitewhere.spi.device.request.IDeviceEventCreateRequest;
@@ -21,18 +23,19 @@ import com.sitewhere.spi.device.request.IDeviceEventCreateRequest;
 public class DeviceEventCreateRequest extends MetadataProvider implements IDeviceEventCreateRequest {
 
 	/** Date event occurred */
-	private Calendar eventDate;
+	private Date eventDate;
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see com.sitewhere.spi.device.request.IDeviceEventCreateRequest#getEventDate()
 	 */
-	public Calendar getEventDate() {
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Calendar eventDate) {
+	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
 	}
 }

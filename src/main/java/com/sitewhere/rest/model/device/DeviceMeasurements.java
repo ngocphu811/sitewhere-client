@@ -1,22 +1,22 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.model.device;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sitewhere.spi.device.IDeviceMeasurements;
 import com.sitewhere.spi.device.IMetadataEntry;
-import com.sitewhere.spi.device.IMetadataProvider;
 
 /**
  * Implementation of device measurements.
@@ -24,32 +24,51 @@ import com.sitewhere.spi.device.IMetadataProvider;
  * @author dadams
  */
 @JsonIgnoreProperties
-@JsonSerialize(include = Inclusion.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasurements {
 
 	/** Holder for measurements */
-	protected MetadataProvider measurements = new MetadataProvider();
+	private MetadataProvider measurementsMetadata = new MetadataProvider();
+
+	/** Used for list presentation */
+	private String propertiesSummary;
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.IDeviceMeasurements#getMeasurementsMetadata()
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#addOrReplaceMeasurement(java.lang.String,
+	 * java.lang.String)
 	 */
-	public IMetadataProvider getMeasurementsMetadata() {
-		return measurements;
-	}
-	
-	public void setMeasurementsMetadata(MetadataProvider measurements) {
-		this.measurements = measurements;
+	public void addOrReplaceMeasurement(String name, String value) {
+		measurementsMetadata.addOrReplaceMetadata(name, value);
 	}
 
-	@JsonIgnore
-	protected MetadataProvider getMeasurements() {
-		return measurements;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#removeMeasurement(java.lang.String)
+	 */
+	public IMetadataEntry removeMeasurement(String name) {
+		return measurementsMetadata.removeMetadata(name);
 	}
 
-	/** Used for list presentation */
-	private String propertiesSummary;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurement(java.lang.String)
+	 */
+	public IMetadataEntry getMeasurement(String name) {
+		return measurementsMetadata.getMetadata(name);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurements()
+	 */
+	public List<IMetadataEntry> getMeasurements() {
+		return measurementsMetadata.getMetadata();
+	}
 
 	public String getPropertiesSummary() {
 		return propertiesSummary;
@@ -65,7 +84,7 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	public void calculatePropertiesSummary() {
 		String result = "";
 		boolean isFirst = true;
-		for (IMetadataEntry entry : measurements.getMetadata()) {
+		for (IMetadataEntry entry : measurementsMetadata.getMetadata()) {
 			if (!isFirst) {
 				result += ", ";
 			} else {
@@ -85,7 +104,9 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	public static DeviceMeasurements copy(IDeviceMeasurements input) {
 		DeviceMeasurements result = new DeviceMeasurements();
 		DeviceEvent.copy(input, result);
-		MetadataProvider.copy(input.getMeasurementsMetadata(), result.getMeasurements());
+		for (IMetadataEntry entry : input.getMeasurements()) {
+			result.addOrReplaceMeasurement(entry.getName(), entry.getValue());
+		}
 		result.calculatePropertiesSummary();
 		return result;
 	}

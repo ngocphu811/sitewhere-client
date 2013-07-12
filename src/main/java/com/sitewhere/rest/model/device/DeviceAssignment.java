@@ -14,9 +14,9 @@ import java.util.Calendar;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
-import com.sitewhere.rest.model.JsonCalendarSerializer;
 import com.sitewhere.rest.model.asset.HardwareAsset;
 import com.sitewhere.rest.model.asset.PersonAsset;
+import com.sitewhere.rest.model.datatype.JsonDateSerializer;
 import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.device.DeviceAssignmentStatus;
 import com.sitewhere.spi.device.IDeviceAssignment;
@@ -178,7 +178,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getActiveDate()
 	 */
-	@JsonSerialize(using = JsonCalendarSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Calendar getActiveDate() {
 		return activeDate;
 	}
@@ -192,7 +192,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getReleasedDate()
 	 */
-	@JsonSerialize(using = JsonCalendarSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Calendar getReleasedDate() {
 		return releasedDate;
 	}

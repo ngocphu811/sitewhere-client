@@ -1,17 +1,17 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.test;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -59,13 +59,12 @@ public class ApiTests {
 		SiteWhereClient client = new SiteWhereClient();
 		DeviceMeasurements create = new DeviceMeasurements();
 		create.setDeviceAssignmentToken("7139bbf5-f65d-42d7-9783-5d8603526f0d");
-		create.setReceivedDate(Calendar.getInstance());
-		create.setEventDate(Calendar.getInstance());
-		create.getMeasurementsMetadata().addOrReplaceMetadata("test", "123");
-		create.getMeasurementsMetadata().addOrReplaceMetadata("another", "another");
+		create.setReceivedDate(new Date());
+		create.setEventDate(new Date());
+		create.addOrReplaceMeasurement("test", "123");
+		create.addOrReplaceMeasurement("another", "another");
 		DeviceMeasurements results = client.createDeviceMeasurements(create);
-		System.out.println("Created " + results.getMeasurementsMetadata().getMetadata().size()
-				+ " measurements.");
+		System.out.println("Created " + results.getMeasurements().size() + " measurements.");
 	}
 
 	@Test

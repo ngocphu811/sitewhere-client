@@ -9,7 +9,7 @@
  */
 package com.sitewhere.spi.device.request;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.sitewhere.spi.device.IMetadataProvider;
 
@@ -25,5 +25,5 @@ public interface IDeviceEventCreateRequest extends IMetadataProvider {
 	 * 
 	 * @return
 	 */
-	public Calendar getEventDate();
+	public Date getEventDate();
 }

@@ -1,19 +1,19 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.model.device;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.sitewhere.rest.model.JsonCalendarSerializer;
+import com.sitewhere.rest.model.datatype.JsonDateSerializer;
 import com.sitewhere.spi.device.IMetadataProviderEntity;
 
 /**
@@ -24,13 +24,13 @@ import com.sitewhere.spi.device.IMetadataProviderEntity;
 public class MetadataProviderEntity extends MetadataProvider implements IMetadataProviderEntity {
 
 	/** Date entity was created */
-	private Calendar createdDate;
+	private Date createdDate;
 
 	/** Username for creator */
 	private String createdBy;
 
 	/** Date entity was last updated */
-	private Calendar updatedDate;
+	private Date updatedDate;
 
 	/** Username that updated entity */
 	private String updatedBy;
@@ -38,17 +38,12 @@ public class MetadataProviderEntity extends MetadataProvider implements IMetadat
 	/** Indicates if entity has been deleted */
 	private boolean deleted;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.common.ISiteWhereEntity#getCreatedDate()
-	 */
-	@JsonSerialize(using = JsonCalendarSerializer.class)
-	public Calendar getCreatedDate() {
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Calendar createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -70,12 +65,12 @@ public class MetadataProviderEntity extends MetadataProvider implements IMetadat
 	 * 
 	 * @see com.sitewhere.spi.common.ISiteWhereEntity#getUpdatedDate()
 	 */
-	@JsonSerialize(using = JsonCalendarSerializer.class)
-	public Calendar getUpdatedDate() {
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(Calendar updatedDate) {
+	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 

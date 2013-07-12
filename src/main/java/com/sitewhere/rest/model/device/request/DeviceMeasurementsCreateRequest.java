@@ -9,8 +9,14 @@
  */
 package com.sitewhere.rest.model.device.request;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.MetadataProvider;
+import com.sitewhere.spi.device.IMetadataEntry;
 import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
 
 /**
@@ -18,22 +24,48 @@ import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
  * 
  * @author Derek
  */
+@JsonIgnoreProperties
+@JsonInclude(Include.NON_NULL)
 public class DeviceMeasurementsCreateRequest extends DeviceEventCreateRequest implements
 		IDeviceMeasurementsCreateRequest {
 
 	/** Measurements metadata */
-	private MetadataProvider measurementsMetadata;
+	private MetadataProvider measurementsMetadata = new MetadataProvider();
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest#getMeasurementsMetadata()
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#addOrReplaceMeasurement(java.lang.String,
+	 * java.lang.String)
 	 */
-	public MetadataProvider getMeasurementsMetadata() {
-		return measurementsMetadata;
+	public void addOrReplaceMeasurement(String name, String value) {
+		measurementsMetadata.addOrReplaceMetadata(name, value);
 	}
 
-	public void setMeasurementsMetadata(MetadataProvider measurementsMetadata) {
-		this.measurementsMetadata = measurementsMetadata;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#removeMeasurement(java.lang.String)
+	 */
+	public IMetadataEntry removeMeasurement(String name) {
+		return measurementsMetadata.removeMetadata(name);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurement(java.lang.String)
+	 */
+	public IMetadataEntry getMeasurement(String name) {
+		return measurementsMetadata.getMetadata(name);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurements()
+	 */
+	public List<IMetadataEntry> getMeasurements() {
+		return measurementsMetadata.getMetadata();
 	}
 }

@@ -1,21 +1,21 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.model.device;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.sitewhere.rest.model.JsonCalendarSerializer;
+import com.sitewhere.rest.model.datatype.JsonDateSerializer;
 import com.sitewhere.spi.device.IDeviceEvent;
 
 /**
@@ -23,8 +23,7 @@ import com.sitewhere.spi.device.IDeviceEvent;
  * 
  * @author dadams
  */
-public abstract class DeviceEvent extends MetadataProvider implements
-		IDeviceEvent {
+public abstract class DeviceEvent extends MetadataProvider implements IDeviceEvent {
 
 	/** Unique event id */
 	private String id;
@@ -39,10 +38,10 @@ public abstract class DeviceEvent extends MetadataProvider implements
 	private String assetName;
 
 	/** Date event occurred */
-	private Calendar eventDate;
+	private Date eventDate;
 
 	/** Date event was received */
-	private Calendar receivedDate;
+	private Date receivedDate;
 
 	/** List of alert ids related to the event */
 	private List<String> alertIds = new ArrayList<String>();
@@ -104,12 +103,12 @@ public abstract class DeviceEvent extends MetadataProvider implements
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceEvent#getEventDate()
 	 */
-	@JsonSerialize(using = JsonCalendarSerializer.class)
-	public Calendar getEventDate() {
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Calendar eventDate) {
+	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
 	}
 
@@ -118,12 +117,12 @@ public abstract class DeviceEvent extends MetadataProvider implements
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceEvent#getReceivedDate()
 	 */
-	@JsonSerialize(using = JsonCalendarSerializer.class)
-	public Calendar getReceivedDate() {
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getReceivedDate() {
 		return receivedDate;
 	}
 
-	public void setReceivedDate(Calendar receivedDate) {
+	public void setReceivedDate(Date receivedDate) {
 		this.receivedDate = receivedDate;
 	}
 

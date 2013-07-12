@@ -9,19 +9,12 @@
  */
 package com.sitewhere.spi.device.request;
 
-import com.sitewhere.spi.device.IMetadataProvider;
+import com.sitewhere.spi.device.IMeasurementsProvider;
 
 /**
  * Interface for arguments needed to create device measurements.
  * 
  * @author Derek
  */
-public interface IDeviceMeasurementsCreateRequest extends IDeviceEventCreateRequest {
-
-	/**
-	 * Get metadata provider for measurements.
-	 * 
-	 * @return
-	 */
-	public IMetadataProvider getMeasurementsMetadata();
+public interface IDeviceMeasurementsCreateRequest extends IDeviceEventCreateRequest, IMeasurementsProvider {
 }
