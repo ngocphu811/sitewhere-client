@@ -10,8 +10,8 @@
 
 package com.sitewhere.rest.model.device;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sitewhere.rest.model.asset.HardwareAsset;
 import com.sitewhere.spi.device.IDevice;
 
@@ -20,7 +20,7 @@ import com.sitewhere.spi.device.IDevice;
  * 
  * @author dadams
  */
-@JsonSerialize(include = Inclusion.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 public class Device extends MetadataProviderEntity implements IDevice {
 
 	/** Asset id of device hardware */

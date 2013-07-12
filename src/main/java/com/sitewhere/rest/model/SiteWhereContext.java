@@ -1,12 +1,12 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.model;
 
@@ -20,6 +20,9 @@ import com.sitewhere.spi.device.IDeviceAssignment;
 import com.sitewhere.spi.device.IDeviceLocation;
 import com.sitewhere.spi.device.IDeviceMeasurements;
 import com.sitewhere.spi.device.ISite;
+import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
+import com.sitewhere.spi.device.request.IDeviceLocationCreateRequest;
+import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
 
 /**
  * Default context implementation.
@@ -37,13 +40,25 @@ public class SiteWhereContext implements ISiteWhereContext {
 	/** Current assignment for device */
 	private IDeviceAssignment deviceAssignment;
 
-	/** Measurements associated with current request */
+	/** Measurements that have not been persisted */
+	private List<IDeviceMeasurementsCreateRequest> unsavedDeviceMeasurements =
+			new ArrayList<IDeviceMeasurementsCreateRequest>();
+
+	/** Locations that have not been persisted */
+	private List<IDeviceLocationCreateRequest> unsavedDeviceLocations =
+			new ArrayList<IDeviceLocationCreateRequest>();
+
+	/** Alerts that have not been persisted */
+	private List<IDeviceAlertCreateRequest> unsavedDeviceAlerts =
+			new ArrayList<IDeviceAlertCreateRequest>();
+
+	/** Measurements that have been persisted */
 	private List<IDeviceMeasurements> deviceMeasurements = new ArrayList<IDeviceMeasurements>();
 
-	/** Locations associated with current request */
+	/** Locations that have been persisted */
 	private List<IDeviceLocation> deviceLocations = new ArrayList<IDeviceLocation>();
 
-	/** Alert associated with current request */
+	/** Alerts that have been persisted */
 	private List<IDeviceAlert> deviceAlerts = new ArrayList<IDeviceAlert>();
 
 	/*
@@ -83,6 +98,46 @@ public class SiteWhereContext implements ISiteWhereContext {
 
 	public void setDeviceAssignment(IDeviceAssignment deviceAssignment) {
 		this.deviceAssignment = deviceAssignment;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereContext#getUnsavedDeviceMeasurements()
+	 */
+	public List<IDeviceMeasurementsCreateRequest> getUnsavedDeviceMeasurements() {
+		return unsavedDeviceMeasurements;
+	}
+
+	public void setUnsavedDeviceMeasurements(
+			List<IDeviceMeasurementsCreateRequest> unsavedDeviceMeasurements) {
+		this.unsavedDeviceMeasurements = unsavedDeviceMeasurements;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereContext#getUnsavedDeviceLocations()
+	 */
+	public List<IDeviceLocationCreateRequest> getUnsavedDeviceLocations() {
+		return unsavedDeviceLocations;
+	}
+
+	public void setUnsavedDeviceLocations(List<IDeviceLocationCreateRequest> unsavedDeviceLocations) {
+		this.unsavedDeviceLocations = unsavedDeviceLocations;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereContext#getUnsavedDeviceAlerts()
+	 */
+	public List<IDeviceAlertCreateRequest> getUnsavedDeviceAlerts() {
+		return unsavedDeviceAlerts;
+	}
+
+	public void setUnsavedDeviceAlerts(List<IDeviceAlertCreateRequest> unsavedDeviceAlerts) {
+		this.unsavedDeviceAlerts = unsavedDeviceAlerts;
 	}
 
 	/*

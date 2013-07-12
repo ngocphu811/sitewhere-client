@@ -10,8 +10,8 @@
 
 package com.sitewhere.rest.model.device;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sitewhere.spi.device.IDeviceLocation;
 
 /**
@@ -19,7 +19,7 @@ import com.sitewhere.spi.device.IDeviceLocation;
  * 
  * @author dadams
  */
-@JsonSerialize(include = Inclusion.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 public class DeviceLocation extends DeviceEvent implements IDeviceLocation {
 
 	/** Latitude value */

@@ -44,11 +44,4 @@ public interface IDeviceAlert extends IDeviceEvent {
 	 * @return
 	 */
 	public boolean isAcknowledged();
-
-	/**
-	 * Set indicator for whether alert has been acknowledged.
-	 * 
-	 * @param value
-	 */
-	public void setAcknowledged(boolean value);
 }

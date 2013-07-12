@@ -1,12 +1,10 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.spi.device;
 
@@ -14,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.sitewhere.spi.SiteWhereException;
-import com.sitewhere.spi.asset.AssetType;
+import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
+import com.sitewhere.spi.device.request.IDeviceCreateRequest;
+import com.sitewhere.spi.device.request.IDeviceLocationCreateRequest;
 
 /**
  * Interface for device operations.
@@ -30,7 +30,7 @@ public interface IDeviceManagement {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDevice createDevice(IDevice device) throws SiteWhereException;
+	public IDevice createDevice(IDeviceCreateRequest device) throws SiteWhereException;
 
 	/**
 	 * Gets a device by unique hardware id.
@@ -90,15 +90,12 @@ public interface IDeviceManagement {
 	/**
 	 * Create a new device assignment.
 	 * 
-	 * @param siteToken
-	 * @param hardwareId
-	 * @param assetType
-	 * @param assetId
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceAssignment createDeviceAssignment(String siteToken, String hardwareId, AssetType assetType,
-			String assetId) throws SiteWhereException;
+	public IDeviceAssignment createDeviceAssignment(IDeviceAssignmentCreateRequest request)
+			throws SiteWhereException;
 
 	/**
 	 * Get the device associated with an assignment.
@@ -149,6 +146,16 @@ public interface IDeviceManagement {
 	 * @throws SiteWhereException
 	 */
 	public IDeviceAssignment updateDeviceAssignmentLocation(String token, IDeviceLocation location)
+			throws SiteWhereException;
+
+	/**
+	 * Add a batch of events for the given assignment.
+	 * 
+	 * @param assignmentToken
+	 * @param batch
+	 * @throws SiteWhereException
+	 */
+	public void addDeviceEventBatch(String assignmentToken, IDeviceEventBatch batch)
 			throws SiteWhereException;
 
 	/**
@@ -246,11 +253,13 @@ public interface IDeviceManagement {
 	/**
 	 * Add location for a given device assignment.
 	 * 
-	 * @param location
+	 * @param assignment
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceLocation addDeviceLocation(IDeviceLocation location) throws SiteWhereException;
+	public IDeviceLocation addDeviceLocation(IDeviceAssignment assignment,
+			IDeviceLocationCreateRequest request) throws SiteWhereException;
 
 	/**
 	 * Gets the most recent device location entries for an assignment.

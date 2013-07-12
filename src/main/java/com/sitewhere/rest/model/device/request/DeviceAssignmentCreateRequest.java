@@ -1,22 +1,21 @@
 /*
- * CreateDeviceAssignmentRequest.java 
- * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
  * The software in this package is published under the terms of the CPAL v1.0
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package com.sitewhere.rest.service.device;
+package com.sitewhere.rest.model.device.request;
 
 import com.sitewhere.spi.asset.AssetType;
+import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 
 /**
  * Holds fields needed to create a device assignment.
  * 
  * @author Derek Adams
  */
-public class CreateDeviceAssignmentRequest {
+public class DeviceAssignmentCreateRequest implements IDeviceAssignmentCreateRequest {
 
 	/** Device hardware id */
 	private String deviceHardwareId;
@@ -30,6 +29,11 @@ public class CreateDeviceAssignmentRequest {
 	/** Unique asset id */
 	private String assetId;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest#getDeviceHardwareId()
+	 */
 	public String getDeviceHardwareId() {
 		return deviceHardwareId;
 	}
@@ -38,6 +42,11 @@ public class CreateDeviceAssignmentRequest {
 		this.deviceHardwareId = deviceHardwareId;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest#getSiteToken()
+	 */
 	public String getSiteToken() {
 		return siteToken;
 	}
@@ -46,6 +55,11 @@ public class CreateDeviceAssignmentRequest {
 		this.siteToken = siteToken;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest#getAssetType()
+	 */
 	public AssetType getAssetType() {
 		return assetType;
 	}
@@ -54,6 +68,11 @@ public class CreateDeviceAssignmentRequest {
 		this.assetType = assetType;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest#getAssetId()
+	 */
 	public String getAssetId() {
 		return assetId;
 	}
