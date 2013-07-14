@@ -25,10 +25,15 @@ import org.springframework.web.client.RestTemplate;
 import com.sitewhere.rest.model.device.Device;
 import com.sitewhere.rest.model.device.DeviceAlert;
 import com.sitewhere.rest.model.device.DeviceAssignment;
+import com.sitewhere.rest.model.device.DeviceEventBatch;
+import com.sitewhere.rest.model.device.DeviceEventBatchResponse;
 import com.sitewhere.rest.model.device.DeviceLocation;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.MetadataProvider;
 import com.sitewhere.rest.model.device.Zone;
+import com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest;
+import com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest;
+import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.service.search.DeviceAlertSearchResults;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.DeviceLocationSearchResults;
@@ -92,13 +97,29 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public Device updateDeviceMetadata(String hardwareId, MetadataProvider metadata)
 			throws SiteWhereException {
-		MetadataProvider update = new MetadataProvider();
-		MetadataProvider.copy(metadata, update);
 		try {
 			Map<String, String> vars = new HashMap<String, String>();
 			vars.put("hardwareId", hardwareId);
-			return getClient().postForObject(getBaseUrl() + "devices/{hardwareId}/metadata", update,
+			return getClient().postForObject(getBaseUrl() + "devices/{hardwareId}/metadata", metadata,
 					Device.class, vars);
+		} catch (RestClientException e) {
+			throw new SiteWhereException(e);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereClient#addDeviceEventBatch(java.lang.String,
+	 * com.sitewhere.rest.model.device.DeviceEventBatch)
+	 */
+	public DeviceEventBatchResponse addDeviceEventBatch(String hardwareId, DeviceEventBatch batch)
+			throws SiteWhereException {
+		try {
+			Map<String, String> vars = new HashMap<String, String>();
+			vars.put("hardwareId", hardwareId);
+			return getClient().postForObject(getBaseUrl() + "devices/{hardwareId}/batch", batch,
+					DeviceEventBatchResponse.class, vars);
 		} catch (RestClientException e) {
 			throw new SiteWhereException(e);
 		}
@@ -183,15 +204,15 @@ public class SiteWhereClient implements ISiteWhereClient {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceMeasurements(com.sitewhere.rest.model.device.
-	 * DeviceMeasurements)
+	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceMeasurements(java.lang.String,
+	 * com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest)
 	 */
-	public DeviceMeasurements createDeviceMeasurements(DeviceMeasurements measurements)
-			throws SiteWhereException {
+	public DeviceMeasurements createDeviceMeasurements(String assignmentToken,
+			DeviceMeasurementsCreateRequest request) throws SiteWhereException {
 		try {
 			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", measurements.getDeviceAssignmentToken());
-			return getClient().postForObject(getBaseUrl() + "assignments/{token}/measurements", measurements,
+			vars.put("token", assignmentToken);
+			return getClient().postForObject(getBaseUrl() + "assignments/{token}/measurements", request,
 					DeviceMeasurements.class, vars);
 		} catch (RestClientException e) {
 			throw new SiteWhereException(e);
@@ -219,15 +240,16 @@ public class SiteWhereClient implements ISiteWhereClient {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.sitewhere.spi.ISiteWhereClient#createDeviceLocation(com.sitewhere.rest.model.device.DeviceLocation)
+	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceLocation(java.lang.String,
+	 * com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest)
 	 */
-	public DeviceLocation createDeviceLocation(DeviceLocation location) throws SiteWhereException {
+	public DeviceLocation createDeviceLocation(String assignmentToken, DeviceLocationCreateRequest request)
+			throws SiteWhereException {
 		try {
 			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", location.getDeviceAssignmentToken());
+			vars.put("token", assignmentToken);
 			DeviceLocation result = getClient().postForObject(getBaseUrl() + "assignments/{token}/locations",
-					location, DeviceLocation.class, vars);
+					request, DeviceLocation.class, vars);
 			return result;
 		} catch (RestClientException e) {
 			throw new SiteWhereException(e);
@@ -255,17 +277,15 @@ public class SiteWhereClient implements ISiteWhereClient {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.ISiteWhereClient#createAlertForDeviceLocation(java.lang.String,
-	 * com.sitewhere.rest.model.device.DeviceAlert)
+	 * @see com.sitewhere.spi.ISiteWhereClient#associateAlertWithDeviceLocation(java.lang.String,
+	 * java.lang.String)
 	 */
-	public DeviceAlert createAlertForDeviceLocation(String locationId, DeviceAlert alert)
-			throws SiteWhereException {
+	public void associateAlertWithDeviceLocation(String alertId, String locationId) throws SiteWhereException {
 		try {
 			Map<String, String> vars = new HashMap<String, String>();
 			vars.put("locationId", locationId);
-			DeviceAlert result = getClient().postForObject(getBaseUrl() + "locations/{locationId}/alerts",
-					alert, DeviceAlert.class, vars);
-			return result;
+			getClient().postForObject(getBaseUrl() + "locations/{locationId}/alerts/{alertId}", null,
+					DeviceAlert.class, vars);
 		} catch (RestClientException e) {
 			throw new SiteWhereException(e);
 		}
@@ -274,14 +294,16 @@ public class SiteWhereClient implements ISiteWhereClient {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceAlert(com.sitewhere.rest.model.device.DeviceAlert)
+	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceAlert(java.lang.String,
+	 * com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest)
 	 */
-	public DeviceAlert createDeviceAlert(DeviceAlert alert) throws SiteWhereException {
+	public DeviceAlert createDeviceAlert(String assignmentToken, DeviceAlertCreateRequest request)
+			throws SiteWhereException {
 		try {
 			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", alert.getDeviceAssignmentToken());
+			vars.put("token", assignmentToken);
 			DeviceAlert result = getClient().postForObject(getBaseUrl() + "assignments/{token}/alerts",
-					alert, DeviceAlert.class, vars);
+					request, DeviceAlert.class, vars);
 			return result;
 		} catch (RestClientException e) {
 			throw new SiteWhereException(e);

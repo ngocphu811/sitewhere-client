@@ -20,6 +20,7 @@ import com.sitewhere.rest.model.common.Location;
 import com.sitewhere.rest.model.device.Device;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.Zone;
+import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.service.SiteWhereClient;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
@@ -57,13 +58,12 @@ public class ApiTests {
 	@Test
 	public void testCreateMeasurements() throws SiteWhereException {
 		SiteWhereClient client = new SiteWhereClient();
-		DeviceMeasurements create = new DeviceMeasurements();
-		create.setDeviceAssignmentToken("7139bbf5-f65d-42d7-9783-5d8603526f0d");
-		create.setReceivedDate(new Date());
-		create.setEventDate(new Date());
-		create.addOrReplaceMeasurement("test", "123");
-		create.addOrReplaceMeasurement("another", "another");
-		DeviceMeasurements results = client.createDeviceMeasurements(create);
+		String assignmentToken = "7139bbf5-f65d-42d7-9783-5d8603526f0d";
+		DeviceMeasurementsCreateRequest measurements = new DeviceMeasurementsCreateRequest();
+		measurements.setEventDate(new Date());
+		measurements.addOrReplaceMeasurement("test", "123");
+		measurements.addOrReplaceMeasurement("another", "another");
+		DeviceMeasurements results = client.createDeviceMeasurements(assignmentToken, measurements);
 		System.out.println("Created " + results.getMeasurements().size() + " measurements.");
 	}
 

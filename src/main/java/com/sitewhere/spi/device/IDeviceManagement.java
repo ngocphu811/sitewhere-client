@@ -12,9 +12,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.sitewhere.spi.SiteWhereException;
+import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceLocationCreateRequest;
+import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
 
 /**
  * Interface for device operations.
@@ -153,9 +155,10 @@ public interface IDeviceManagement {
 	 * 
 	 * @param assignmentToken
 	 * @param batch
+	 * @return
 	 * @throws SiteWhereException
 	 */
-	public void addDeviceEventBatch(String assignmentToken, IDeviceEventBatch batch)
+	public IDeviceEventBatchResponse addDeviceEventBatch(String assignmentToken, IDeviceEventBatch batch)
 			throws SiteWhereException;
 
 	/**
@@ -210,12 +213,13 @@ public interface IDeviceManagement {
 	/**
 	 * Add measurements for a given device assignment.
 	 * 
+	 * @param assignment
 	 * @param measurements
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceMeasurements addDeviceMeasurements(IDeviceMeasurements measurements)
-			throws SiteWhereException;
+	public IDeviceMeasurements addDeviceMeasurements(IDeviceAssignment assignment,
+			IDeviceMeasurementsCreateRequest measurements) throws SiteWhereException;
 
 	/**
 	 * Gets the most recent device measurement entries for an assignment.
@@ -240,14 +244,13 @@ public interface IDeviceManagement {
 			throws SiteWhereException;
 
 	/**
-	 * Adds an alert which is associated with a given set of measurements.
+	 * Associates an alert with measurements.
 	 * 
+	 * @param alertId
 	 * @param measurementsId
-	 * @param alert
-	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceAlert addAlertForMeasurements(String measurementsId, IDeviceAlert alert)
+	public void associateAlertWithMeasurements(String alertId, String measurementsId)
 			throws SiteWhereException;
 
 	/**
@@ -296,23 +299,24 @@ public interface IDeviceManagement {
 			throws SiteWhereException;
 
 	/**
-	 * Adds an alert which is associated with a given location.
+	 * Associates an alert with a device location.
 	 * 
+	 * @param alertId
 	 * @param locationId
-	 * @param alert
-	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceAlert addAlertForLocation(String locationId, IDeviceAlert alert) throws SiteWhereException;
+	public void associateAlertWithLocation(String alertId, String locationId) throws SiteWhereException;
 
 	/**
 	 * Add alert for a given device assignment.
 	 * 
-	 * @param alert
+	 * @param assignment
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceAlert addDeviceAlert(IDeviceAlert alert) throws SiteWhereException;
+	public IDeviceAlert addDeviceAlert(IDeviceAssignment assignment, IDeviceAlertCreateRequest request)
+			throws SiteWhereException;
 
 	/**
 	 * Gets the most recent device alert entries for an assignment.

@@ -12,10 +12,15 @@ package com.sitewhere.spi;
 import com.sitewhere.rest.model.device.Device;
 import com.sitewhere.rest.model.device.DeviceAlert;
 import com.sitewhere.rest.model.device.DeviceAssignment;
+import com.sitewhere.rest.model.device.DeviceEventBatch;
+import com.sitewhere.rest.model.device.DeviceEventBatchResponse;
 import com.sitewhere.rest.model.device.DeviceLocation;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.MetadataProvider;
 import com.sitewhere.rest.model.device.Zone;
+import com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest;
+import com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest;
+import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.service.search.DeviceAlertSearchResults;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.DeviceLocationSearchResults;
@@ -47,6 +52,17 @@ public interface ISiteWhereClient {
 	 * @throws SiteWhereException
 	 */
 	public Device updateDeviceMetadata(String hardwareId, MetadataProvider metadata)
+			throws SiteWhereException;
+
+	/**
+	 * Add a batch of events to the current assignment for the given hardware id.
+	 * 
+	 * @param hardwareId
+	 * @param batch
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public DeviceEventBatchResponse addDeviceEventBatch(String hardwareId, DeviceEventBatch batch)
 			throws SiteWhereException;
 
 	/**
@@ -95,13 +111,15 @@ public interface ISiteWhereClient {
 			throws SiteWhereException;
 
 	/**
-	 * Create device measurements.
+	 * Create measurements for an assignment.
 	 * 
+	 * @param assignmentToken
 	 * @param measurements
+	 * @return
 	 * @throws SiteWhereException
 	 */
-	public DeviceMeasurements createDeviceMeasurements(DeviceMeasurements measurements)
-			throws SiteWhereException;
+	public DeviceMeasurements createDeviceMeasurements(String assignmentToken,
+			DeviceMeasurementsCreateRequest measurements) throws SiteWhereException;
 
 	/**
 	 * Get most recent device measurements for a given assignment.
@@ -115,12 +133,15 @@ public interface ISiteWhereClient {
 			throws SiteWhereException;
 
 	/**
-	 * Create device location.
+	 * Create a new device location for an assignment.
 	 * 
-	 * @param location
+	 * @param assignmentToken
+	 * @param request
+	 * @return
 	 * @throws SiteWhereException
 	 */
-	public DeviceLocation createDeviceLocation(DeviceLocation location) throws SiteWhereException;
+	public DeviceLocation createDeviceLocation(String assignmentToken, DeviceLocationCreateRequest request)
+			throws SiteWhereException;
 
 	/**
 	 * Get most recent device locations for a given assignment.
@@ -134,23 +155,24 @@ public interface ISiteWhereClient {
 			throws SiteWhereException;
 
 	/**
-	 * Create an alert an associate it with a device location.
+	 * Associates an alert with a device location.
 	 * 
+	 * @param alertId
 	 * @param locationId
-	 * @param alert
+	 * @throws SiteWhereException
+	 */
+	public void associateAlertWithDeviceLocation(String alertId, String locationId) throws SiteWhereException;
+
+	/**
+	 * Create a new alert for a device assignment.
+	 * 
+	 * @param assignmentToken
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public DeviceAlert createAlertForDeviceLocation(String locationId, DeviceAlert alert)
+	public DeviceAlert createDeviceAlert(String assignmentToken, DeviceAlertCreateRequest request)
 			throws SiteWhereException;
-
-	/**
-	 * Create device alert.
-	 * 
-	 * @param alert
-	 * @throws SiteWhereException
-	 */
-	public DeviceAlert createDeviceAlert(DeviceAlert alert) throws SiteWhereException;
 
 	/**
 	 * Get most recent device alerts for a given assignment.

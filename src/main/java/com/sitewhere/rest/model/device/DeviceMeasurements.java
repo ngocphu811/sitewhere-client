@@ -70,6 +70,18 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 		return measurementsMetadata.getMetadata();
 	}
 
+	/**
+	 * Needed for JSON marshaling.
+	 * 
+	 * @param entries
+	 */
+	public void setMeasurements(List<MetadataEntry> entries) {
+		this.measurementsMetadata = new MetadataProvider();
+		for (MetadataEntry entry : entries) {
+			measurementsMetadata.addOrReplaceMetadata(entry.getName(), entry.getValue());
+		}
+	}
+
 	public String getPropertiesSummary() {
 		return propertiesSummary;
 	}
