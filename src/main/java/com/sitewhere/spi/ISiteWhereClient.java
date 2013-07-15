@@ -19,6 +19,7 @@ import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.MetadataProvider;
 import com.sitewhere.rest.model.device.Zone;
 import com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest;
+import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.service.search.DeviceAlertSearchResults;
@@ -33,6 +34,15 @@ import com.sitewhere.rest.service.search.ZoneSearchResults;
  * @author Derek Adams
  */
 public interface ISiteWhereClient {
+
+	/**
+	 * Create a new device.
+	 * 
+	 * @param request
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public Device createDevice(DeviceCreateRequest request) throws SiteWhereException;
 
 	/**
 	 * Get a device by its unique hardware id.

@@ -9,12 +9,14 @@
  */
 package com.sitewhere.spi.device.request;
 
+import com.sitewhere.spi.device.IMetadataProvider;
+
 /**
  * Interface for arguments needed to create a device.
  * 
  * @author Derek
  */
-public interface IDeviceCreateRequest {
+public interface IDeviceCreateRequest extends IMetadataProvider {
 
 	/**
 	 * Get the unique device hardware id.

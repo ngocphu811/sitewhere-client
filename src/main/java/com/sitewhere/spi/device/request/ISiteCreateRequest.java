@@ -1,5 +1,5 @@
 /*
- * IDeviceAssignmentCreateRequest.java 
+ * ISiteCreateRequest.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -9,41 +9,47 @@
  */
 package com.sitewhere.spi.device.request;
 
-import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.device.IMetadataProvider;
 
 /**
- * Interface for arguments needed to create a device assignment.
+ * Interface for arguments needed to create a site.
  * 
  * @author Derek
  */
-public interface IDeviceAssignmentCreateRequest extends IMetadataProvider {
+public interface ISiteCreateRequest extends IMetadataProvider {
 
 	/**
-	 * Get the unique device hardware id.
+	 * Get site name.
 	 * 
 	 * @return
 	 */
-	public String getDeviceHardwareId();
+	public String getName();
 
 	/**
-	 * Get token of assigned site.
+	 * Get site description.
 	 * 
 	 * @return
 	 */
-	public String getSiteToken();
+	public String getDescription();
 
 	/**
-	 * Get assigned asset type.
+	 * Get URL for site logo image.
 	 * 
 	 * @return
 	 */
-	public AssetType getAssetType();
+	public String getImageUrl();
 
 	/**
-	 * Get assigned asset id.
+	 * Get map type.
 	 * 
 	 * @return
 	 */
-	public String getAssetId();
+	public String getMapType();
+
+	/**
+	 * Get map metadata.
+	 * 
+	 * @return
+	 */
+	public IMetadataProvider getMapMetadata();
 }

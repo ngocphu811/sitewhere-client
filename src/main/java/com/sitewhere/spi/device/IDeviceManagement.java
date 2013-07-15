@@ -17,6 +17,8 @@ import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceLocationCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
+import com.sitewhere.spi.device.request.ISiteCreateRequest;
+import com.sitewhere.spi.device.request.IZoneCreateRequest;
 
 /**
  * Interface for device operations.
@@ -343,20 +345,21 @@ public interface IDeviceManagement {
 	/**
 	 * Create a site based on the given input.
 	 * 
-	 * @param input
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public ISite createSite(ISite input) throws SiteWhereException;
+	public ISite createSite(ISiteCreateRequest request) throws SiteWhereException;
 
 	/**
 	 * Update information for a site.
 	 * 
-	 * @param input
+	 * @param siteToken
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public ISite updateSite(ISite input) throws SiteWhereException;
+	public ISite updateSite(String siteToken, ISiteCreateRequest request) throws SiteWhereException;
 
 	/**
 	 * Get a site by unique token.
@@ -378,11 +381,12 @@ public interface IDeviceManagement {
 	/**
 	 * Create a new zone.
 	 * 
-	 * @param input
+	 * @param site
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IZone createZone(IZone input) throws SiteWhereException;
+	public IZone createZone(ISite site, IZoneCreateRequest request) throws SiteWhereException;
 
 	/**
 	 * Get a zone by its unique token.

@@ -10,8 +10,6 @@
 
 package com.sitewhere.spi.device;
 
-import java.util.Date;
-
 import com.sitewhere.spi.common.ISiteWhereEntity;
 
 /**
@@ -62,11 +60,4 @@ public interface ISite extends IMetadataProvider, ISiteWhereEntity {
 	 * @return
 	 */
 	public IMetadataProvider getMapMetadata();
-
-	/**
-	 * Get the created date.
-	 * 
-	 * @return
-	 */
-	public Date getCreatedDate();
 }

@@ -7,6 +7,7 @@
  */
 package com.sitewhere.rest.model.device.request;
 
+import com.sitewhere.rest.model.device.MetadataProvider;
 import com.sitewhere.spi.device.request.IDeviceCreateRequest;
 
 /**
@@ -14,7 +15,7 @@ import com.sitewhere.spi.device.request.IDeviceCreateRequest;
  * 
  * @author Derek Adams
  */
-public class DeviceCreateRequest implements IDeviceCreateRequest {
+public class DeviceCreateRequest extends MetadataProvider implements IDeviceCreateRequest {
 
 	/** Hardware id for new device */
 	private String hardwareId;

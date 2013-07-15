@@ -10,7 +10,6 @@
 
 package com.sitewhere.spi.device;
 
-import java.util.Date;
 import java.util.List;
 
 import com.sitewhere.spi.common.ILocation;
@@ -50,13 +49,6 @@ public interface IZone extends IMetadataProvider, ISiteWhereEntity {
 	 * @return
 	 */
 	public List<ILocation> getCoordinates();
-
-	/**
-	 * Get date the zone was created.
-	 * 
-	 * @return
-	 */
-	public Date getCreatedDate();
 
 	/**
 	 * Get the border color.

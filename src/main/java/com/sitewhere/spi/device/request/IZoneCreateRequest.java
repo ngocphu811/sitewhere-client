@@ -1,5 +1,5 @@
 /*
- * IDeviceAssignmentCreateRequest.java 
+ * IZoneCreateRequest.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -9,41 +9,57 @@
  */
 package com.sitewhere.spi.device.request;
 
-import com.sitewhere.spi.asset.AssetType;
+import java.util.List;
+
+import com.sitewhere.spi.common.ILocation;
 import com.sitewhere.spi.device.IMetadataProvider;
 
 /**
- * Interface for arguments needed to create a device assignment.
+ * Interface for arguments needed to create a zone.
  * 
  * @author Derek
  */
-public interface IDeviceAssignmentCreateRequest extends IMetadataProvider {
+public interface IZoneCreateRequest extends IMetadataProvider {
 
 	/**
-	 * Get the unique device hardware id.
+	 * Get unique token for zone.
 	 * 
 	 * @return
 	 */
-	public String getDeviceHardwareId();
+	public String getToken();
 
 	/**
-	 * Get token of assigned site.
+	 * Get zone name.
 	 * 
 	 * @return
 	 */
-	public String getSiteToken();
+	public String getName();
 
 	/**
-	 * Get assigned asset type.
+	 * Get zone coordinates.
 	 * 
 	 * @return
 	 */
-	public AssetType getAssetType();
+	public List<ILocation> getCoordinates();
 
 	/**
-	 * Get assigned asset id.
+	 * Get border color for UI.
 	 * 
 	 * @return
 	 */
-	public String getAssetId();
+	public String getBorderColor();
+
+	/**
+	 * Get fill color for UI.
+	 * 
+	 * @return
+	 */
+	public String getFillColor();
+
+	/**
+	 * Get opacity for UI.
+	 * 
+	 * @return
+	 */
+	public Double getOpacity();
 }

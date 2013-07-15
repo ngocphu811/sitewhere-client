@@ -17,7 +17,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -32,6 +32,7 @@ import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.MetadataProvider;
 import com.sitewhere.rest.model.device.Zone;
 import com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest;
+import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.service.search.DeviceAlertSearchResults;
@@ -65,9 +66,25 @@ public class SiteWhereClient implements ISiteWhereClient {
 	public SiteWhereClient(String url) {
 		this.client = new RestTemplate();
 		List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
-		converters.add(new MappingJacksonHttpMessageConverter());
+		converters.add(new MappingJackson2HttpMessageConverter());
 		client.setMessageConverters(converters);
 		this.baseUrl = url;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.sitewhere.spi.ISiteWhereClient#createDevice(com.sitewhere.rest.model.device.request.DeviceCreateRequest
+	 * )
+	 */
+	public Device createDevice(DeviceCreateRequest request) throws SiteWhereException {
+		try {
+			Map<String, String> vars = new HashMap<String, String>();
+			return getClient().postForObject(getBaseUrl() + "devices", request, Device.class, vars);
+		} catch (RestClientException e) {
+			throw new SiteWhereException(e);
+		}
 	}
 
 	/*

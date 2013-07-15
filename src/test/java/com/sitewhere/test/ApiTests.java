@@ -20,6 +20,7 @@ import com.sitewhere.rest.model.common.Location;
 import com.sitewhere.rest.model.device.Device;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.Zone;
+import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.service.SiteWhereClient;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
@@ -32,15 +33,29 @@ import com.sitewhere.spi.SiteWhereException;
  * @author dadams
  */
 public class ApiTests {
-
-	/** Amazon instance URL */
-	// private static final String AWS_URL = "http://107.21.251.203/sitewhere/api/";
+	
+	/** Hardware id used for test cases */
+	public static final String TEST_HARDWARE_ID = "12356789-TEST-123";
+	
+	@Test
+	public void createDevice() throws SiteWhereException {
+		SiteWhereClient client = new SiteWhereClient();
+		DeviceCreateRequest request = new DeviceCreateRequest();
+		request.setHardwareId(TEST_HARDWARE_ID);
+		request.setAssetId("174");
+		request.setComments("This is a test device.");
+		Device device = client.createDevice(request);
+		if (device.getCreatedDate() != null) {
+			System.out.println("New device created on " + device.getCreatedDate());
+		} else {
+			System.out.println("Device did not get a created date.");
+		}
+	}
 
 	@Test
 	public void getDeviceByHardwareId() throws SiteWhereException {
 		SiteWhereClient client = new SiteWhereClient();
-		Device device = client.getDeviceByHardwareId("bb-12335-76454");
-		// Device device = client.getDeviceByHardwareId("3287423-ERICSON-5657");
+		Device device = client.getDeviceByHardwareId("23438373447-MEI-0933");
 		if (device != null) {
 			System.out.println(device.getHardwareId() + " " + device.getComments());
 		} else {
