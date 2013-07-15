@@ -1,12 +1,12 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.spi.error;
 
@@ -82,14 +82,17 @@ public enum ErrorCode {
 
 	/** Operation assumes device is assigned but no assignment exists */
 	DeviceNotAssigned(601, "Device is not currently assigned."),
-	
+
+	/** Operation assumes device is assigned but no assignment exists */
+	DeviceHardwareIdCanNotBeChanged(602, "Device hardware id can not be updated."),
+
 	/********
 	 * ZONE *
 	 ********/
 
 	/** Zone delete failure message */
 	ZoneDeleteFailed(700, "Unable to delete zoned."),
-	
+
 	/***********
 	 * GENERIC *
 	 ***********/

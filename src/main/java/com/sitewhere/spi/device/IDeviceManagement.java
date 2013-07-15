@@ -46,6 +46,16 @@ public interface IDeviceManagement {
 	public IDevice getDeviceByHardwareId(String hardwareId) throws SiteWhereException;
 
 	/**
+	 * Update device information.
+	 * 
+	 * @param hardwareId
+	 * @param request
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public IDevice updateDevice(String hardwareId, IDeviceCreateRequest request) throws SiteWhereException;
+
+	/**
 	 * Gets the current assignment for a device. Null if none.
 	 * 
 	 * @param device
@@ -53,17 +63,6 @@ public interface IDeviceManagement {
 	 * @throws SiteWhereException
 	 */
 	public IDeviceAssignment getCurrentDeviceAssignment(IDevice device) throws SiteWhereException;
-
-	/**
-	 * Update metadata associated with a device.
-	 * 
-	 * @param hardwareId
-	 * @param metadata
-	 * @return
-	 * @throws SiteWhereException
-	 */
-	public IDevice updateDeviceMetadata(String hardwareId, IMetadataProvider metadata)
-			throws SiteWhereException;
 
 	/**
 	 * List devices that meet the given criteria.

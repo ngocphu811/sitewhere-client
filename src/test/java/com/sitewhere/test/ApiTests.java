@@ -43,6 +43,9 @@ public class ApiTests {
 	/** Hardware id used for test cases */
 	public static final String TEST_HARDWARE_ID = "12356789-TEST-123";
 
+	/** Asset id for testing */
+	public static final String TEST_ASSET_ID = "174";
+
 	/** SiteWhere client */
 	private ISiteWhereClient client;
 
@@ -61,10 +64,13 @@ public class ApiTests {
 		// Test initial create.
 		DeviceCreateRequest request = new DeviceCreateRequest();
 		request.setHardwareId(TEST_HARDWARE_ID);
-		request.setAssetId("174");
+		request.setAssetId(TEST_ASSET_ID);
 		request.setComments("This is a test device.");
+		request.addOrReplaceMetadata("name1", "value1");
+		request.addOrReplaceMetadata("name2", "value2");
 		Device device = client.createDevice(request);
 		Assert.assertNotNull("Device create returned null.", device);
+		Assert.assertEquals("Metadata not stored properly.", 2, device.getMetadata().size());
 
 		// Test duplicate.
 		try {
@@ -73,6 +79,9 @@ public class ApiTests {
 		} catch (SiteWhereException e) {
 			verifyErrorCode(e, HttpStatus.CONFLICT);
 		}
+
+		// Delete device.
+		client.deleteDevice(TEST_HARDWARE_ID, true);
 	}
 
 	@Test
