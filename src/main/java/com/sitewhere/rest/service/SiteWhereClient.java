@@ -109,6 +109,25 @@ public class SiteWhereClient implements ISiteWhereClient {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.sitewhere.spi.ISiteWhereClient#deleteDevice(java.lang.String, boolean)
+	 */
+	public void deleteDevice(String hardwareId, boolean force) throws SiteWhereException {
+		try {
+			Map<String, String> vars = new HashMap<String, String>();
+			vars.put("hardwareId", hardwareId);
+			String url = getBaseUrl() + "devices/{hardwareId}";
+			if (force) {
+				url += "?force=true";
+			}
+			getClient().delete(url, vars);
+		} catch (HttpClientErrorException e) {
+			throw new SiteWhereException(e);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.sitewhere.spi.ISiteWhereClient#updateDeviceMetadata(java.lang.String,
 	 * com.sitewhere.rest.model.device.MetadataProvider)
 	 */

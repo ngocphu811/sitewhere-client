@@ -86,10 +86,11 @@ public interface IDeviceManagement {
 	 * Delete an existing device.
 	 * 
 	 * @param hardwareId
+	 * @param force
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDevice deleteDevice(String hardwareId) throws SiteWhereException;
+	public IDevice deleteDevice(String hardwareId, boolean force) throws SiteWhereException;
 
 	/**
 	 * Create a new device assignment.

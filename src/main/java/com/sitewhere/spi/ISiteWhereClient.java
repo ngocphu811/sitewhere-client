@@ -39,7 +39,8 @@ public interface ISiteWhereClient {
 	 * Create a new device.
 	 * 
 	 * @param request
-	 * @return
+	 *            information about device to be created
+	 * @return the created device
 	 * @throws SiteWhereException
 	 */
 	public Device createDevice(DeviceCreateRequest request) throws SiteWhereException;
@@ -48,10 +49,22 @@ public interface ISiteWhereClient {
 	 * Get a device by its unique hardware id.
 	 * 
 	 * @param hardwareId
-	 * @return
+	 *            hardware id of device to return
+	 * @return device if found or null if not
 	 * @throws SiteWhereException
 	 */
 	public Device getDeviceByHardwareId(String hardwareId) throws SiteWhereException;
+
+	/**
+	 * Delete a device.
+	 * 
+	 * @param hardwareId
+	 *            hardware id of device to delete
+	 * @param force
+	 *            if true, data is deleted. if false, delete flag is set to true
+	 * @throws SiteWhereException
+	 */
+	public void deleteDevice(String hardwareId, boolean force) throws SiteWhereException;
 
 	/**
 	 * Update the metadata for an existing device.

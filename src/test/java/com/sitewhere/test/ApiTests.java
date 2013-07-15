@@ -14,7 +14,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import junit.framework.Assert;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.sitewhere.rest.model.common.Location;
 import com.sitewhere.rest.model.device.Device;
@@ -25,6 +30,7 @@ import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.service.SiteWhereClient;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
+import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
 
 /**
@@ -33,28 +39,44 @@ import com.sitewhere.spi.SiteWhereException;
  * @author dadams
  */
 public class ApiTests {
-	
+
 	/** Hardware id used for test cases */
 	public static final String TEST_HARDWARE_ID = "12356789-TEST-123";
-	
+
+	/** SiteWhere client */
+	private ISiteWhereClient client;
+
+	@Before
+	public void setup() {
+		this.client = new SiteWhereClient();
+	}
+
 	@Test
-	public void createDevice() throws SiteWhereException {
-		SiteWhereClient client = new SiteWhereClient();
+	public void testDeviceCRUD() throws SiteWhereException {
+		Device existing = client.getDeviceByHardwareId(TEST_HARDWARE_ID);
+		if (existing != null) {
+			client.deleteDevice(TEST_HARDWARE_ID, true);
+		}
+
+		// Test initial create.
 		DeviceCreateRequest request = new DeviceCreateRequest();
 		request.setHardwareId(TEST_HARDWARE_ID);
 		request.setAssetId("174");
 		request.setComments("This is a test device.");
 		Device device = client.createDevice(request);
-		if (device.getCreatedDate() != null) {
-			System.out.println("New device created on " + device.getCreatedDate());
-		} else {
-			System.out.println("Device did not get a created date.");
+		Assert.assertNotNull("Device create returned null.", device);
+
+		// Test duplicate.
+		try {
+			device = client.createDevice(request);
+			Assert.fail("Create device allowed duplicate.");
+		} catch (SiteWhereException e) {
+			verifyErrorCode(e, HttpStatus.CONFLICT);
 		}
 	}
 
 	@Test
 	public void getDeviceByHardwareId() throws SiteWhereException {
-		SiteWhereClient client = new SiteWhereClient();
 		Device device = client.getDeviceByHardwareId("23438373447-MEI-0933");
 		if (device != null) {
 			System.out.println(device.getHardwareId() + " " + device.getComments());
@@ -65,7 +87,6 @@ public class ApiTests {
 
 	@Test
 	public void getDeviceAssignmentHistory() throws SiteWhereException {
-		SiteWhereClient client = new SiteWhereClient();
 		DeviceAssignmentSearchResults history = client.listDeviceAssignmentHistory("38729342-BB-3847389");
 		System.out.println("Found " + history.getNumResults() + " history records.");
 	}
@@ -98,5 +119,22 @@ public class ApiTests {
 		System.out.println("Created zone: " + results.getName());
 		ZoneSearchResults search = client.listZonesForSite("b2229cb1-de4e-4114-9863-08d0efd81064");
 		System.out.println("Found " + search.getNumResults() + " results.");
+	}
+
+	/**
+	 * Verifies that
+	 * 
+	 * @param e
+	 */
+	protected void verifyErrorCode(SiteWhereException e, HttpStatus status) {
+		if (e.getCause() instanceof HttpClientErrorException) {
+			HttpClientErrorException http = (HttpClientErrorException) e.getCause();
+			if (http.getStatusCode() != status) {
+				Assert.fail("Unexpected error code returned. Expected " + status.getReasonPhrase()
+						+ " but got: " + http.getStatusText());
+			}
+		} else {
+			Assert.fail("Unexpected exception: " + e.getMessage());
+		}
 	}
 }
