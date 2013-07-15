@@ -15,7 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
@@ -102,6 +105,25 @@ public class SiteWhereClient implements ISiteWhereClient {
 			if (HttpStatus.NOT_FOUND == status) {
 				return null;
 			}
+			throw new SiteWhereException(e);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereClient#updateDevice(java.lang.String,
+	 * com.sitewhere.rest.model.device.request.DeviceCreateRequest)
+	 */
+	public Device updateDevice(String hardwareId, DeviceCreateRequest request) throws SiteWhereException {
+		try {
+			Map<String, String> vars = new HashMap<String, String>();
+			vars.put("hardwareId", hardwareId);
+			HttpEntity<DeviceCreateRequest> entity = new HttpEntity<DeviceCreateRequest>(request);
+			ResponseEntity<Device> response = getClient().exchange(getBaseUrl() + "devices/{hardwareId}",
+					HttpMethod.PUT, entity, Device.class, vars);
+			return response.getBody();
+		} catch (RestClientException e) {
 			throw new SiteWhereException(e);
 		}
 	}

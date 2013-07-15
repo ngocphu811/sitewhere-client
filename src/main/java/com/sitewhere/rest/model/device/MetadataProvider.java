@@ -83,10 +83,9 @@ public class MetadataProvider implements IMetadataProvider {
 	 * 
 	 * @see com.sitewhere.spi.device.IMetadataProvider#getMetadata()
 	 */
+	@SuppressWarnings("unchecked")
 	public List<IMetadataEntry> getMetadata() {
-		List<IMetadataEntry> results = new ArrayList<IMetadataEntry>();
-		results.addAll(entries);
-		return results;
+		return (List<IMetadataEntry>) (List<? extends IMetadataEntry>) entries;
 	}
 
 	public void setMetadata(List<MetadataEntry> entries) {

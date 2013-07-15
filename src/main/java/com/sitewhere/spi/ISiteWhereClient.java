@@ -56,6 +56,17 @@ public interface ISiteWhereClient {
 	public Device getDeviceByHardwareId(String hardwareId) throws SiteWhereException;
 
 	/**
+	 * Update information for an existing device.
+	 * 
+	 * @param hardwareId
+	 *            hardware id of device to update
+	 * @param request
+	 *            updated information
+	 * @throws SiteWhereException
+	 */
+	public Device updateDevice(String hardwareId, DeviceCreateRequest request) throws SiteWhereException;
+
+	/**
 	 * Delete a device.
 	 * 
 	 * @param hardwareId

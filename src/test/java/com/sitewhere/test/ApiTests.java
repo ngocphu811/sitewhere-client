@@ -56,6 +56,7 @@ public class ApiTests {
 
 	@Test
 	public void testDeviceCRUD() throws SiteWhereException {
+		// Delete device if it already exists.
 		Device existing = client.getDeviceByHardwareId(TEST_HARDWARE_ID);
 		if (existing != null) {
 			client.deleteDevice(TEST_HARDWARE_ID, true);
@@ -71,6 +72,23 @@ public class ApiTests {
 		Device device = client.createDevice(request);
 		Assert.assertNotNull("Device create returned null.", device);
 		Assert.assertEquals("Metadata not stored properly.", 2, device.getMetadata().size());
+
+		// Test update.
+		DeviceCreateRequest update = new DeviceCreateRequest();
+		update.setComments("Updated.");
+		update.addOrReplaceMetadata("name1", "value1");
+		device = client.updateDevice(TEST_HARDWARE_ID, update);
+		Assert.assertEquals("Updated.", device.getComments());
+		Assert.assertEquals("Metadata not updated properly.", 1, device.getMetadata().size());
+
+		// Should not allow hardware id to be updated.
+		try {
+			update = new DeviceCreateRequest();
+			update.setHardwareId("xxx");
+			client.updateDevice(TEST_HARDWARE_ID, request);
+		} catch (SiteWhereException e) {
+			verifyErrorCode(e, HttpStatus.BAD_REQUEST);
+		}
 
 		// Test duplicate.
 		try {
