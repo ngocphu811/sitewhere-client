@@ -18,8 +18,6 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
 
 import com.sitewhere.rest.model.common.Location;
 import com.sitewhere.rest.model.device.Device;
@@ -32,6 +30,8 @@ import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
 import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
+import com.sitewhere.spi.SiteWhereSystemException;
+import com.sitewhere.spi.error.ErrorCode;
 
 /**
  * Test cases for client API calls.
@@ -57,9 +57,11 @@ public class ApiTests {
 	@Test
 	public void testDeviceCRUD() throws SiteWhereException {
 		// Delete device if it already exists.
-		Device existing = client.getDeviceByHardwareId(TEST_HARDWARE_ID);
-		if (existing != null) {
+		try {
+			client.getDeviceByHardwareId(TEST_HARDWARE_ID);
 			client.deleteDevice(TEST_HARDWARE_ID, true);
+		} catch (SiteWhereException e) {
+			// Ignore missing device since we wanted it deleted.
 		}
 
 		// Test initial create.
@@ -73,6 +75,13 @@ public class ApiTests {
 		Assert.assertNotNull("Device create returned null.", device);
 		Assert.assertEquals("Metadata not stored properly.", 2, device.getMetadata().size());
 
+		// Test get by hardware id.
+		try {
+			device = client.getDeviceByHardwareId(TEST_HARDWARE_ID);
+		} catch (SiteWhereException e) {
+			Assert.fail("Device should exist, but not found by handware id.");
+		}
+
 		// Test update.
 		DeviceCreateRequest update = new DeviceCreateRequest();
 		update.setComments("Updated.");
@@ -80,14 +89,16 @@ public class ApiTests {
 		device = client.updateDevice(TEST_HARDWARE_ID, update);
 		Assert.assertEquals("Updated.", device.getComments());
 		Assert.assertEquals("Metadata not updated properly.", 1, device.getMetadata().size());
+		Assert.assertNotNull("Updated date not set.", device.getUpdatedDate());
 
 		// Should not allow hardware id to be updated.
 		try {
 			update = new DeviceCreateRequest();
 			update.setHardwareId("xxx");
-			client.updateDevice(TEST_HARDWARE_ID, request);
-		} catch (SiteWhereException e) {
-			verifyErrorCode(e, HttpStatus.BAD_REQUEST);
+			client.updateDevice(TEST_HARDWARE_ID, update);
+			Assert.fail("Device update allowed update of hardware id.");
+		} catch (SiteWhereSystemException e) {
+			verifyErrorCode(e, ErrorCode.DeviceHardwareIdCanNotBeChanged);
 		}
 
 		// Test duplicate.
@@ -95,11 +106,12 @@ public class ApiTests {
 			device = client.createDevice(request);
 			Assert.fail("Create device allowed duplicate.");
 		} catch (SiteWhereException e) {
-			verifyErrorCode(e, HttpStatus.CONFLICT);
+			verifyErrorCode(e, ErrorCode.DuplicateHardwareId);
 		}
 
 		// Delete device.
-		client.deleteDevice(TEST_HARDWARE_ID, true);
+		device = client.deleteDevice(TEST_HARDWARE_ID, true);
+		Assert.assertNotNull(device);
 	}
 
 	@Test
@@ -153,12 +165,12 @@ public class ApiTests {
 	 * 
 	 * @param e
 	 */
-	protected void verifyErrorCode(SiteWhereException e, HttpStatus status) {
-		if (e.getCause() instanceof HttpClientErrorException) {
-			HttpClientErrorException http = (HttpClientErrorException) e.getCause();
-			if (http.getStatusCode() != status) {
-				Assert.fail("Unexpected error code returned. Expected " + status.getReasonPhrase()
-						+ " but got: " + http.getStatusText());
+	protected void verifyErrorCode(SiteWhereException e, ErrorCode code) {
+		if (e instanceof SiteWhereSystemException) {
+			SiteWhereSystemException sw = (SiteWhereSystemException) e;
+			if (code != sw.getCode()) {
+				Assert.fail("Unexpected error code returned. Expected " + code.getCode() + " but got: "
+						+ sw.getCode());
 			}
 		} else {
 			Assert.fail("Unexpected exception: " + e.getMessage());

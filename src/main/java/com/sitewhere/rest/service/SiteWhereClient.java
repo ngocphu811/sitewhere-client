@@ -17,11 +17,10 @@ import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -45,6 +44,7 @@ import com.sitewhere.rest.service.search.DeviceMeasurementsSearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
 import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
+import com.sitewhere.spi.SiteWhereSystemException;
 
 /**
  * Client for interacting with SiteWhere REST services.
@@ -71,6 +71,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 		List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
 		converters.add(new MappingJackson2HttpMessageConverter());
 		client.setMessageConverters(converters);
+		client.setErrorHandler(new SiteWhereErrorHandler());
 		this.baseUrl = url;
 	}
 
@@ -82,12 +83,8 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * )
 	 */
 	public Device createDevice(DeviceCreateRequest request) throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			return getClient().postForObject(getBaseUrl() + "devices", request, Device.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		return sendRest(getBaseUrl() + "devices", HttpMethod.POST, request, Device.class, vars);
 	}
 
 	/*
@@ -96,17 +93,9 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#getDeviceByHardwareId(java.lang.String)
 	 */
 	public Device getDeviceByHardwareId(String hardwareId) throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("hardwareId", hardwareId);
-			return getClient().getForObject(getBaseUrl() + "devices/{hardwareId}", Device.class, vars);
-		} catch (HttpClientErrorException e) {
-			HttpStatus status = e.getStatusCode();
-			if (HttpStatus.NOT_FOUND == status) {
-				return null;
-			}
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("hardwareId", hardwareId);
+		return sendRest(getBaseUrl() + "devices/{hardwareId}", HttpMethod.GET, null, Device.class, vars);
 	}
 
 	/*
@@ -116,16 +105,9 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * com.sitewhere.rest.model.device.request.DeviceCreateRequest)
 	 */
 	public Device updateDevice(String hardwareId, DeviceCreateRequest request) throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("hardwareId", hardwareId);
-			HttpEntity<DeviceCreateRequest> entity = new HttpEntity<DeviceCreateRequest>(request);
-			ResponseEntity<Device> response = getClient().exchange(getBaseUrl() + "devices/{hardwareId}",
-					HttpMethod.PUT, entity, Device.class, vars);
-			return response.getBody();
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("hardwareId", hardwareId);
+		return sendRest(getBaseUrl() + "devices/{hardwareId}", HttpMethod.PUT, request, Device.class, vars);
 	}
 
 	/*
@@ -133,18 +115,14 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * 
 	 * @see com.sitewhere.spi.ISiteWhereClient#deleteDevice(java.lang.String, boolean)
 	 */
-	public void deleteDevice(String hardwareId, boolean force) throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("hardwareId", hardwareId);
-			String url = getBaseUrl() + "devices/{hardwareId}";
-			if (force) {
-				url += "?force=true";
-			}
-			getClient().delete(url, vars);
-		} catch (HttpClientErrorException e) {
-			throw new SiteWhereException(e);
+	public Device deleteDevice(String hardwareId, boolean force) throws SiteWhereException {
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("hardwareId", hardwareId);
+		String url = getBaseUrl() + "devices/{hardwareId}";
+		if (force) {
+			url += "?force=true";
 		}
+		return sendRest(url, HttpMethod.DELETE, null, Device.class, vars);
 	}
 
 	/*
@@ -412,6 +390,31 @@ public class SiteWhereClient implements ISiteWhereClient {
 					ZoneSearchResults.class, vars);
 		} catch (RestClientException e) {
 			throw new SiteWhereException(e);
+		}
+	}
+
+	/**
+	 * Send a REST request and handle the response.
+	 * 
+	 * @param url
+	 * @param method
+	 * @param input
+	 * @param clazz
+	 * @param vars
+	 * @return
+	 * @throws SiteWhereSystemException
+	 */
+	protected <S, T> S sendRest(String url, HttpMethod method, T input, Class<S> clazz,
+			Map<String, String> vars) throws SiteWhereSystemException {
+		try {
+			HttpEntity<T> entity = new HttpEntity<T>(input);
+			ResponseEntity<S> response = getClient().exchange(url, method, entity, clazz, vars);
+			return response.getBody();
+		} catch (ResourceAccessException e) {
+			if (e.getCause() instanceof SiteWhereSystemException) {
+				throw (SiteWhereSystemException) e.getCause();
+			}
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -73,9 +73,10 @@ public interface ISiteWhereClient {
 	 *            hardware id of device to delete
 	 * @param force
 	 *            if true, data is deleted. if false, delete flag is set to true
+	 * @return
 	 * @throws SiteWhereException
 	 */
-	public void deleteDevice(String hardwareId, boolean force) throws SiteWhereException;
+	public Device deleteDevice(String hardwareId, boolean force) throws SiteWhereException;
 
 	/**
 	 * Update the metadata for an existing device.

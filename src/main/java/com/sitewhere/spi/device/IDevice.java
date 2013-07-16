@@ -12,14 +12,12 @@ package com.sitewhere.spi.device;
 
 import java.util.Date;
 
-import com.sitewhere.spi.common.ISiteWhereEntity;
-
 /**
  * Interface for a device that provides location information.
  * 
  * @author Derek
  */
-public interface IDevice extends IMetadataProvider, ISiteWhereEntity {
+public interface IDevice extends IMetadataProviderEntity {
 
 	/**
 	 * Get the asset id.
