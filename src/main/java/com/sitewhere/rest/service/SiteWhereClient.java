@@ -202,16 +202,10 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceAssignment updateDeviceAssignmentMetadata(String token, MetadataProvider metadata)
 			throws SiteWhereException {
-		MetadataProvider update = new MetadataProvider();
-		MetadataProvider.copy(metadata, update);
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", token);
-			return getClient().postForObject(getBaseUrl() + "assignments/{token}/metadata", update,
-					DeviceAssignment.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("token", token);
+		return sendRest(getBaseUrl() + "assignments/{token}/metadata", HttpMethod.POST, metadata,
+				DeviceAssignment.class, vars);
 	}
 
 	/*

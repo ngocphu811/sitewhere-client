@@ -120,8 +120,12 @@ public class ApiTests {
 		assnRequest.setAssetType(AssetType.Hardware);
 		assnRequest.setAssetId(TEST_ASSET_ID);
 		assnRequest.setDeviceHardwareId(device.getHardwareId());
+		assnRequest.addOrReplaceMetadata("name1", "value1");
+		assnRequest.addOrReplaceMetadata("name2", "value2");
+		assnRequest.addOrReplaceMetadata("name1", "value2");
 		DeviceAssignment assignment = client.createDeviceAssignment(assnRequest);
 		Assert.assertNotNull("Assignment token was null.", assignment.getToken());
+		Assert.assertEquals("Assignment metadata count incorrect.", 2, assignment.getMetadata().size());
 
 		// Test getting current assignment for a device.
 		DeviceAssignment currAssignment = client.getCurrentAssignmentForDevice(TEST_HARDWARE_ID);
@@ -136,8 +140,8 @@ public class ApiTests {
 		}
 
 		// Delete device.
-		device = client.deleteDevice(TEST_HARDWARE_ID, true);
-		Assert.assertNotNull(device);
+//		device = client.deleteDevice(TEST_HARDWARE_ID, true);
+//		Assert.assertNotNull(device);
 	}
 
 	@Test
