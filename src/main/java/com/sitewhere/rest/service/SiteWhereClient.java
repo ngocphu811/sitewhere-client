@@ -231,14 +231,10 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceMeasurements createDeviceMeasurements(String assignmentToken,
 			DeviceMeasurementsCreateRequest request) throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", assignmentToken);
-			return getClient().postForObject(getBaseUrl() + "assignments/{token}/measurements", request,
-					DeviceMeasurements.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("token", assignmentToken);
+		return sendRest(getBaseUrl() + "assignments/{token}/measurements", HttpMethod.POST, request,
+				DeviceMeasurements.class, vars);
 	}
 
 	/*
@@ -248,15 +244,11 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceMeasurementsSearchResults listDeviceMeasurements(String assignmentToken, int maxCount)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", assignmentToken);
-			vars.put("count", String.valueOf(maxCount));
-			return getClient().getForObject(getBaseUrl() + "assignments/{token}/measurements?count={count}",
-					DeviceMeasurementsSearchResults.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("token", assignmentToken);
+		vars.put("count", String.valueOf(maxCount));
+		String url = getBaseUrl() + "assignments/{token}/measurements?count={count}";
+		return sendRest(url, HttpMethod.GET, null, DeviceMeasurementsSearchResults.class, vars);
 	}
 
 	/*
@@ -267,15 +259,10 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceLocation createDeviceLocation(String assignmentToken, DeviceLocationCreateRequest request)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", assignmentToken);
-			DeviceLocation result = getClient().postForObject(getBaseUrl() + "assignments/{token}/locations",
-					request, DeviceLocation.class, vars);
-			return result;
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("token", assignmentToken);
+		return sendRest(getBaseUrl() + "assignments/{token}/locations", HttpMethod.POST, request,
+				DeviceLocation.class, vars);
 	}
 
 	/*
@@ -285,15 +272,11 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceLocationSearchResults listDeviceLocations(String assignmentToken, int maxCount)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", assignmentToken);
-			vars.put("count", String.valueOf(maxCount));
-			return getClient().getForObject(getBaseUrl() + "assignments/{token}/locations?count={count}",
-					DeviceLocationSearchResults.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("token", assignmentToken);
+		vars.put("count", String.valueOf(maxCount));
+		String url = getBaseUrl() + "assignments/{token}/locations?count={count}";
+		return sendRest(url, HttpMethod.GET, null, DeviceLocationSearchResults.class, vars);
 	}
 
 	/*
@@ -302,7 +285,8 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#associateAlertWithDeviceLocation(java.lang.String,
 	 * java.lang.String)
 	 */
-	public void associateAlertWithDeviceLocation(String alertId, String locationId) throws SiteWhereException {
+	public DeviceLocation associateAlertWithDeviceLocation(String alertId, String locationId)
+			throws SiteWhereException {
 		try {
 			Map<String, String> vars = new HashMap<String, String>();
 			vars.put("locationId", locationId);
@@ -311,6 +295,11 @@ public class SiteWhereClient implements ISiteWhereClient {
 		} catch (RestClientException e) {
 			throw new SiteWhereException(e);
 		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("locationId", locationId);
+		vars.put("alertId", alertId);
+		String url = getBaseUrl() + "locations/{locationId}/alerts/{alertId}";
+		return sendRest(url, HttpMethod.PUT, null, DeviceLocation.class, vars);
 	}
 
 	/*

@@ -76,6 +76,12 @@ public enum ErrorCode {
 	/** Invalid device location id */
 	InvalidDeviceLocationId(523, "Device location not found for id."),
 
+	/** Invalid device measurements id */
+	InvalidDeviceMeasurementsId(524, "Device measurements not found for id."),
+
+	/** Invalid device alert id */
+	InvalidDeviceAlertId(524, "Device alert not found for id."),
+
 	/**********
 	 * DEVICE *
 	 **********/

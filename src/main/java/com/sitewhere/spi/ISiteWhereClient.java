@@ -206,10 +206,14 @@ public interface ISiteWhereClient {
 	 * Associates an alert with a device location.
 	 * 
 	 * @param alertId
+	 *            unique alert id
 	 * @param locationId
+	 *            unique location id
+	 * @return device location after updates
 	 * @throws SiteWhereException
 	 */
-	public void associateAlertWithDeviceLocation(String alertId, String locationId) throws SiteWhereException;
+	public DeviceLocation associateAlertWithDeviceLocation(String alertId, String locationId)
+			throws SiteWhereException;
 
 	/**
 	 * Create a new alert for a device assignment.

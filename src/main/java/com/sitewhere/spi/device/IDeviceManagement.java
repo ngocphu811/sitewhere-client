@@ -304,10 +304,14 @@ public interface IDeviceManagement {
 	 * Associates an alert with a device location.
 	 * 
 	 * @param alertId
+	 *            unique identifier for alert
 	 * @param locationId
+	 *            unique identifier for location
+	 * @return the updated device location
 	 * @throws SiteWhereException
 	 */
-	public void associateAlertWithLocation(String alertId, String locationId) throws SiteWhereException;
+	public IDeviceLocation associateAlertWithLocation(String alertId, String locationId)
+			throws SiteWhereException;
 
 	/**
 	 * Add alert for a given device assignment.
