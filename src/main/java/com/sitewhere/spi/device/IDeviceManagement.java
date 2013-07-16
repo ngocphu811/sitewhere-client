@@ -145,11 +145,11 @@ public interface IDeviceManagement {
 	 * Updates the current location of a device assignment.
 	 * 
 	 * @param token
-	 * @param location
+	 * @param locationId
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceAssignment updateDeviceAssignmentLocation(String token, IDeviceLocation location)
+	public IDeviceAssignment updateDeviceAssignmentLocation(String token, String locationId)
 			throws SiteWhereException;
 
 	/**

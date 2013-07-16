@@ -73,6 +73,9 @@ public enum ErrorCode {
 	/** Invalid zone token */
 	InvalidZoneToken(522, "Zone not found."),
 
+	/** Invalid device location id */
+	InvalidDeviceLocationId(523, "Device location not found for id."),
+
 	/**********
 	 * DEVICE *
 	 **********/

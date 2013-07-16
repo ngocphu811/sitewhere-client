@@ -151,11 +151,11 @@ public interface ISiteWhereClient {
 	 * Update the location for an existing device assignment.
 	 * 
 	 * @param token
-	 * @param location
+	 * @param locationId
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public void updateDeviceAssignmentLocation(String token, DeviceLocation location)
+	public DeviceAssignment updateDeviceAssignmentLocation(String token, String locationId)
 			throws SiteWhereException;
 
 	/**

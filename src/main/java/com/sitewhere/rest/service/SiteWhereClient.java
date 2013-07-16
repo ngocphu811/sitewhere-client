@@ -19,7 +19,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -42,6 +41,7 @@ import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.DeviceLocationSearchResults;
 import com.sitewhere.rest.service.search.DeviceMeasurementsSearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
+import com.sitewhere.rest.spring.MappingJackson2HttpMessageConverter;
 import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.SiteWhereSystemException;
@@ -212,17 +212,15 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * (non-Javadoc)
 	 * 
 	 * @see com.sitewhere.spi.ISiteWhereClient#updateDeviceAssignmentLocation(java.lang.String,
-	 * com.sitewhere.rest.model.device.DeviceLocation)
+	 * java.lang.String)
 	 */
-	public void updateDeviceAssignmentLocation(String token, DeviceLocation location)
+	public DeviceAssignment updateDeviceAssignmentLocation(String token, String locationId)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", token);
-			getClient().put(getBaseUrl() + "assignments/{token}/location", location, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("token", token);
+		vars.put("locationId", locationId);
+		return sendRest(getBaseUrl() + "assignments/{token}/location/{locationId}", HttpMethod.PUT, null,
+				DeviceAssignment.class, vars);
 	}
 
 	/*
