@@ -27,6 +27,7 @@ import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.DeviceLocationSearchResults;
 import com.sitewhere.rest.service.search.DeviceMeasurementsSearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
+import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 
 /**
  * Interface for SiteWhere client calls.
@@ -79,26 +80,14 @@ public interface ISiteWhereClient {
 	public Device deleteDevice(String hardwareId, boolean force) throws SiteWhereException;
 
 	/**
-	 * Update the metadata for an existing device.
+	 * Get current device assignment for a device based on hardware id.
 	 * 
 	 * @param hardwareId
-	 * @param metadata
-	 * @return
+	 *            unique hardware id of device
+	 * @return device assignment information
 	 * @throws SiteWhereException
 	 */
-	public Device updateDeviceMetadata(String hardwareId, MetadataProvider metadata)
-			throws SiteWhereException;
-
-	/**
-	 * Add a batch of events to the current assignment for the given hardware id.
-	 * 
-	 * @param hardwareId
-	 * @param batch
-	 * @return
-	 * @throws SiteWhereException
-	 */
-	public DeviceEventBatchResponse addDeviceEventBatch(String hardwareId, DeviceEventBatch batch)
-			throws SiteWhereException;
+	public DeviceAssignment getCurrentAssignmentForDevice(String hardwareId) throws SiteWhereException;
 
 	/**
 	 * Get the history of device assignments for a given hardware id.
@@ -108,6 +97,30 @@ public interface ISiteWhereClient {
 	 * @throws SiteWhereException
 	 */
 	public DeviceAssignmentSearchResults listDeviceAssignmentHistory(String hardwareId)
+			throws SiteWhereException;
+
+	/**
+	 * Add a batch of events to the current assignment for the given hardware id.
+	 * 
+	 * @param hardwareId
+	 *            hardware id whose assignment will have events added
+	 * @param batch
+	 *            batch of events that will be added
+	 * @return response of events that were created
+	 * @throws SiteWhereException
+	 */
+	public DeviceEventBatchResponse addDeviceEventBatch(String hardwareId, DeviceEventBatch batch)
+			throws SiteWhereException;
+
+	/**
+	 * Create a new device assignment based on the given inputs.
+	 * 
+	 * @param request
+	 *            information about the new assignment
+	 * @return the assignment that was created.
+	 * @throws SiteWhereException
+	 */
+	public DeviceAssignment createDeviceAssignment(IDeviceAssignmentCreateRequest request)
 			throws SiteWhereException;
 
 	/**

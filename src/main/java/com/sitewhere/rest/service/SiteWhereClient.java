@@ -45,6 +45,7 @@ import com.sitewhere.rest.service.search.ZoneSearchResults;
 import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.SiteWhereSystemException;
+import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 
 /**
  * Client for interacting with SiteWhere REST services.
@@ -128,19 +129,38 @@ public class SiteWhereClient implements ISiteWhereClient {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.ISiteWhereClient#updateDeviceMetadata(java.lang.String,
-	 * com.sitewhere.rest.model.device.MetadataProvider)
+	 * @see com.sitewhere.spi.ISiteWhereClient#getCurrentAssignmentForDevice(java.lang.String)
 	 */
-	public Device updateDeviceMetadata(String hardwareId, MetadataProvider metadata)
+	public DeviceAssignment getCurrentAssignmentForDevice(String hardwareId) throws SiteWhereException {
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("hardwareId", hardwareId);
+		return sendRest(getBaseUrl() + "devices/{hardwareId}/assignment", HttpMethod.GET, null,
+				DeviceAssignment.class, vars);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceAssignment(com.sitewhere.spi.device.request.
+	 * IDeviceAssignmentCreateRequest)
+	 */
+	public DeviceAssignment createDeviceAssignment(IDeviceAssignmentCreateRequest request)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("hardwareId", hardwareId);
-			return getClient().postForObject(getBaseUrl() + "devices/{hardwareId}/metadata", metadata,
-					Device.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		return sendRest(getBaseUrl() + "assignments", HttpMethod.POST, request, DeviceAssignment.class, vars);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceAssignmentHistory(java.lang.String)
+	 */
+	public DeviceAssignmentSearchResults listDeviceAssignmentHistory(String hardwareId)
+			throws SiteWhereException {
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("hardwareId", hardwareId);
+		return sendRest(getBaseUrl() + "devices/{hardwareId}/assignments", HttpMethod.GET, null,
+				DeviceAssignmentSearchResults.class, vars);
 	}
 
 	/*
@@ -151,31 +171,10 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceEventBatchResponse addDeviceEventBatch(String hardwareId, DeviceEventBatch batch)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("hardwareId", hardwareId);
-			return getClient().postForObject(getBaseUrl() + "devices/{hardwareId}/batch", batch,
-					DeviceEventBatchResponse.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceAssignmentHistory(java.lang.String)
-	 */
-	public DeviceAssignmentSearchResults listDeviceAssignmentHistory(String hardwareId)
-			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("hardwareId", hardwareId);
-			return getClient().getForObject(getBaseUrl() + "devices/{hardwareId}/assignments",
-					DeviceAssignmentSearchResults.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("hardwareId", hardwareId);
+		return sendRest(getBaseUrl() + "devices/{hardwareId}/batch", HttpMethod.POST, batch,
+				DeviceEventBatchResponse.class, vars);
 	}
 
 	/*
@@ -185,19 +184,14 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceAssignmentSearchResults findDeviceAssignmentsNear(double latitude, double longitude,
 			double maxDistance, int maxResults) throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("latitude", String.valueOf(latitude));
-			vars.put("longitude", String.valueOf(longitude));
-			vars.put("maxDistance", String.valueOf(maxDistance));
-			vars.put("maxResults", String.valueOf(maxResults));
-			return getClient().getForObject(
-					getBaseUrl() + "assignments/near/{latitude}/{longitude}"
-							+ "?maxDistance={maxDistance}&maxResults={maxResults}",
-					DeviceAssignmentSearchResults.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("latitude", String.valueOf(latitude));
+		vars.put("longitude", String.valueOf(longitude));
+		vars.put("maxDistance", String.valueOf(maxDistance));
+		vars.put("maxResults", String.valueOf(maxResults));
+		String url = getBaseUrl() + "assignments/near/{latitude}/{longitude}"
+				+ "?maxDistance={maxDistance}&maxResults={maxResults}";
+		return sendRest(url, HttpMethod.GET, null, DeviceAssignmentSearchResults.class, vars);
 	}
 
 	/*

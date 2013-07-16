@@ -21,16 +21,18 @@ import org.junit.Test;
 
 import com.sitewhere.rest.model.common.Location;
 import com.sitewhere.rest.model.device.Device;
+import com.sitewhere.rest.model.device.DeviceAssignment;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.Zone;
+import com.sitewhere.rest.model.device.request.DeviceAssignmentCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.service.SiteWhereClient;
-import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
 import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.SiteWhereSystemException;
+import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.error.ErrorCode;
 
 /**
@@ -45,6 +47,9 @@ public class ApiTests {
 
 	/** Asset id for testing */
 	public static final String TEST_ASSET_ID = "174";
+
+	/** Site token used in tests */
+	public static final String TEST_SITE_TOKEN = "22223793-3028-4114-86ba-aefc7d05369f";
 
 	/** SiteWhere client */
 	private ISiteWhereClient client;
@@ -109,25 +114,30 @@ public class ApiTests {
 			verifyErrorCode(e, ErrorCode.DuplicateHardwareId);
 		}
 
+		// Create a device assignment.
+		DeviceAssignmentCreateRequest assnRequest = new DeviceAssignmentCreateRequest();
+		assnRequest.setSiteToken(TEST_SITE_TOKEN);
+		assnRequest.setAssetType(AssetType.Hardware);
+		assnRequest.setAssetId(TEST_ASSET_ID);
+		assnRequest.setDeviceHardwareId(device.getHardwareId());
+		DeviceAssignment assignment = client.createDeviceAssignment(assnRequest);
+		Assert.assertNotNull("Assignment token was null.", assignment.getToken());
+
+		// Test getting current assignment for a device.
+		DeviceAssignment currAssignment = client.getCurrentAssignmentForDevice(TEST_HARDWARE_ID);
+		Assert.assertEquals("Current device assignment is incorrect.", assignment.getToken(),
+				currAssignment.getToken());
+
+		// Verify that an assignment can not be created for a device if one is already assigned.
+		try {
+			assignment = client.createDeviceAssignment(assnRequest);
+		} catch (SiteWhereException e) {
+			verifyErrorCode(e, ErrorCode.DeviceAlreadyAssigned);
+		}
+
 		// Delete device.
 		device = client.deleteDevice(TEST_HARDWARE_ID, true);
 		Assert.assertNotNull(device);
-	}
-
-	@Test
-	public void getDeviceByHardwareId() throws SiteWhereException {
-		Device device = client.getDeviceByHardwareId("23438373447-MEI-0933");
-		if (device != null) {
-			System.out.println(device.getHardwareId() + " " + device.getComments());
-		} else {
-			System.out.println("Device not found.");
-		}
-	}
-
-	@Test
-	public void getDeviceAssignmentHistory() throws SiteWhereException {
-		DeviceAssignmentSearchResults history = client.listDeviceAssignmentHistory("38729342-BB-3847389");
-		System.out.println("Found " + history.getNumResults() + " history records.");
 	}
 
 	@Test
