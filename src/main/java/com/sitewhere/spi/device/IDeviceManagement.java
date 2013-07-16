@@ -102,6 +102,26 @@ public interface IDeviceManagement {
 			throws SiteWhereException;
 
 	/**
+	 * Get a device assignment by unique token.
+	 * 
+	 * @param token
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public IDeviceAssignment getDeviceAssignmentByToken(String token) throws SiteWhereException;
+
+	/**
+	 * Delete a device assignment. Depending on 'force' flag the assignment will be marked for delete or
+	 * actually be deleted.
+	 * 
+	 * @param token
+	 * @param force
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public IDeviceAssignment deleteDeviceAssignment(String token, boolean force) throws SiteWhereException;
+
+	/**
 	 * Get the device associated with an assignment.
 	 * 
 	 * @param assignment
@@ -180,15 +200,6 @@ public interface IDeviceManagement {
 	 * @throws SiteWhereException
 	 */
 	public List<IDeviceAssignment> getDeviceAssignmentHistory(String hardwareId) throws SiteWhereException;
-
-	/**
-	 * Get a device assignment by unique token.
-	 * 
-	 * @param token
-	 * @return
-	 * @throws SiteWhereException
-	 */
-	public IDeviceAssignment getDeviceAssignmentByToken(String token) throws SiteWhereException;
 
 	/**
 	 * Get a list of device assignments for a site.

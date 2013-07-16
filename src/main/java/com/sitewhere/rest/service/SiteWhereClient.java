@@ -20,7 +20,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.sitewhere.rest.model.device.Device;
@@ -36,6 +35,7 @@ import com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
+import com.sitewhere.rest.model.device.request.ZoneCreateRequest;
 import com.sitewhere.rest.service.search.DeviceAlertSearchResults;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.DeviceLocationSearchResults;
@@ -148,6 +148,34 @@ public class SiteWhereClient implements ISiteWhereClient {
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		return sendRest(getBaseUrl() + "assignments", HttpMethod.POST, request, DeviceAssignment.class, vars);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereClient#getDeviceAssignmentByToken(java.lang.String)
+	 */
+	public DeviceAssignment getDeviceAssignmentByToken(String assignmentToken) throws SiteWhereException {
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("assignmentToken", assignmentToken);
+		return sendRest(getBaseUrl() + "assignments/{assignmentToken}", HttpMethod.GET, null,
+				DeviceAssignment.class, vars);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereClient#deleteDeviceAssignment(java.lang.String, boolean)
+	 */
+	public DeviceAssignment deleteDeviceAssignment(String assignmentToken, boolean force)
+			throws SiteWhereException {
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("assignmentToken", assignmentToken);
+		String url = getBaseUrl() + "assignments/{assignmentToken}";
+		if (force) {
+			url += "?force=true";
+		}
+		return sendRest(url, HttpMethod.DELETE, null, DeviceAssignment.class, vars);
 	}
 
 	/*
@@ -287,14 +315,6 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceLocation associateAlertWithDeviceLocation(String alertId, String locationId)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("locationId", locationId);
-			getClient().postForObject(getBaseUrl() + "locations/{locationId}/alerts/{alertId}", null,
-					DeviceAlert.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("locationId", locationId);
 		vars.put("alertId", alertId);
@@ -310,15 +330,10 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceAlert createDeviceAlert(String assignmentToken, DeviceAlertCreateRequest request)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", assignmentToken);
-			DeviceAlert result = getClient().postForObject(getBaseUrl() + "assignments/{token}/alerts",
-					request, DeviceAlert.class, vars);
-			return result;
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("token", assignmentToken);
+		return sendRest(getBaseUrl() + "assignments/{token}/alerts", HttpMethod.POST, request,
+				DeviceAlert.class, vars);
 	}
 
 	/*
@@ -328,28 +343,23 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 */
 	public DeviceAlertSearchResults listDeviceAlerts(String assignmentToken, int maxCount)
 			throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("token", assignmentToken);
-			vars.put("count", String.valueOf(maxCount));
-			return getClient().getForObject(getBaseUrl() + "assignments/{token}/alerts?count={count}",
-					DeviceAlertSearchResults.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("token", assignmentToken);
+		vars.put("count", String.valueOf(maxCount));
+		String url = getBaseUrl() + "assignments/{token}/alerts?count={count}";
+		return sendRest(url, HttpMethod.GET, null, DeviceAlertSearchResults.class, vars);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.ISiteWhereClient#createZone(com.sitewhere.rest.model.device.Zone)
+	 * @see com.sitewhere.spi.ISiteWhereClient#createZone(java.lang.String,
+	 * com.sitewhere.rest.model.device.request.ZoneCreateRequest)
 	 */
-	public Zone createZone(Zone zone) throws SiteWhereException {
-		try {
-			return getClient().postForObject(getBaseUrl() + "zones", zone, Zone.class);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+	public Zone createZone(String siteToken, ZoneCreateRequest request) throws SiteWhereException {
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("siteToken", siteToken);
+		return sendRest(getBaseUrl() + "sites/{siteToken}/zones", HttpMethod.POST, request, Zone.class, vars);
 	}
 
 	/*
@@ -358,14 +368,10 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#listZonesForSite(java.lang.String)
 	 */
 	public ZoneSearchResults listZonesForSite(String siteToken) throws SiteWhereException {
-		try {
-			Map<String, String> vars = new HashMap<String, String>();
-			vars.put("siteToken", siteToken);
-			return getClient().getForObject(getBaseUrl() + "sites/{siteToken}/zones",
-					ZoneSearchResults.class, vars);
-		} catch (RestClientException e) {
-			throw new SiteWhereException(e);
-		}
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("siteToken", siteToken);
+		String url = getBaseUrl() + "sites/{siteToken}/zones";
+		return sendRest(url, HttpMethod.GET, null, ZoneSearchResults.class, vars);
 	}
 
 	/**

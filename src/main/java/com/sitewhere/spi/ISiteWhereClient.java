@@ -22,6 +22,7 @@ import com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
+import com.sitewhere.rest.model.device.request.ZoneCreateRequest;
 import com.sitewhere.rest.service.search.DeviceAlertSearchResults;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.DeviceLocationSearchResults;
@@ -121,6 +122,29 @@ public interface ISiteWhereClient {
 	 * @throws SiteWhereException
 	 */
 	public DeviceAssignment createDeviceAssignment(IDeviceAssignmentCreateRequest request)
+			throws SiteWhereException;
+
+	/**
+	 * Get a device assignment by its unique token.
+	 * 
+	 * @param assignmentToken
+	 *            unique assignment token
+	 * @return the device assignment
+	 * @throws SiteWhereException
+	 */
+	public DeviceAssignment getDeviceAssignmentByToken(String assignmentToken) throws SiteWhereException;
+
+	/**
+	 * Delete a device assignment based on its unique token.
+	 * 
+	 * @param assignmentToken
+	 *            unique assignment token
+	 * @param force
+	 *            value of false sets deleted flag, true deletes data.
+	 * @return assignment that was deleted
+	 * @throws SiteWhereException
+	 */
+	public DeviceAssignment deleteDeviceAssignment(String assignmentToken, boolean force)
 			throws SiteWhereException;
 
 	/**
@@ -238,13 +262,16 @@ public interface ISiteWhereClient {
 			throws SiteWhereException;
 
 	/**
-	 * Create a new zone.
+	 * Create a new zone associated with a site.
 	 * 
-	 * @param zone
-	 * @return
+	 * @param siteToken
+	 *            unique token for site
+	 * @param request
+	 *            information for new zone
+	 * @return zone that was created.
 	 * @throws SiteWhereException
 	 */
-	public Zone createZone(Zone zone) throws SiteWhereException;
+	public Zone createZone(String siteToken, ZoneCreateRequest request) throws SiteWhereException;
 
 	/**
 	 * List zones associated with a given site.

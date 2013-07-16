@@ -11,7 +11,6 @@
 package com.sitewhere.test;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -22,11 +21,10 @@ import org.junit.Test;
 import com.sitewhere.rest.model.common.Location;
 import com.sitewhere.rest.model.device.Device;
 import com.sitewhere.rest.model.device.DeviceAssignment;
-import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.Zone;
 import com.sitewhere.rest.model.device.request.DeviceAssignmentCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
-import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
+import com.sitewhere.rest.model.device.request.ZoneCreateRequest;
 import com.sitewhere.rest.service.SiteWhereClient;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
 import com.sitewhere.spi.ISiteWhereClient;
@@ -127,6 +125,10 @@ public class ApiTests {
 		Assert.assertNotNull("Assignment token was null.", assignment.getToken());
 		Assert.assertEquals("Assignment metadata count incorrect.", 2, assignment.getMetadata().size());
 
+		// Test get assignment by token.
+		assignment = client.getDeviceAssignmentByToken(assignment.getToken());
+		Assert.assertNotNull("Assignment by token returned null.", assignment);
+
 		// Test getting current assignment for a device.
 		DeviceAssignment currAssignment = client.getCurrentAssignmentForDevice(TEST_HARDWARE_ID);
 		Assert.assertEquals("Current device assignment is incorrect.", assignment.getToken(),
@@ -140,37 +142,24 @@ public class ApiTests {
 		}
 
 		// Delete device.
-//		device = client.deleteDevice(TEST_HARDWARE_ID, true);
-//		Assert.assertNotNull(device);
-	}
-
-	@Test
-	public void testCreateMeasurements() throws SiteWhereException {
-		SiteWhereClient client = new SiteWhereClient();
-		String assignmentToken = "7139bbf5-f65d-42d7-9783-5d8603526f0d";
-		DeviceMeasurementsCreateRequest measurements = new DeviceMeasurementsCreateRequest();
-		measurements.setEventDate(new Date());
-		measurements.addOrReplaceMeasurement("test", "123");
-		measurements.addOrReplaceMeasurement("another", "another");
-		DeviceMeasurements results = client.createDeviceMeasurements(assignmentToken, measurements);
-		System.out.println("Created " + results.getMeasurements().size() + " measurements.");
+		device = client.deleteDevice(TEST_HARDWARE_ID, true);
+		Assert.assertNotNull(device);
 	}
 
 	@Test
 	public void testCreateZone() throws SiteWhereException {
 		SiteWhereClient client = new SiteWhereClient();
-		Zone zone = new Zone();
-		zone.setName("My Test Zone");
-		zone.setSiteToken("b2229cb1-de4e-4114-9863-08d0efd81064");
+		ZoneCreateRequest request = new ZoneCreateRequest();
+		request.setName("My Test Zone");
 		List<Location> coords = new ArrayList<Location>();
 		coords.add(new Location(30.0, -85.0));
 		coords.add(new Location(30.0, -90.0));
 		coords.add(new Location(35.0, -90.0));
 		coords.add(new Location(35.0, -85.0));
-		zone.setCoordinates(coords);
-		Zone results = client.createZone(zone);
+		request.setCoordinates(coords);
+		Zone results = client.createZone(TEST_SITE_TOKEN, request);
 		System.out.println("Created zone: " + results.getName());
-		ZoneSearchResults search = client.listZonesForSite("b2229cb1-de4e-4114-9863-08d0efd81064");
+		ZoneSearchResults search = client.listZonesForSite(TEST_SITE_TOKEN);
 		System.out.println("Found " + search.getNumResults() + " results.");
 	}
 
