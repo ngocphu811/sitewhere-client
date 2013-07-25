@@ -28,6 +28,9 @@ public class Device extends MetadataProviderEntity implements IDevice {
 
 	/** Asset name */
 	private String assetName;
+	
+	/** Asset image url */
+	private String assetImageUrl;
 
 	/** Unique hardware id for device */
 	private String hardwareId;
@@ -63,6 +66,14 @@ public class Device extends MetadataProviderEntity implements IDevice {
 
 	public void setAssetName(String assetName) {
 		this.assetName = assetName;
+	}
+
+	public String getAssetImageUrl() {
+		return assetImageUrl;
+	}
+
+	public void setAssetImageUrl(String assetImageUrl) {
+		this.assetImageUrl = assetImageUrl;
 	}
 
 	/*

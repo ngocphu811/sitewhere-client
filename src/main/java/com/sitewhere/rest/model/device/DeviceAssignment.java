@@ -47,6 +47,9 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	/** Associated asset name */
 	private String assetName;
 
+	/** Associated asset image */
+	private String assetImageUrl;
+
 	/** Assigned site */
 	private Site site;
 
@@ -137,6 +140,14 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 
 	public void setAssetName(String assetName) {
 		this.assetName = assetName;
+	}
+
+	public String getAssetImageUrl() {
+		return assetImageUrl;
+	}
+
+	public void setAssetImageUrl(String assetImageUrl) {
+		this.assetImageUrl = assetImageUrl;
 	}
 
 	public Site getSite() {
