@@ -13,14 +13,13 @@ package com.sitewhere.spi.device;
 import java.util.List;
 
 import com.sitewhere.spi.common.ILocation;
-import com.sitewhere.spi.common.ISiteWhereEntity;
 
 /**
  * A polygonal area associated with a site that can be used to trigger events.
  * 
  * @author dadams
  */
-public interface IZone extends IMetadataProvider, ISiteWhereEntity {
+public interface IZone extends IMetadataProviderEntity {
 
 	/**
 	 * Get unique zone token.

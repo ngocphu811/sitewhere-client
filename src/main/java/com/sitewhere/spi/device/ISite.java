@@ -10,14 +10,13 @@
 
 package com.sitewhere.spi.device;
 
-import com.sitewhere.spi.common.ISiteWhereEntity;
 
 /**
  * High-level abstract of a site where devices are used to track assets.
  * 
  * @author Derek
  */
-public interface ISite extends IMetadataProvider, ISiteWhereEntity {
+public interface ISite extends IMetadataProviderEntity {
 
 	/**
 	 * Get unique token.
