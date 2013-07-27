@@ -95,6 +95,9 @@ public enum ErrorCode {
 	/** Operation assumes device is assigned but no assignment exists */
 	DeviceHardwareIdCanNotBeChanged(602, "Device hardware id can not be updated."),
 
+	/** Operation assumes device is assigned but no assignment exists */
+	DeviceCanNotBeDeletedIfAssigned(603, "Device can not be deleted if it is currently assigned."),
+
 	/********
 	 * ZONE *
 	 ********/
