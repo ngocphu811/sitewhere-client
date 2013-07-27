@@ -367,6 +367,17 @@ public interface IDeviceManagement {
 	public ISite createSite(ISiteCreateRequest request) throws SiteWhereException;
 
 	/**
+	 * Delete a site based on unique site token. If 'force' is specified, the database object will be deleted,
+	 * otherwise the deleted flag will be set to true.
+	 * 
+	 * @param siteToken
+	 * @param force
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public ISite deleteSite(String siteToken, boolean force) throws SiteWhereException;
+
+	/**
 	 * Update information for a site.
 	 * 
 	 * @param siteToken
