@@ -1,16 +1,16 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.model.asset;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.asset.IPersonAsset;
 
@@ -29,6 +29,9 @@ public class PersonAsset extends Asset implements IPersonAsset {
 
 	/** Asset email address */
 	private String emailAddress;
+
+	/** List of roles */
+	private List<String> roles = new ArrayList<String>();
 
 	/** Primary photo URL */
 	private String photoUrl;
@@ -79,6 +82,19 @@ public class PersonAsset extends Asset implements IPersonAsset {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.sitewhere.spi.asset.IPersonAsset#getRoles()
+	 */
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.sitewhere.spi.asset.IPersonAsset#getPhotoUrl()
 	 */
 	public String getPhotoUrl() {
@@ -87,58 +103,5 @@ public class PersonAsset extends Asset implements IPersonAsset {
 
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IAsset#loadFromProperties()
-	 */
-	public void loadFromProperties() {
-		super.loadFromProperties();
-		this.setName(getProperty(getNameProperty()));
-		this.setUserName(getProperty(getUserNameProperty()));
-		this.setEmailAddress(getProperty(getEmailAddressProperty()));
-		this.setPhotoUrl(getProperty(getPhotoUrlProperty()));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IPersonAsset#getUserNameProperty()
-	 */
-	@JsonIgnore
-	public String getUserNameProperty() {
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IPersonAsset#getNameProperty()
-	 */
-	@JsonIgnore
-	public String getNameProperty() {
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IPersonAsset#getEmailAddressProperty()
-	 */
-	@JsonIgnore
-	public String getEmailAddressProperty() {
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IPersonAsset#getPhotoUrlProperty()
-	 */
-	@JsonIgnore
-	public String getPhotoUrlProperty() {
-		return null;
 	}
 }

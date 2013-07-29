@@ -10,7 +10,6 @@
 
 package com.sitewhere.rest.model.asset;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.asset.IHardwareAsset;
 
@@ -87,74 +86,5 @@ public class HardwareAsset extends Asset implements IHardwareAsset {
 
 	public void setImageUrl(String url) {
 		this.imageUrl = url;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IHardwareAsset#getNameProperty()
-	 */
-	@JsonIgnore
-	public String getNameProperty() {
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IHardwareAsset#getDescriptionProperty()
-	 */
-	@JsonIgnore
-	public String getDescriptionProperty() {
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IHardwareAsset#getImageUrlProperty()
-	 */
-	@JsonIgnore
-	public String getImageUrlProperty() {
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IHardwareAsset#getSkuProperty()
-	 */
-	@JsonIgnore
-	public String getSkuProperty() {
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IAsset#loadFromProperties()
-	 */
-	public void loadFromProperties() {
-		super.loadFromProperties();
-		this.setName(getProperty(getNameProperty()));
-		this.setSku(getProperty(getSkuProperty()));
-		this.setDescription(truncate(getProperty(getDescriptionProperty()), 175));
-		this.setImageUrl(getProperty(getImageUrlProperty()));
-	}
-
-	/**
-	 * Truncate the input string if necessary.
-	 * 
-	 * @param input
-	 * @param max
-	 * @return
-	 */
-	protected String truncate(String input, int max) {
-		if (input.length() > max) {
-			String truncated = input.substring(0, max);
-			truncated += "...";
-			return truncated;
-		}
-		return input;
 	}
 }

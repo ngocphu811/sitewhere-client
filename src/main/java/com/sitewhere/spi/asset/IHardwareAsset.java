@@ -44,32 +44,4 @@ public interface IHardwareAsset extends IAsset {
 	 * @return
 	 */
 	public String getImageUrl();
-
-	/**
-	 * Get property that holds asset name.
-	 * 
-	 * @return
-	 */
-	public String getNameProperty();
-
-	/**
-	 * Get property that holds SKU.
-	 * 
-	 * @return
-	 */
-	public String getSkuProperty();
-
-	/**
-	 * Get property that holds asset description.
-	 * 
-	 * @return
-	 */
-	public String getDescriptionProperty();
-
-	/**
-	 * Get property that holds image URL.
-	 * 
-	 * @return
-	 */
-	public String getImageUrlProperty();
 }
