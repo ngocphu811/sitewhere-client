@@ -24,9 +24,6 @@ import com.sitewhere.spi.device.request.IZoneCreateRequest;
  */
 public class ZoneCreateRequest extends MetadataProvider implements IZoneCreateRequest {
 
-	/** Unique zone token */
-	private String token;
-
 	/** Zone name */
 	private String name;
 
@@ -41,19 +38,6 @@ public class ZoneCreateRequest extends MetadataProvider implements IZoneCreateRe
 
 	/** Opacity in UI */
 	private Double opacity;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.device.request.IZoneCreateRequest#getToken()
-	 */
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
 
 	/*
 	 * (non-Javadoc)

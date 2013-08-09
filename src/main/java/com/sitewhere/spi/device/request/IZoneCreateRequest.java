@@ -22,13 +22,6 @@ import com.sitewhere.spi.device.IMetadataProvider;
 public interface IZoneCreateRequest extends IMetadataProvider {
 
 	/**
-	 * Get unique token for zone.
-	 * 
-	 * @return
-	 */
-	public String getToken();
-
-	/**
 	 * Get zone name.
 	 * 
 	 * @return
