@@ -89,10 +89,9 @@ public class Zone extends MetadataProviderEntity implements IZone {
 	 * 
 	 * @see com.sitewhere.spi.device.IZone#getCoordinates()
 	 */
+	@SuppressWarnings("unchecked")
 	public List<ILocation> getCoordinates() {
-		List<ILocation> locations = new ArrayList<ILocation>();
-		locations.addAll(coordinates);
-		return locations;
+		return (List<ILocation>) (List<? extends ILocation>) coordinates;
 	}
 
 	public void setCoordinates(List<Location> coordinates) {
