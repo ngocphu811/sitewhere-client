@@ -436,8 +436,9 @@ public interface IDeviceManagement {
 	 * Delete a zone given its unique token.
 	 * 
 	 * @param zoneToken
+	 * @param force
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IZone deleteZone(String zoneToken) throws SiteWhereException;
+	public IZone deleteZone(String zoneToken, boolean force) throws SiteWhereException;
 }
