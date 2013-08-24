@@ -415,6 +415,16 @@ public interface IDeviceManagement {
 	public IZone createZone(ISite site, IZoneCreateRequest request) throws SiteWhereException;
 
 	/**
+	 * Update an existing zone.
+	 * 
+	 * @param token
+	 * @param request
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public IZone updateZone(String token, IZoneCreateRequest request) throws SiteWhereException;
+
+	/**
 	 * Get a zone by its unique token.
 	 * 
 	 * @param zoneToken
