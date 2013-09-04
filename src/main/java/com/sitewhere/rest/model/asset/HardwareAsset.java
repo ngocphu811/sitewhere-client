@@ -20,9 +20,6 @@ import com.sitewhere.spi.asset.IHardwareAsset;
  */
 public class HardwareAsset extends Asset implements IHardwareAsset {
 
-	/** Asset name */
-	private String name;
-
 	/** SKU */
 	private String sku;
 
@@ -34,19 +31,6 @@ public class HardwareAsset extends Asset implements IHardwareAsset {
 
 	public HardwareAsset() {
 		setType(AssetType.Hardware);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IHardwareAsset#getName()
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/*

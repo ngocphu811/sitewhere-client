@@ -24,9 +24,6 @@ public class PersonAsset extends Asset implements IPersonAsset {
 	/** Asset uaername */
 	private String userName;
 
-	/** Asset name */
-	private String name;
-
 	/** Asset email address */
 	private String emailAddress;
 
@@ -51,19 +48,6 @@ public class PersonAsset extends Asset implements IPersonAsset {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.asset.IPersonAsset#getName()
-	 */
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/*

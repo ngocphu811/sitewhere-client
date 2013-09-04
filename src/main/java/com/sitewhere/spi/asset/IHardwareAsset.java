@@ -18,13 +18,6 @@ package com.sitewhere.spi.asset;
 public interface IHardwareAsset extends IAsset {
 
 	/**
-	 * Get the asset name.
-	 * 
-	 * @return
-	 */
-	public String getName();
-
-	/**
 	 * Get the stock keeping unit (SKU).
 	 * 
 	 * @return

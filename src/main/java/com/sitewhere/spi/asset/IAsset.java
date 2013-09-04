@@ -17,7 +17,7 @@ import java.util.Set;
  * 
  * @author dadams
  */
-public interface IAsset {
+public interface IAsset extends Comparable<IAsset> {
 
 	/**
 	 * Unique asset id.
@@ -25,6 +25,13 @@ public interface IAsset {
 	 * @return
 	 */
 	public String getId();
+
+	/**
+	 * Get asset name.
+	 * 
+	 * @return
+	 */
+	public String getName();
 
 	/**
 	 * Get the asset type indicator.

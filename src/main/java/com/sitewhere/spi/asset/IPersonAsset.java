@@ -24,13 +24,7 @@ public interface IPersonAsset extends IAsset {
 	 */
 	public String getUserName();
 
-	/**
-	 * Get the full name of the person.
-	 * 
-	 * @return
-	 */
-	public String getName();
-
+	//
 	/**
 	 * Get the email address.
 	 * 

@@ -28,6 +28,9 @@ public class Asset implements IAsset {
 	/** Unique id */
 	private String id;
 
+	/** Asset name */
+	private String name;
+
 	/** Asset type indicator */
 	private AssetType type;
 
@@ -44,6 +47,19 @@ public class Asset implements IAsset {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.asset.IAsset#getName()
+	 */
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/*
@@ -95,5 +111,17 @@ public class Asset implements IAsset {
 	@JsonIgnore
 	public String getIdProperty() {
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(IAsset other) {
+		if (getName() != null) {
+			return getName().compareTo(other.getName());
+		}
+		return 0;
 	}
 }
