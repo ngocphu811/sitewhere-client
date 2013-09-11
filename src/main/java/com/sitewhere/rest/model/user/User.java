@@ -9,7 +9,7 @@
  */
 package com.sitewhere.rest.model.user;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import com.sitewhere.rest.model.common.MetadataProviderEntity;
 import com.sitewhere.spi.user.AccountStatus;
@@ -35,7 +35,7 @@ public class User extends MetadataProviderEntity implements IUser {
 	private String lastName;
 
 	/** Last login */
-	private Calendar lastLogin;
+	private Date lastLogin;
 
 	/** Account status */
 	private AccountStatus status;
@@ -97,11 +97,11 @@ public class User extends MetadataProviderEntity implements IUser {
 	 * 
 	 * @see com.sitewhere.spi.user.IUser#getLastLogin()
 	 */
-	public Calendar getLastLogin() {
+	public Date getLastLogin() {
 		return lastLogin;
 	}
 
-	public void setLastLogin(Calendar lastLogin) {
+	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 
@@ -127,6 +127,7 @@ public class User extends MetadataProviderEntity implements IUser {
 	public static User copy(IUser input) {
 		User result = new User();
 		result.setUsername(input.getUsername());
+		result.setHashedPassword(input.getHashedPassword());
 		result.setFirstName(input.getFirstName());
 		result.setLastName(input.getLastName());
 		result.setLastLogin(input.getLastLogin());

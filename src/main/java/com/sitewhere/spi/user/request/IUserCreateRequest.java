@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * IUserCreateRequest.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -7,19 +7,17 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
+package com.sitewhere.spi.user.request;
 
-package com.sitewhere.spi.user;
-
-import java.util.Date;
-
-import com.sitewhere.spi.common.IMetadataProviderEntity;
+import com.sitewhere.spi.common.IMetadataProvider;
+import com.sitewhere.spi.user.AccountStatus;
 
 /**
- * Interface for accessing user information.
+ * Interface for arguments needed to create a user.
  * 
  * @author Derek
  */
-public interface IUser extends IMetadataProviderEntity {
+public interface IUserCreateRequest extends IMetadataProvider {
 
 	/**
 	 * Get the username.
@@ -33,7 +31,7 @@ public interface IUser extends IMetadataProviderEntity {
 	 * 
 	 * @return
 	 */
-	public String getHashedPassword();
+	public String getPassword();
 
 	/**
 	 * Get the common name.
@@ -48,13 +46,6 @@ public interface IUser extends IMetadataProviderEntity {
 	 * @return
 	 */
 	public String getLastName();
-
-	/**
-	 * Get the last login date.
-	 * 
-	 * @return
-	 */
-	public Date getLastLogin();
 
 	/**
 	 * Get the account status.

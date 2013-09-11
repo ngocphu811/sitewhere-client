@@ -30,12 +30,6 @@ public enum ErrorCode {
 	/** Username already used */
 	DuplicateUser(102, "Username already in use."),
 
-	/** Invalid group reference */
-	InvalidGroup(110, "Group does not exist."),
-
-	/** Group name already used */
-	DuplicateGroup(111, "Group name already in use."),
-
 	/** Invalid authority reference */
 	InvalidAuthority(120, "Authority does not exist"),
 
@@ -80,7 +74,7 @@ public enum ErrorCode {
 	InvalidDeviceMeasurementsId(524, "Device measurements not found for id."),
 
 	/** Invalid device alert id */
-	InvalidDeviceAlertId(524, "Device alert not found for id."),
+	InvalidDeviceAlertId(525, "Device alert not found for id."),
 
 	/**********
 	 * DEVICE *

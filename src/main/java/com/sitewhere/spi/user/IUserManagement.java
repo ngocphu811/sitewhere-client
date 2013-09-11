@@ -13,6 +13,7 @@ package com.sitewhere.spi.user;
 import java.util.List;
 
 import com.sitewhere.spi.SiteWhereException;
+import com.sitewhere.spi.user.request.IUserCreateRequest;
 
 /**
  * Interface for user management operations.
@@ -24,11 +25,11 @@ public interface IUserManagement {
 	/**
 	 * Create a new user based on the given input.
 	 * 
-	 * @param user
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IUser createUser(IUser user) throws SiteWhereException;
+	public IUser createUser(IUserCreateRequest request) throws SiteWhereException;
 
 	/**
 	 * Authenticate the given username and password.
@@ -41,15 +42,14 @@ public interface IUserManagement {
 	public IUser authenticate(String username, String password) throws SiteWhereException;
 
 	/**
-	 * Update details for a user. Username is used for to look up the user since the updated information may
-	 * include a new username.
+	 * Update details for a user.
 	 * 
 	 * @param username
-	 * @param user
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IUser updateUser(String username, IUser user) throws SiteWhereException;
+	public IUser updateUser(String username, IUserCreateRequest request) throws SiteWhereException;
 
 	/**
 	 * Get a user given unique username.
