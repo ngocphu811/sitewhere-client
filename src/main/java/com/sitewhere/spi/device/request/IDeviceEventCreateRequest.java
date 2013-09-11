@@ -11,7 +11,7 @@ package com.sitewhere.spi.device.request;
 
 import java.util.Date;
 
-import com.sitewhere.spi.device.IMetadataProvider;
+import com.sitewhere.spi.common.IMetadataProvider;
 
 /**
  * Interface for arguments needed to create a device event.

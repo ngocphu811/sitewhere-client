@@ -8,9 +8,9 @@
 * LICENSE.txt file.
 */
 
-package com.sitewhere.rest.model.device;
+package com.sitewhere.rest.model.common;
 
-import com.sitewhere.spi.device.IMetadataEntry;
+import com.sitewhere.spi.common.IMetadataEntry;
 
 /**
  * A single entry for a metadata provider.

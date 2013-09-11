@@ -8,13 +8,13 @@
  * LICENSE.txt file.
  */
 
-package com.sitewhere.rest.model.device;
+package com.sitewhere.rest.model.common;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sitewhere.rest.model.datatype.JsonDateSerializer;
-import com.sitewhere.spi.device.IMetadataProviderEntity;
+import com.sitewhere.spi.common.IMetadataProviderEntity;
 
 /**
  * Metadata provider that also contains SiteWhere entity information.

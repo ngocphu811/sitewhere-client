@@ -12,6 +12,8 @@ package com.sitewhere.spi.device;
 
 import java.util.Date;
 
+import com.sitewhere.spi.common.IMetadataProviderEntity;
+
 /**
  * Interface for a device that provides location information.
  * 

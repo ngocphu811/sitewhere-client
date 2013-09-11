@@ -10,9 +10,9 @@ package com.sitewhere.rest.model.device.request;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.sitewhere.rest.model.common.MetadataProvider;
 import com.sitewhere.rest.model.datatype.JsonDateSerializer;
 import com.sitewhere.rest.model.device.DeviceEvent;
-import com.sitewhere.rest.model.device.MetadataProvider;
 import com.sitewhere.spi.device.request.IDeviceEventCreateRequest;
 
 /**

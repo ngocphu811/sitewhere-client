@@ -7,7 +7,7 @@
  */
 package com.sitewhere.rest.model.device.request;
 
-import com.sitewhere.rest.model.device.MetadataProvider;
+import com.sitewhere.rest.model.common.MetadataProvider;
 import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 

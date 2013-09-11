@@ -8,33 +8,13 @@
 * LICENSE.txt file.
 */
 
-package com.sitewhere.spi.user;
+package com.sitewhere.spi.common;
+
 
 /**
- * Interface for accessing group information.
+ * Interface that merges metadata provider and base entity.
  * 
- * @author Derek
+ * @author Derek Adams
  */
-public interface IGroup {
-
-	/**
-	 * Get the unique group id.
-	 * 
-	 * @return
-	 */
-	public long getId();
-
-	/**
-	 * Get the group name.
-	 * 
-	 * @return
-	 */
-	public String getName();
-
-	/**
-	 * Get the group description.
-	 * 
-	 * @return
-	 */
-	public String getDescription();
+public interface IMetadataProviderEntity extends IMetadataProvider, ISiteWhereEntity {
 }

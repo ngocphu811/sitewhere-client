@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sitewhere.rest.model.common.Location;
-import com.sitewhere.rest.model.device.MetadataProvider;
+import com.sitewhere.rest.model.common.MetadataProvider;
 import com.sitewhere.spi.common.ILocation;
 import com.sitewhere.spi.device.request.IZoneCreateRequest;
 

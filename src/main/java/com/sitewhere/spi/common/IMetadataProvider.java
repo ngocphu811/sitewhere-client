@@ -8,9 +8,10 @@
 * LICENSE.txt file.
 */
 
-package com.sitewhere.spi.device;
+package com.sitewhere.spi.common;
 
 import java.util.List;
+
 
 /**
  * Interface for an entity that has associated metadata.

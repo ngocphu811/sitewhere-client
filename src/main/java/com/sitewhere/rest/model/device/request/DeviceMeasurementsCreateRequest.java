@@ -14,10 +14,10 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.sitewhere.rest.model.common.MetadataEntry;
+import com.sitewhere.rest.model.common.MetadataProvider;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
-import com.sitewhere.rest.model.device.MetadataEntry;
-import com.sitewhere.rest.model.device.MetadataProvider;
-import com.sitewhere.spi.device.IMetadataEntry;
+import com.sitewhere.spi.common.IMetadataEntry;
 import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
 
 /**

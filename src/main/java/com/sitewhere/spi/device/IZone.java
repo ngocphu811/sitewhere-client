@@ -13,6 +13,7 @@ package com.sitewhere.spi.device;
 import java.util.List;
 
 import com.sitewhere.spi.common.ILocation;
+import com.sitewhere.spi.common.IMetadataProviderEntity;
 
 /**
  * A polygonal area associated with a site that can be used to trigger events.

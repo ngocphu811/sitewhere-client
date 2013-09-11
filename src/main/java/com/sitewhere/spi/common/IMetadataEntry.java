@@ -8,14 +8,26 @@
 * LICENSE.txt file.
 */
 
-package com.sitewhere.spi.device;
-
-import com.sitewhere.spi.common.ISiteWhereEntity;
+package com.sitewhere.spi.common;
 
 /**
- * Interface that merges metadata provider and base entity.
+ * A single entry for a metadataprovider.
  * 
  * @author Derek Adams
  */
-public interface IMetadataProviderEntity extends IMetadataProvider, ISiteWhereEntity {
+public interface IMetadataEntry {
+
+	/**
+	 * Get metadata field name.
+	 * 
+	 * @return
+	 */
+	public String getName();
+
+	/**
+	 * Get metadata field value.
+	 * 
+	 * @return
+	 */
+	public String getValue();
 }

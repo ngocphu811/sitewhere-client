@@ -8,13 +8,13 @@
  * LICENSE.txt file.
  */
 
-package com.sitewhere.rest.model.device;
+package com.sitewhere.rest.model.common;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sitewhere.spi.device.IMetadataEntry;
-import com.sitewhere.spi.device.IMetadataProvider;
+import com.sitewhere.spi.common.IMetadataEntry;
+import com.sitewhere.spi.common.IMetadataProvider;
 
 /**
  * Holds arbitrary metadata associated with an entity.

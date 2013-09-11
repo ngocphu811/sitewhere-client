@@ -1,3 +1,12 @@
+/*
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 package com.sitewhere.rest.model.user;
 
 import com.sitewhere.spi.user.IGrantedAuthority;
@@ -9,27 +18,15 @@ import com.sitewhere.spi.user.IGrantedAuthority;
  */
 public class GrantedAuthority implements IGrantedAuthority {
 
-	/** Unique id */
-	private long id;
-	
 	/** Authority */
 	private String authority;
-	
+
 	/** Description */
 	private String description;
 
-	/* (non-Javadoc)
-	 * @see com.sitewhere.spi.user.IGrantedAuthority#getId()
-	 */
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.sitewhere.spi.user.IGrantedAuthority#getAuthority()
 	 */
 	public String getAuthority() {
@@ -40,7 +37,9 @@ public class GrantedAuthority implements IGrantedAuthority {
 		this.authority = authority;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.sitewhere.spi.user.IGrantedAuthority#getDescription()
 	 */
 	public String getDescription() {

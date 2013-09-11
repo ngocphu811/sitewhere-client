@@ -11,6 +11,8 @@ package com.sitewhere.spi.device;
 
 import java.util.List;
 
+import com.sitewhere.spi.common.IMetadataEntry;
+
 /**
  * Class that stores measurement metadata.
  * 

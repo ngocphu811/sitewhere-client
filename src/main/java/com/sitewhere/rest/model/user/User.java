@@ -1,7 +1,17 @@
+/*
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 package com.sitewhere.rest.model.user;
 
 import java.util.Calendar;
 
+import com.sitewhere.rest.model.common.MetadataProviderEntity;
 import com.sitewhere.spi.user.AccountStatus;
 import com.sitewhere.spi.user.IUser;
 
@@ -10,10 +20,7 @@ import com.sitewhere.spi.user.IUser;
  * 
  * @author Derek Adams
  */
-public class User implements IUser {
-
-	/** Unique id */
-	private long id;
+public class User extends MetadataProviderEntity implements IUser {
 
 	/** Unique username */
 	private String username;
@@ -32,19 +39,6 @@ public class User implements IUser {
 
 	/** Account status */
 	private AccountStatus status;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.user.IUser#getId()
-	 */
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -127,17 +121,17 @@ public class User implements IUser {
 	/**
 	 * Copy contents from the SPI class.
 	 * 
-	 * @param user
+	 * @param input
 	 * @return
 	 */
-	public static User copy(IUser user) {
+	public static User copy(IUser input) {
 		User result = new User();
-		result.setId(user.getId());
-		result.setUsername(user.getUsername());
-		result.setFirstName(user.getFirstName());
-		result.setLastName(user.getLastName());
-		result.setLastLogin(user.getLastLogin());
-		result.setStatus(user.getStatus());
+		result.setUsername(input.getUsername());
+		result.setFirstName(input.getFirstName());
+		result.setLastName(input.getLastName());
+		result.setLastLogin(input.getLastLogin());
+		result.setStatus(input.getStatus());
+		MetadataProviderEntity.copy(input, result);
 		return result;
 	}
 }

@@ -13,6 +13,8 @@ package com.sitewhere.spi.device;
 import java.util.Date;
 import java.util.List;
 
+import com.sitewhere.spi.common.IMetadataProvider;
+
 /**
  * Event that originates from a device.
  * 

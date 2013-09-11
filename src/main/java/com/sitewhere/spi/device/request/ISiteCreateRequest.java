@@ -9,7 +9,7 @@
  */
 package com.sitewhere.spi.device.request;
 
-import com.sitewhere.spi.device.IMetadataProvider;
+import com.sitewhere.spi.common.IMetadataProvider;
 
 /**
  * Interface for arguments needed to create a site.
