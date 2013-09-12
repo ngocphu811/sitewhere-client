@@ -11,6 +11,7 @@ package com.sitewhere.rest.model.user;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sitewhere.rest.model.common.MetadataProviderEntity;
 import com.sitewhere.spi.user.AccountStatus;
 import com.sitewhere.spi.user.IUser;
@@ -58,6 +59,7 @@ public class User extends MetadataProviderEntity implements IUser {
 	 * 
 	 * @see com.sitewhere.spi.user.IUser#getHashedPassword()
 	 */
+	@JsonIgnore
 	public String getHashedPassword() {
 		return hashedPassword;
 	}
