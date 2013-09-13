@@ -13,6 +13,7 @@ package com.sitewhere.spi.user;
 import java.util.List;
 
 import com.sitewhere.spi.SiteWhereException;
+import com.sitewhere.spi.user.request.IGrantedAuthorityCreateRequest;
 import com.sitewhere.spi.user.request.IUserCreateRequest;
 
 /**
@@ -93,12 +94,13 @@ public interface IUserManagement {
 			throws SiteWhereException;
 
 	/**
-	 * Get the list of all users.
+	 * Get the list of all users that meet the given criteria.
 	 * 
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IUser> listUsers() throws SiteWhereException;
+	public List<IUser> listUsers(IUserSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Delete the user with the given username.
@@ -111,10 +113,11 @@ public interface IUserManagement {
 	/**
 	 * Create a new granted authority.
 	 * 
-	 * @param auth
+	 * @param request
 	 * @throws SiteWhereException
 	 */
-	public IGrantedAuthority createGrantedAuthority(IGrantedAuthority auth) throws SiteWhereException;
+	public IGrantedAuthority createGrantedAuthority(IGrantedAuthorityCreateRequest request)
+			throws SiteWhereException;
 
 	/**
 	 * Get a granted authority by name.
@@ -129,20 +132,22 @@ public interface IUserManagement {
 	 * Update a granted authority.
 	 * 
 	 * @param name
-	 * @param auth
+	 * @param request
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IGrantedAuthority updateGrantedAuthority(String name, IGrantedAuthority auth)
+	public IGrantedAuthority updateGrantedAuthority(String name, IGrantedAuthorityCreateRequest request)
 			throws SiteWhereException;
 
 	/**
-	 * List all granted authorities.
+	 * List granted authorities that match the given criteria.
 	 * 
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IGrantedAuthority> listGrantedAuthorities() throws SiteWhereException;
+	public List<IGrantedAuthority> listGrantedAuthorities(IGrantedAuthoritySearchCriteria criteria)
+			throws SiteWhereException;
 
 	/**
 	 * Delete a granted authority.

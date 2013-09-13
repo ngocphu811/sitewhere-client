@@ -9,7 +9,9 @@
  */
 package com.sitewhere.rest.model.user;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sitewhere.rest.model.common.MetadataProviderEntity;
@@ -40,6 +42,9 @@ public class User extends MetadataProviderEntity implements IUser {
 
 	/** Account status */
 	private AccountStatus status;
+
+	/** List of granted authorities */
+	private List<String> authorities = new ArrayList<String>();
 
 	/*
 	 * (non-Javadoc)
@@ -120,6 +125,19 @@ public class User extends MetadataProviderEntity implements IUser {
 		this.status = status;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.user.IUser#getAuthorities()
+	 */
+	public List<String> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<String> authorities) {
+		this.authorities = authorities;
+	}
+
 	/**
 	 * Copy contents from the SPI class.
 	 * 
@@ -134,6 +152,7 @@ public class User extends MetadataProviderEntity implements IUser {
 		result.setLastName(input.getLastName());
 		result.setLastLogin(input.getLastLogin());
 		result.setStatus(input.getStatus());
+		result.setAuthorities(new ArrayList<String>(input.getAuthorities()));
 		MetadataProviderEntity.copy(input, result);
 		return result;
 	}

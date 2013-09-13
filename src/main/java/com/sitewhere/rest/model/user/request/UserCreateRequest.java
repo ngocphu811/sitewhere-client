@@ -9,6 +9,9 @@
  */
 package com.sitewhere.rest.model.user.request;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sitewhere.rest.model.common.MetadataProvider;
 import com.sitewhere.spi.user.AccountStatus;
 import com.sitewhere.spi.user.request.IUserCreateRequest;
@@ -34,6 +37,9 @@ public class UserCreateRequest extends MetadataProvider implements IUserCreateRe
 
 	/** Account status */
 	private AccountStatus status;
+
+	/** List of granted authorities */
+	private List<String> authorities = new ArrayList<String>();
 
 	/*
 	 * (non-Javadoc)
@@ -98,5 +104,18 @@ public class UserCreateRequest extends MetadataProvider implements IUserCreateRe
 
 	public void setStatus(AccountStatus status) {
 		this.status = status;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.user.request.IUserCreateRequest#getAuthorities()
+	 */
+	public List<String> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<String> authorities) {
+		this.authorities = authorities;
 	}
 }

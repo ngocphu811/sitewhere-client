@@ -9,6 +9,8 @@
  */
 package com.sitewhere.spi.user.request;
 
+import java.util.List;
+
 import com.sitewhere.spi.common.IMetadataProvider;
 import com.sitewhere.spi.user.AccountStatus;
 
@@ -53,4 +55,11 @@ public interface IUserCreateRequest extends IMetadataProvider {
 	 * @return
 	 */
 	public AccountStatus getStatus();
+
+	/**
+	 * Get the list of granted authorities.
+	 * 
+	 * @return
+	 */
+	public List<String> getAuthorities();
 }

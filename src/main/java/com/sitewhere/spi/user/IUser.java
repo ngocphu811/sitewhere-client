@@ -11,6 +11,7 @@
 package com.sitewhere.spi.user;
 
 import java.util.Date;
+import java.util.List;
 
 import com.sitewhere.spi.common.IMetadataProviderEntity;
 
@@ -62,4 +63,11 @@ public interface IUser extends IMetadataProviderEntity {
 	 * @return
 	 */
 	public AccountStatus getStatus();
+
+	/**
+	 * Get the list of granted authorities.
+	 * 
+	 * @return
+	 */
+	public List<String> getAuthorities();
 }
