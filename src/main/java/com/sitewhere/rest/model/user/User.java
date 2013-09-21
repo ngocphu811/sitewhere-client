@@ -9,6 +9,7 @@
  */
 package com.sitewhere.rest.model.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,10 @@ import com.sitewhere.spi.user.IUser;
  * 
  * @author Derek Adams
  */
-public class User extends MetadataProviderEntity implements IUser {
+public class User extends MetadataProviderEntity implements IUser, Serializable {
+
+	/** For {@link Serializable} */
+	private static final long serialVersionUID = -3322129570954465956L;
 
 	/** Unique username */
 	private String username;
