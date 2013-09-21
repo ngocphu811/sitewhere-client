@@ -39,6 +39,9 @@ public enum ErrorCode {
 	/** Authority name already used */
 	DuplicateAuthority(121, "Authority name already in use."),
 
+	/** No user logged in for action that requires authorization */
+	NotLoggedIn(103, "You must provide credentials to perform this action."),
+
 	/***************************
 	 * INVALID OR DUPLICATE ID *
 	 ***************************/
