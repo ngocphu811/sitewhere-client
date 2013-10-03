@@ -30,8 +30,8 @@ public enum ErrorCode {
 	/** Username already used */
 	DuplicateUser(102, "Username already in use."),
 
-	/** Invalid status for a new user */
-	InvalidNewUserStatus(103, "Status for a new user must be active."),
+	/** One or more required user fields are missing */
+	InvalidUserInformation(103, "Missing required fields for user."),
 
 	/** Invalid authority reference */
 	InvalidAuthority(120, "Authority does not exist"),
