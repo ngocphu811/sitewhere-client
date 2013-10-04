@@ -106,9 +106,11 @@ public interface IUserManagement {
 	 * Delete the user with the given username.
 	 * 
 	 * @param username
+	 * @param force
+	 * @return
 	 * @throws SiteWhereException
 	 */
-	public void deleteUser(String username) throws SiteWhereException;
+	public IUser deleteUser(String username, boolean force) throws SiteWhereException;
 
 	/**
 	 * Create a new granted authority.
