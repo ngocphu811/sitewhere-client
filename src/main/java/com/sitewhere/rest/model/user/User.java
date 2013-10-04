@@ -15,7 +15,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sitewhere.rest.model.common.MetadataProviderEntity;
+import com.sitewhere.rest.model.datatype.JsonDateSerializer;
 import com.sitewhere.spi.user.AccountStatus;
 import com.sitewhere.spi.user.IUser;
 
@@ -108,6 +110,7 @@ public class User extends MetadataProviderEntity implements IUser, Serializable 
 	 * 
 	 * @see com.sitewhere.spi.user.IUser#getLastLogin()
 	 */
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getLastLogin() {
 		return lastLogin;
 	}
