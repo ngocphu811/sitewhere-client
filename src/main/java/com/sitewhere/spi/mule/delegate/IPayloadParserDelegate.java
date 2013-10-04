@@ -42,6 +42,14 @@ public interface IPayloadParserDelegate {
 	public String getDeviceHardwareId() throws SiteWhereException;
 
 	/**
+	 * Get information for replying to the originator.
+	 * 
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public String getReplyTo() throws SiteWhereException;
+
+	/**
 	 * Get a list of location create requests associated with the payload.
 	 * 
 	 * @return

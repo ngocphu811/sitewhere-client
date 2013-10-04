@@ -30,9 +30,11 @@ public class DeviceEventBatch implements IDeviceEventBatch {
 	/** Device hardware id */
 	private String hardwareId;
 
+	/** Contains information about sending responses */
+	private String replyTo;
+
 	/** List of measurements requests */
-	private List<DeviceMeasurementsCreateRequest> measurements =
-			new ArrayList<DeviceMeasurementsCreateRequest>();
+	private List<DeviceMeasurementsCreateRequest> measurements = new ArrayList<DeviceMeasurementsCreateRequest>();
 
 	/** List of location requests */
 	private List<DeviceLocationCreateRequest> locations = new ArrayList<DeviceLocationCreateRequest>();
@@ -40,12 +42,30 @@ public class DeviceEventBatch implements IDeviceEventBatch {
 	/** List of alert requests */
 	private List<DeviceAlertCreateRequest> alerts = new ArrayList<DeviceAlertCreateRequest>();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IDeviceEventBatch#getHardwareId()
+	 */
 	public String getHardwareId() {
 		return hardwareId;
 	}
 
 	public void setHardwareId(String hardwareId) {
 		this.hardwareId = hardwareId;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IDeviceEventBatch#getReplyTo()
+	 */
+	public String getReplyTo() {
+		return replyTo;
+	}
+
+	public void setReplyTo(String replyTo) {
+		this.replyTo = replyTo;
 	}
 
 	/*

@@ -17,7 +17,6 @@ import com.sitewhere.spi.device.IDeviceAlert;
 import com.sitewhere.spi.device.IDeviceAssignment;
 import com.sitewhere.spi.device.IDeviceLocation;
 import com.sitewhere.spi.device.IDeviceMeasurements;
-import com.sitewhere.spi.device.ISite;
 import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceLocationCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
@@ -28,13 +27,6 @@ import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
  * @author dadams
  */
 public interface ISiteWhereContext {
-
-	/**
-	 * Get site for assignment associated with current request.
-	 * 
-	 * @return
-	 */
-	public ISite getSite();
 
 	/**
 	 * Get the device associated with the current request.
@@ -91,4 +83,11 @@ public interface ISiteWhereContext {
 	 * @return
 	 */
 	public List<IDeviceAlert> getDeviceAlerts();
+
+	/**
+	 * Get information for replying to originator.
+	 * 
+	 * @return
+	 */
+	public String getReplyTo();
 }

@@ -19,7 +19,6 @@ import com.sitewhere.spi.device.IDeviceAlert;
 import com.sitewhere.spi.device.IDeviceAssignment;
 import com.sitewhere.spi.device.IDeviceLocation;
 import com.sitewhere.spi.device.IDeviceMeasurements;
-import com.sitewhere.spi.device.ISite;
 import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceLocationCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
@@ -31,9 +30,6 @@ import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
  */
 public class SiteWhereContext implements ISiteWhereContext {
 
-	/** Site for current device assignment */
-	private ISite site;
-
 	/** Device associated with current request */
 	private IDevice device;
 
@@ -41,16 +37,13 @@ public class SiteWhereContext implements ISiteWhereContext {
 	private IDeviceAssignment deviceAssignment;
 
 	/** Measurements that have not been persisted */
-	private List<IDeviceMeasurementsCreateRequest> unsavedDeviceMeasurements =
-			new ArrayList<IDeviceMeasurementsCreateRequest>();
+	private List<IDeviceMeasurementsCreateRequest> unsavedDeviceMeasurements = new ArrayList<IDeviceMeasurementsCreateRequest>();
 
 	/** Locations that have not been persisted */
-	private List<IDeviceLocationCreateRequest> unsavedDeviceLocations =
-			new ArrayList<IDeviceLocationCreateRequest>();
+	private List<IDeviceLocationCreateRequest> unsavedDeviceLocations = new ArrayList<IDeviceLocationCreateRequest>();
 
 	/** Alerts that have not been persisted */
-	private List<IDeviceAlertCreateRequest> unsavedDeviceAlerts =
-			new ArrayList<IDeviceAlertCreateRequest>();
+	private List<IDeviceAlertCreateRequest> unsavedDeviceAlerts = new ArrayList<IDeviceAlertCreateRequest>();
 
 	/** Measurements that have been persisted */
 	private List<IDeviceMeasurements> deviceMeasurements = new ArrayList<IDeviceMeasurements>();
@@ -61,18 +54,8 @@ public class SiteWhereContext implements ISiteWhereContext {
 	/** Alerts that have been persisted */
 	private List<IDeviceAlert> deviceAlerts = new ArrayList<IDeviceAlert>();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.ISiteWhereContext#getSite()
-	 */
-	public ISite getSite() {
-		return site;
-	}
-
-	public void setSite(ISite site) {
-		this.site = site;
-	}
+	/** Information for replying to originator */
+	private String replyTo;
 
 	/*
 	 * (non-Javadoc)
@@ -109,8 +92,7 @@ public class SiteWhereContext implements ISiteWhereContext {
 		return unsavedDeviceMeasurements;
 	}
 
-	public void setUnsavedDeviceMeasurements(
-			List<IDeviceMeasurementsCreateRequest> unsavedDeviceMeasurements) {
+	public void setUnsavedDeviceMeasurements(List<IDeviceMeasurementsCreateRequest> unsavedDeviceMeasurements) {
 		this.unsavedDeviceMeasurements = unsavedDeviceMeasurements;
 	}
 
@@ -177,5 +159,18 @@ public class SiteWhereContext implements ISiteWhereContext {
 
 	public void setDeviceAlerts(List<IDeviceAlert> deviceAlerts) {
 		this.deviceAlerts = deviceAlerts;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.ISiteWhereContext#getReplyTo()
+	 */
+	public String getReplyTo() {
+		return replyTo;
+	}
+
+	public void setReplyTo(String replyTo) {
+		this.replyTo = replyTo;
 	}
 }
