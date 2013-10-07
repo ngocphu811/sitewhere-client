@@ -24,13 +24,15 @@ import com.sitewhere.spi.SiteWhereException;
 public interface ISiteWhereDelegate {
 
 	/**
-	 * Process information using SiteWhere and Mule information.
+	 * Process information using SiteWhere and Mule information. If response is non-null, it will be returned
+	 * as the new payload. Otherwise, the current SiteWhere context will be returned.
 	 * 
 	 * @param context
 	 * @param client
 	 * @param event
+	 * @return
 	 * @throws SiteWhereException
 	 */
-	public void process(ISiteWhereContext context, ISiteWhereClient client, MuleEvent event)
+	public Object process(ISiteWhereContext context, ISiteWhereClient client, MuleEvent event)
 			throws SiteWhereException;
 }
