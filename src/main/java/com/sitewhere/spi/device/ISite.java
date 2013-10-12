@@ -13,9 +13,8 @@ package com.sitewhere.spi.device;
 import com.sitewhere.spi.common.IMetadataProvider;
 import com.sitewhere.spi.common.IMetadataProviderEntity;
 
-
 /**
- * High-level abstract of a site where devices are used to track assets.
+ * A construct that groups together related device assignments and provides common settings for them.
  * 
  * @author Derek
  */
