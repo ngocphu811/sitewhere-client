@@ -25,6 +25,11 @@ public class SearchCriteria implements ISearchCriteria {
 	/** Number of records in a page of results */
 	private int pageSize;
 
+	public SearchCriteria(int pageNumber, int pageSize) {
+		this.pageNumber = pageNumber;
+		this.pageSize = pageSize;
+	}
+
 	public int getPageNumber() {
 		return pageNumber;
 	}

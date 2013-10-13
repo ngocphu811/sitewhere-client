@@ -1,12 +1,12 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.service.search;
 
@@ -25,9 +25,14 @@ public class SearchResults<T> {
 	/** List of results */
 	private List<T> results;
 
-	public SearchResults(List<T> results) {
-		setNumResults(results.size());
-		setResults(results);
+	public SearchResults(List<T> all) {
+		setNumResults(all.size());
+		setResults(all);
+	}
+
+	public SearchResults(List<T> page, int total) {
+		setNumResults(total);
+		setResults(page);
 	}
 
 	public int getNumResults() {

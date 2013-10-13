@@ -26,7 +26,7 @@ import com.sitewhere.rest.model.device.request.ZoneCreateRequest;
 import com.sitewhere.rest.service.search.DeviceAlertSearchResults;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
 import com.sitewhere.rest.service.search.DeviceLocationSearchResults;
-import com.sitewhere.rest.service.search.DeviceMeasurementsSearchResults;
+import com.sitewhere.rest.service.search.SearchResults;
 import com.sitewhere.rest.service.search.ZoneSearchResults;
 import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 
@@ -201,7 +201,7 @@ public interface ISiteWhereClient {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public DeviceMeasurementsSearchResults listDeviceMeasurements(String assignmentToken, int maxCount)
+	public SearchResults<DeviceMeasurements> listDeviceMeasurements(String assignmentToken, int maxCount)
 			throws SiteWhereException;
 
 	/**

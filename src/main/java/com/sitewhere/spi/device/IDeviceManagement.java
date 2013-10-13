@@ -14,6 +14,7 @@ import java.util.List;
 import com.sitewhere.rest.service.search.SearchResults;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.common.IMetadataProvider;
+import com.sitewhere.spi.common.ISearchCriteria;
 import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceCreateRequest;
@@ -69,19 +70,22 @@ public interface IDeviceManagement {
 	/**
 	 * List devices that meet the given criteria.
 	 * 
+	 * @param includeDeleted
 	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDevice> listDevices(IDeviceSearchCriteria criteria) throws SiteWhereException;
+	public SearchResults<IDevice> listDevices(boolean includeDeleted, ISearchCriteria criteria)
+			throws SiteWhereException;
 
 	/**
 	 * List all devices that are not currently assigned.
 	 * 
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDevice> listUnassignedDevices() throws SiteWhereException;
+	public SearchResults<IDevice> listUnassignedDevices(ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Delete an existing device.
@@ -198,19 +202,23 @@ public interface IDeviceManagement {
 	 * Get the device assignment history for a given device.
 	 * 
 	 * @param hardwareId
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceAssignment> getDeviceAssignmentHistory(String hardwareId) throws SiteWhereException;
+	public SearchResults<IDeviceAssignment> getDeviceAssignmentHistory(String hardwareId,
+			ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Get a list of device assignments for a site.
 	 * 
 	 * @param siteToken
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceAssignment> getDeviceAssignmentsForSite(String siteToken) throws SiteWhereException;
+	public SearchResults<IDeviceAssignment> getDeviceAssignmentsForSite(String siteToken,
+			ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Find assignments within a given distance of a location.
@@ -218,12 +226,12 @@ public interface IDeviceManagement {
 	 * @param latitude
 	 * @param longitude
 	 * @param maxDistance
-	 * @param maxResults
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceAssignment> getDeviceAssignmentsNear(double latitude, double longitude,
-			double maxDistance, int maxResults) throws SiteWhereException;
+	public SearchResults<IDeviceAssignment> getDeviceAssignmentsNear(double latitude, double longitude,
+			double maxDistance, ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Add measurements for a given device assignment.
@@ -239,23 +247,24 @@ public interface IDeviceManagement {
 	/**
 	 * Gets device measurement entries for an assignment based on criteria.
 	 * 
+	 * @param siteToken
 	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceMeasurements> listDeviceMeasurements(
-			IDeviceMeasurementsSearchCriteria criteria) throws SiteWhereException;
+	public SearchResults<IDeviceMeasurements> listDeviceMeasurements(String siteToken,
+			ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * List device measurements for a site.
 	 * 
 	 * @param siteToken
-	 * @param maxCount
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceMeasurements> listDeviceMeasurementsForSite(String siteToken, int maxCount)
-			throws SiteWhereException;
+	public SearchResults<IDeviceMeasurements> listDeviceMeasurementsForSite(String siteToken,
+			ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Associates an alert with measurements.
@@ -279,26 +288,26 @@ public interface IDeviceManagement {
 			IDeviceLocationCreateRequest request) throws SiteWhereException;
 
 	/**
-	 * Gets the most recent device location entries for an assignment.
+	 * Gets device location entries for an assignment.
 	 * 
 	 * @param assignmentToken
-	 * @param maxCount
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceLocation> listDeviceLocations(String assignmentToken, int maxCount)
+	public SearchResults<IDeviceLocation> listDeviceLocations(String assignmentToken, ISearchCriteria criteria)
 			throws SiteWhereException;
 
 	/**
 	 * List device locations for a site.
 	 * 
 	 * @param siteToken
-	 * @param maxCount
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceLocation> listDeviceLocationsForSite(String siteToken, int maxCount)
-			throws SiteWhereException;
+	public SearchResults<IDeviceLocation> listDeviceLocationsForSite(String siteToken,
+			ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * List device locations for the given tokens within the given time range.
@@ -306,11 +315,12 @@ public interface IDeviceManagement {
 	 * @param assignmentTokens
 	 * @param start
 	 * @param end
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceLocation> listDeviceLocations(List<String> assignmentTokens, Date start, Date end)
-			throws SiteWhereException;
+	public SearchResults<IDeviceLocation> listDeviceLocations(List<String> assignmentTokens, Date start,
+			Date end, ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Associates an alert with a device location.
@@ -340,22 +350,22 @@ public interface IDeviceManagement {
 	 * Gets the most recent device alert entries for an assignment.
 	 * 
 	 * @param assignmentToken
-	 * @param maxCount
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceAlert> listDeviceAlerts(String assignmentToken, int maxCount)
+	public SearchResults<IDeviceAlert> listDeviceAlerts(String assignmentToken, ISearchCriteria criteria)
 			throws SiteWhereException;
 
 	/**
 	 * List device alerts for a site.
 	 * 
 	 * @param siteToken
-	 * @param maxCount
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceAlert> listDeviceAlertsForSite(String siteToken, int maxCount)
+	public SearchResults<IDeviceAlert> listDeviceAlertsForSite(String siteToken, ISearchCriteria criteria)
 			throws SiteWhereException;
 
 	/**
@@ -400,10 +410,11 @@ public interface IDeviceManagement {
 	/**
 	 * Get a list of all sites.
 	 * 
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<ISite> listSites() throws SiteWhereException;
+	public SearchResults<ISite> listSites(ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Create a new zone.
@@ -438,10 +449,12 @@ public interface IDeviceManagement {
 	 * Get a list of all zones associated with a Site.
 	 * 
 	 * @param siteToken
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IZone> listZones(String siteToken) throws SiteWhereException;
+	public SearchResults<IZone> listZones(String siteToken, ISearchCriteria criteria)
+			throws SiteWhereException;
 
 	/**
 	 * Delete a zone given its unique token.
