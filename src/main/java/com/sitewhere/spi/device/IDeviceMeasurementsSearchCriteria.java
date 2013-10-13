@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * IDeviceMeasurementsSearchCriteria.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -7,22 +7,12 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-
 package com.sitewhere.spi.device;
 
-import com.sitewhere.spi.common.ISearchCriteria;
-
 /**
- * Criteria used when searching for devices.
+ * Search criteria specific to locating device measurements.
  * 
- * @author Derek Adams
+ * @author Derek
  */
-public interface IDeviceSearchCriteria extends ISearchCriteria {
-
-	/**
-	 * Indicates whether deleted records should be returned.
-	 * 
-	 * @return
-	 */
-	public boolean isIncludeDeleted();
+public interface IDeviceMeasurementsSearchCriteria extends IDeviceEventSearchCriteria {
 }

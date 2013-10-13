@@ -11,6 +11,7 @@ package com.sitewhere.spi.device;
 import java.util.Date;
 import java.util.List;
 
+import com.sitewhere.rest.service.search.SearchResults;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.common.IMetadataProvider;
 import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
@@ -112,8 +113,8 @@ public interface IDeviceManagement {
 	public IDeviceAssignment getDeviceAssignmentByToken(String token) throws SiteWhereException;
 
 	/**
-	 * Delete a device assignment. Depending on 'force' flag the assignment will be marked for delete or
-	 * actually be deleted.
+	 * Delete a device assignment. Depending on 'force' flag the assignment will be marked
+	 * for delete or actually be deleted.
 	 * 
 	 * @param token
 	 * @param force
@@ -236,15 +237,14 @@ public interface IDeviceManagement {
 			IDeviceMeasurementsCreateRequest measurements) throws SiteWhereException;
 
 	/**
-	 * Gets the most recent device measurement entries for an assignment.
+	 * Gets device measurement entries for an assignment based on criteria.
 	 * 
-	 * @param assignmentToken
-	 * @param maxCount
+	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<IDeviceMeasurements> listDeviceMeasurements(String assignmentToken, int maxCount)
-			throws SiteWhereException;
+	public SearchResults<IDeviceMeasurements> listDeviceMeasurements(
+			IDeviceMeasurementsSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * List device measurements for a site.
@@ -368,8 +368,8 @@ public interface IDeviceManagement {
 	public ISite createSite(ISiteCreateRequest request) throws SiteWhereException;
 
 	/**
-	 * Delete a site based on unique site token. If 'force' is specified, the database object will be deleted,
-	 * otherwise the deleted flag will be set to true.
+	 * Delete a site based on unique site token. If 'force' is specified, the database
+	 * object will be deleted, otherwise the deleted flag will be set to true.
 	 * 
 	 * @param siteToken
 	 * @param force

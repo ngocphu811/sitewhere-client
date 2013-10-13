@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * IDeviceEventSearchCriteria.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -7,22 +7,21 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-
 package com.sitewhere.spi.device;
 
 import com.sitewhere.spi.common.ISearchCriteria;
 
 /**
- * Criteria used when searching for devices.
+ * Search criteria that applies to device event subclasses.
  * 
- * @author Derek Adams
+ * @author Derek
  */
-public interface IDeviceSearchCriteria extends ISearchCriteria {
+public interface IDeviceEventSearchCriteria extends ISearchCriteria {
 
 	/**
-	 * Indicates whether deleted records should be returned.
+	 * Get token of parent assignment for events.
 	 * 
 	 * @return
 	 */
-	public boolean isIncludeDeleted();
+	public String getDeviceAssignmentToken();
 }
