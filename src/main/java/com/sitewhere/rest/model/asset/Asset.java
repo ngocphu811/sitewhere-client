@@ -112,6 +112,14 @@ public class Asset implements IAsset {
 	public String getIdProperty() {
 		return null;
 	}
+	
+	/**
+	 * Included for JSON marshaling of properties map.
+	 * @return
+	 */
+	public Map<String, String> getProperties() {
+		return properties;
+	}
 
 	/*
 	 * (non-Javadoc)
