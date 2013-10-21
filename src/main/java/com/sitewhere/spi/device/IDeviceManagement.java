@@ -8,11 +8,11 @@
 
 package com.sitewhere.spi.device;
 
-import java.util.Date;
 import java.util.List;
 
 import com.sitewhere.rest.service.search.SearchResults;
 import com.sitewhere.spi.SiteWhereException;
+import com.sitewhere.spi.common.IDateRangeSearchCriteria;
 import com.sitewhere.spi.common.IMetadataProvider;
 import com.sitewhere.spi.common.ISearchCriteria;
 import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
@@ -253,7 +253,7 @@ public interface IDeviceManagement {
 	 * @throws SiteWhereException
 	 */
 	public SearchResults<IDeviceMeasurements> listDeviceMeasurements(String siteToken,
-			ISearchCriteria criteria) throws SiteWhereException;
+			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * List device measurements for a site.
@@ -264,7 +264,7 @@ public interface IDeviceManagement {
 	 * @throws SiteWhereException
 	 */
 	public SearchResults<IDeviceMeasurements> listDeviceMeasurementsForSite(String siteToken,
-			ISearchCriteria criteria) throws SiteWhereException;
+			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Associates an alert with measurements.
@@ -295,8 +295,8 @@ public interface IDeviceManagement {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceLocation> listDeviceLocations(String assignmentToken, ISearchCriteria criteria)
-			throws SiteWhereException;
+	public SearchResults<IDeviceLocation> listDeviceLocations(String assignmentToken,
+			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * List device locations for a site.
@@ -307,7 +307,7 @@ public interface IDeviceManagement {
 	 * @throws SiteWhereException
 	 */
 	public SearchResults<IDeviceLocation> listDeviceLocationsForSite(String siteToken,
-			ISearchCriteria criteria) throws SiteWhereException;
+			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * List device locations for the given tokens within the given time range.
@@ -319,8 +319,8 @@ public interface IDeviceManagement {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceLocation> listDeviceLocations(List<String> assignmentTokens, Date start,
-			Date end, ISearchCriteria criteria) throws SiteWhereException;
+	public SearchResults<IDeviceLocation> listDeviceLocations(List<String> assignmentTokens,
+			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Associates an alert with a device location.
@@ -354,8 +354,8 @@ public interface IDeviceManagement {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceAlert> listDeviceAlerts(String assignmentToken, ISearchCriteria criteria)
-			throws SiteWhereException;
+	public SearchResults<IDeviceAlert> listDeviceAlerts(String assignmentToken,
+			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * List device alerts for a site.
@@ -365,8 +365,8 @@ public interface IDeviceManagement {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceAlert> listDeviceAlertsForSite(String siteToken, ISearchCriteria criteria)
-			throws SiteWhereException;
+	public SearchResults<IDeviceAlert> listDeviceAlertsForSite(String siteToken,
+			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Create a site based on the given input.
