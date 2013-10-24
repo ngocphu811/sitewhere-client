@@ -19,8 +19,8 @@ import com.sitewhere.rest.model.asset.HardwareAsset;
 import com.sitewhere.rest.model.asset.PersonAsset;
 import com.sitewhere.rest.model.common.MetadataProviderEntity;
 import com.sitewhere.rest.model.datatype.JsonDateSerializer;
-import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.device.DeviceAssignmentStatus;
+import com.sitewhere.spi.device.DeviceAssignmentType;
 import com.sitewhere.spi.device.IDeviceAssignment;
 
 /**
@@ -41,7 +41,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	private String deviceHardwareId;
 
 	/** Type of associated asset */
-	private AssetType assetType;
+	private DeviceAssignmentType assignmentType;
 
 	/** Id of associated asset */
 	private String assetId;
@@ -113,14 +113,14 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.IDeviceAssignment#getAssetType()
+	 * @see com.sitewhere.spi.device.IDeviceAssignment#getAssignmentType()
 	 */
-	public AssetType getAssetType() {
-		return assetType;
+	public DeviceAssignmentType getAssignmentType() {
+		return assignmentType;
 	}
 
-	public void setAssetType(AssetType assetType) {
-		this.assetType = assetType;
+	public void setAssignmentType(DeviceAssignmentType assignmentType) {
+		this.assignmentType = assignmentType;
 	}
 
 	/*

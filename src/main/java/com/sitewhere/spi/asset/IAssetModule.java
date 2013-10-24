@@ -1,12 +1,12 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.spi.asset;
 
@@ -59,22 +59,24 @@ public interface IAssetModule<T extends IAsset> {
 	public boolean isAssetTypeSupported(AssetType type);
 
 	/**
-	 * Get an asset by an id interpreted by the wrapped system.
+	 * Get an asset by unique id.
 	 * 
+	 * @param type
 	 * @param id
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public T getAssetById(String id) throws SiteWhereException;
+	public T getAssetById(AssetType type, String id) throws SiteWhereException;
 
 	/**
-	 * Search the underlying store for an asset based on the search criteria.
+	 * Search for all assets of a given type that meet the criteria.
 	 * 
+	 * @param type
 	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public List<T> search(String criteria) throws SiteWhereException;
+	public List<T> search(AssetType type, String criteria) throws SiteWhereException;
 
 	/**
 	 * Refresh any cached data in the module.

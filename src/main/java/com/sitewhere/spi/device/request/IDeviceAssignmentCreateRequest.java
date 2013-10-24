@@ -9,8 +9,8 @@
  */
 package com.sitewhere.spi.device.request;
 
-import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.common.IMetadataProvider;
+import com.sitewhere.spi.device.DeviceAssignmentType;
 
 /**
  * Interface for arguments needed to create a device assignment.
@@ -34,11 +34,11 @@ public interface IDeviceAssignmentCreateRequest extends IMetadataProvider {
 	public String getSiteToken();
 
 	/**
-	 * Get assigned asset type.
+	 * Get assignment type.
 	 * 
 	 * @return
 	 */
-	public AssetType getAssetType();
+	public DeviceAssignmentType getAssignmentType();
 
 	/**
 	 * Get assigned asset id.

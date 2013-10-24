@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.command.ICommandResponse;
+import com.sitewhere.spi.device.DeviceAssignmentType;
 
 /**
  * Interface for interacting with the asset module manager.
@@ -58,6 +59,16 @@ public interface IAssetModuleManager {
 	 * @throws SiteWhereException
 	 */
 	public IAsset getAssetById(AssetType type, String id) throws SiteWhereException;
+
+	/**
+	 * Finds an associated asset based on unique id.
+	 * 
+	 * @param type
+	 * @param id
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public IAsset getAssignedAsset(DeviceAssignmentType type, String id) throws SiteWhereException;
 
 	/**
 	 * Search for an asset of the given type based on the given criteria.

@@ -30,7 +30,7 @@ import com.sitewhere.rest.service.search.ZoneSearchResults;
 import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.SiteWhereSystemException;
-import com.sitewhere.spi.asset.AssetType;
+import com.sitewhere.spi.device.DeviceAssignmentType;
 import com.sitewhere.spi.error.ErrorCode;
 
 /**
@@ -115,7 +115,7 @@ public class ApiTests {
 		// Create a device assignment.
 		DeviceAssignmentCreateRequest assnRequest = new DeviceAssignmentCreateRequest();
 		assnRequest.setSiteToken(TEST_SITE_TOKEN);
-		assnRequest.setAssetType(AssetType.Hardware);
+		assnRequest.setAssignmentType(DeviceAssignmentType.Hardware);
 		assnRequest.setAssetId(TEST_ASSET_ID);
 		assnRequest.setDeviceHardwareId(device.getHardwareId());
 		assnRequest.addOrReplaceMetadata("name1", "value1");
@@ -134,7 +134,8 @@ public class ApiTests {
 		Assert.assertEquals("Current device assignment is incorrect.", assignment.getToken(),
 				currAssignment.getToken());
 
-		// Verify that an assignment can not be created for a device if one is already assigned.
+		// Verify that an assignment can not be created for a device if one is already
+		// assigned.
 		try {
 			assignment = client.createDeviceAssignment(assnRequest);
 		} catch (SiteWhereException e) {

@@ -8,7 +8,7 @@
 package com.sitewhere.rest.model.device.request;
 
 import com.sitewhere.rest.model.common.MetadataProvider;
-import com.sitewhere.spi.asset.AssetType;
+import com.sitewhere.spi.device.DeviceAssignmentType;
 import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 
 /**
@@ -24,8 +24,8 @@ public class DeviceAssignmentCreateRequest extends MetadataProvider implements I
 	/** Unique site token */
 	private String siteToken;
 
-	/** Type of asset */
-	private AssetType assetType;
+	/** Type of assignment */
+	private DeviceAssignmentType assignmentType;
 
 	/** Unique asset id */
 	private String assetId;
@@ -33,7 +33,9 @@ public class DeviceAssignmentCreateRequest extends MetadataProvider implements I
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest#getDeviceHardwareId()
+	 * @see
+	 * com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest#getDeviceHardwareId
+	 * ()
 	 */
 	public String getDeviceHardwareId() {
 		return deviceHardwareId;
@@ -59,14 +61,15 @@ public class DeviceAssignmentCreateRequest extends MetadataProvider implements I
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest#getAssetType()
+	 * @see
+	 * com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest#getAssignmentType()
 	 */
-	public AssetType getAssetType() {
-		return assetType;
+	public DeviceAssignmentType getAssignmentType() {
+		return assignmentType;
 	}
 
-	public void setAssetType(AssetType assetType) {
-		this.assetType = assetType;
+	public void setAssignmentType(DeviceAssignmentType assignmentType) {
+		this.assignmentType = assignmentType;
 	}
 
 	/*

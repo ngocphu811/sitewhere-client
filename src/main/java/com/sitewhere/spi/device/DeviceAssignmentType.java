@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * DeviceAssignmentType.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -7,18 +7,17 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-
-package com.sitewhere.spi.asset;
+package com.sitewhere.spi.device;
 
 /**
- * Indicates the general type of an asset.
+ * Indicates what type of asset is linked via the assignment.
  * 
- * @author dadams
+ * @author Derek
  */
-public enum AssetType {
+public enum DeviceAssignmentType {
 
-	/** Device asset (hardware used for monitoring) */
-	Device,
+	/** No associated asset */
+	Unassociated,
 
 	/** Asset is a person */
 	Person,

@@ -12,12 +12,11 @@ package com.sitewhere.spi.device;
 
 import java.util.Date;
 
-import com.sitewhere.spi.asset.AssetType;
 import com.sitewhere.spi.common.IMetadataProviderEntity;
 
 /**
- * Assigns a device to a physical entity being monitored. A device may be used for multiple assets over a
- * period of time.
+ * Assigns a device to a physical entity being monitored. A device may be used for
+ * multiple assets over a period of time.
  * 
  * @author Derek
  */
@@ -49,7 +48,7 @@ public interface IDeviceAssignment extends IMetadataProviderEntity {
 	 * 
 	 * @return
 	 */
-	public AssetType getAssetType();
+	public DeviceAssignmentType getAssignmentType();
 
 	/**
 	 * Get the asset identifier.
