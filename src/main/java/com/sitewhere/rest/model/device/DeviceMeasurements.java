@@ -15,9 +15,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.sitewhere.rest.model.common.MetadataEntry;
-import com.sitewhere.rest.model.common.MetadataProvider;
-import com.sitewhere.spi.common.IMetadataEntry;
+import com.sitewhere.spi.common.IMeasurementEntry;
 import com.sitewhere.spi.device.IDeviceMeasurements;
 
 /**
@@ -30,7 +28,7 @@ import com.sitewhere.spi.device.IDeviceMeasurements;
 public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasurements {
 
 	/** Holder for measurements */
-	private MetadataProvider measurementsMetadata = new MetadataProvider();
+	private MeasurementsProvider measurementsMetadata = new MeasurementsProvider();
 
 	/** Used for list presentation */
 	private String propertiesSummary;
@@ -38,29 +36,32 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.IMeasurementsProvider#addOrReplaceMeasurement(java.lang.String,
-	 * java.lang.String)
+	 * @see
+	 * com.sitewhere.spi.device.IMeasurementsProvider#addOrReplaceMeasurement(java.lang
+	 * .String, java.lang.Double)
 	 */
-	public void addOrReplaceMeasurement(String name, String value) {
-		measurementsMetadata.addOrReplaceMetadata(name, value);
+	public void addOrReplaceMeasurement(String name, Double value) {
+		measurementsMetadata.addOrReplaceMeasurement(name, value);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.IMeasurementsProvider#removeMeasurement(java.lang.String)
+	 * @see
+	 * com.sitewhere.spi.device.IMeasurementsProvider#removeMeasurement(java.lang.String)
 	 */
-	public IMetadataEntry removeMeasurement(String name) {
-		return measurementsMetadata.removeMetadata(name);
+	public IMeasurementEntry removeMeasurement(String name) {
+		return measurementsMetadata.removeMeasurement(name);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurement(java.lang.String)
+	 * @see
+	 * com.sitewhere.spi.device.IMeasurementsProvider#getMeasurement(java.lang.String)
 	 */
-	public IMetadataEntry getMeasurement(String name) {
-		return measurementsMetadata.getMetadata(name);
+	public IMeasurementEntry getMeasurement(String name) {
+		return measurementsMetadata.getMeasurement(name);
 	}
 
 	/*
@@ -68,8 +69,8 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	 * 
 	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurements()
 	 */
-	public List<IMetadataEntry> getMeasurements() {
-		return measurementsMetadata.getMetadata();
+	public List<IMeasurementEntry> getMeasurements() {
+		return measurementsMetadata.getMeasurements();
 	}
 
 	/**
@@ -77,11 +78,9 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	 * 
 	 * @param entries
 	 */
-	public void setMeasurements(List<MetadataEntry> entries) {
-		this.measurementsMetadata = new MetadataProvider();
-		for (MetadataEntry entry : entries) {
-			measurementsMetadata.addOrReplaceMetadata(entry.getName(), entry.getValue());
-		}
+	public void setMeasurements(List<MeasurementEntry> entries) {
+		this.measurementsMetadata = new MeasurementsProvider();
+		measurementsMetadata.setMeasurements(entries);
 	}
 
 	public String getPropertiesSummary() {
@@ -98,7 +97,7 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	public void calculatePropertiesSummary() {
 		String result = "";
 		boolean isFirst = true;
-		for (IMetadataEntry entry : measurementsMetadata.getMetadata()) {
+		for (IMeasurementEntry entry : measurementsMetadata.getMeasurements()) {
 			if (!isFirst) {
 				result += ", ";
 			} else {
@@ -118,7 +117,7 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	public static DeviceMeasurements copy(IDeviceMeasurements input) {
 		DeviceMeasurements result = new DeviceMeasurements();
 		DeviceEvent.copy(input, result);
-		for (IMetadataEntry entry : input.getMeasurements()) {
+		for (IMeasurementEntry entry : input.getMeasurements()) {
 			result.addOrReplaceMeasurement(entry.getName(), entry.getValue());
 		}
 		result.calculatePropertiesSummary();
