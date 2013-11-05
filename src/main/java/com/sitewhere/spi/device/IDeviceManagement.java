@@ -11,6 +11,7 @@ package com.sitewhere.spi.device;
 import java.util.List;
 
 import com.sitewhere.rest.service.search.SearchResults;
+import com.sitewhere.spi.ISiteWhereLifecycle;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.common.IDateRangeSearchCriteria;
 import com.sitewhere.spi.common.IMetadataProvider;
@@ -28,7 +29,7 @@ import com.sitewhere.spi.device.request.IZoneCreateRequest;
  * 
  * @author Derek
  */
-public interface IDeviceManagement {
+public interface IDeviceManagement extends ISiteWhereLifecycle {
 
 	/**
 	 * Create a new device.

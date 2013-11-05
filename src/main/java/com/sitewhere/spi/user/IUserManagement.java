@@ -12,6 +12,7 @@ package com.sitewhere.spi.user;
 
 import java.util.List;
 
+import com.sitewhere.spi.ISiteWhereLifecycle;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.user.request.IGrantedAuthorityCreateRequest;
 import com.sitewhere.spi.user.request.IUserCreateRequest;
@@ -21,7 +22,7 @@ import com.sitewhere.spi.user.request.IUserCreateRequest;
  * 
  * @author Derek
  */
-public interface IUserManagement {
+public interface IUserManagement extends ISiteWhereLifecycle {
 
 	/**
 	 * Create a new user based on the given input.
@@ -62,8 +63,8 @@ public interface IUserManagement {
 	public IUser getUserByUsername(String username) throws SiteWhereException;
 
 	/**
-	 * Get the granted authorities for a specific user. Does not include any authorities inherited from
-	 * groups.
+	 * Get the granted authorities for a specific user. Does not include any authorities
+	 * inherited from groups.
 	 * 
 	 * @param username
 	 * @return
