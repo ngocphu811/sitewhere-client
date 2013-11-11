@@ -24,10 +24,7 @@ import com.sitewhere.spi.device.IDeviceEvent;
  * 
  * @author dadams
  */
-public abstract class DeviceEvent extends MetadataProvider implements IDeviceEvent {
-
-	/** Unique event id */
-	private String id;
+public abstract class DeviceEvent extends MetadataProvider implements IDeviceEvent, Comparable<IDeviceEvent> {
 
 	/** Site token */
 	private String siteToken;
@@ -46,19 +43,6 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 
 	/** List of alert ids related to the event */
 	private List<String> alertIds = new ArrayList<String>();
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.device.IDeviceEvent#getId()
-	 */
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -140,6 +124,18 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 		this.alertIds = alertIds;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(IDeviceEvent other) {
+		if ((getEventDate() != null) && (other.getEventDate() != null)) {
+			return getEventDate().compareTo(other.getEventDate());
+		}
+		return 0;
+	}
+
 	/**
 	 * Create a copy of an SPI object. Used by web services for marshaling.
 	 * 
@@ -147,7 +143,6 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 	 * @param target
 	 */
 	public static void copy(IDeviceEvent source, DeviceEvent target) {
-		target.setId(source.getId());
 		target.setSiteToken(source.getSiteToken());
 		target.setDeviceAssignmentToken(source.getDeviceAssignmentToken());
 		target.setAssetName(source.getAssetName());

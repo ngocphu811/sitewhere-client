@@ -20,14 +20,7 @@ import com.sitewhere.spi.common.IMetadataProvider;
  * 
  * @author Derek
  */
-public interface IDeviceEvent extends IMetadataProvider {
-
-	/**
-	 * Get unique id for this event.
-	 * 
-	 * @return
-	 */
-	public String getId();
+public interface IDeviceEvent extends IMetadataProvider, Comparable<IDeviceEvent> {
 
 	/**
 	 * Get token for site the event pertains to.

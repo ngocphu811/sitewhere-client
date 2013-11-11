@@ -251,12 +251,11 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * com.sitewhere.spi.ISiteWhereClient#updateDeviceAssignmentLocation(java.lang.String,
 	 * java.lang.String)
 	 */
-	public DeviceAssignment updateDeviceAssignmentLocation(String token, String locationId)
+	public DeviceAssignment updateDeviceAssignmentLocation(String token, DeviceLocation location)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("token", token);
-		vars.put("locationId", locationId);
-		return sendRest(getBaseUrl() + "assignments/{token}/location/{locationId}", HttpMethod.PUT, null,
+		return sendRest(getBaseUrl() + "assignments/{token}/location", HttpMethod.PUT, location,
 				DeviceAssignment.class, vars);
 	}
 

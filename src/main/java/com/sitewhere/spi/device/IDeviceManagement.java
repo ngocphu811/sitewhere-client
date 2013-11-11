@@ -172,11 +172,11 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * Updates the current location of a device assignment.
 	 * 
 	 * @param token
-	 * @param locationId
+	 * @param location
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceAssignment updateDeviceAssignmentLocation(String token, String locationId)
+	public IDeviceAssignment updateDeviceAssignmentLocation(String token, IDeviceLocation location)
 			throws SiteWhereException;
 
 	/**
