@@ -32,9 +32,6 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 	/** Device assignment token */
 	private String deviceAssignmentToken;
 
-	/** Asset name at time of event */
-	private String assetName;
-
 	/** Date event occurred */
 	private Date eventDate;
 
@@ -68,19 +65,6 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 
 	public void setDeviceAssignmentToken(String deviceAssignmentToken) {
 		this.deviceAssignmentToken = deviceAssignmentToken;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.device.IDeviceEvent#getAssetName()
-	 */
-	public String getAssetName() {
-		return assetName;
-	}
-
-	public void setAssetName(String assetName) {
-		this.assetName = assetName;
 	}
 
 	/*
@@ -145,7 +129,6 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 	public static void copy(IDeviceEvent source, DeviceEvent target) {
 		target.setSiteToken(source.getSiteToken());
 		target.setDeviceAssignmentToken(source.getDeviceAssignmentToken());
-		target.setAssetName(source.getAssetName());
 		target.setReceivedDate(source.getReceivedDate());
 		target.setEventDate(source.getEventDate());
 		target.getAlertIds().clear();

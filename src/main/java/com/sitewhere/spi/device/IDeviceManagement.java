@@ -176,8 +176,8 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceAssignment updateDeviceAssignmentLocation(String token, IDeviceLocation location)
-			throws SiteWhereException;
+	public IDeviceAssignment updateDeviceAssignmentLocation(String token,
+			IDeviceLocationCreateRequest location) throws SiteWhereException;
 
 	/**
 	 * Add a batch of events for the given assignment.

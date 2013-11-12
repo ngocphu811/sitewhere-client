@@ -37,13 +37,6 @@ public interface IDeviceEvent extends IMetadataProvider, Comparable<IDeviceEvent
 	public String getDeviceAssignmentToken();
 
 	/**
-	 * Get the asset name at time of creation.
-	 * 
-	 * @return
-	 */
-	public String getAssetName();
-
-	/**
 	 * Get the date the event occurred.
 	 * 
 	 * @return
