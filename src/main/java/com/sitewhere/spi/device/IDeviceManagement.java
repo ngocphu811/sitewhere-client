@@ -268,16 +268,6 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
-	 * Associates an alert with measurements.
-	 * 
-	 * @param alertId
-	 * @param measurementsId
-	 * @throws SiteWhereException
-	 */
-	public void associateAlertWithMeasurements(String alertId, String measurementsId)
-			throws SiteWhereException;
-
-	/**
 	 * Add location for a given device assignment.
 	 * 
 	 * @param assignment
@@ -322,19 +312,6 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 */
 	public SearchResults<IDeviceLocation> listDeviceLocations(List<String> assignmentTokens,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
-
-	/**
-	 * Associates an alert with a device location.
-	 * 
-	 * @param alertId
-	 *            unique identifier for alert
-	 * @param locationId
-	 *            unique identifier for location
-	 * @return the updated device location
-	 * @throws SiteWhereException
-	 */
-	public IDeviceLocation associateAlertWithLocation(String alertId, String locationId)
-			throws SiteWhereException;
 
 	/**
 	 * Add alert for a given device assignment.
