@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sitewhere.rest.model.common.MetadataProviderEntity;
 import com.sitewhere.rest.model.datatype.JsonDateSerializer;
@@ -70,7 +69,6 @@ public class User extends MetadataProviderEntity implements IUser, Serializable 
 	 * 
 	 * @see com.sitewhere.spi.user.IUser#getHashedPassword()
 	 */
-	@JsonIgnore
 	public String getHashedPassword() {
 		return hashedPassword;
 	}
