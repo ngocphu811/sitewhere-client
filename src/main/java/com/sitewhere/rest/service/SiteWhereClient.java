@@ -15,9 +15,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
@@ -30,11 +40,13 @@ import com.sitewhere.rest.model.device.DeviceEventBatch;
 import com.sitewhere.rest.model.device.DeviceEventBatchResponse;
 import com.sitewhere.rest.model.device.DeviceLocation;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
+import com.sitewhere.rest.model.device.Site;
 import com.sitewhere.rest.model.device.Zone;
 import com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
+import com.sitewhere.rest.model.device.request.SiteCreateRequest;
 import com.sitewhere.rest.model.device.request.ZoneCreateRequest;
 import com.sitewhere.rest.service.search.DeviceAlertSearchResults;
 import com.sitewhere.rest.service.search.DeviceAssignmentSearchResults;
@@ -58,23 +70,79 @@ public class SiteWhereClient implements ISiteWhereClient {
 	/** Default base url for calling REST services */
 	private static final String DEFAULT_BASE_URL = "http://localhost:8080/sitewhere/api/";
 
+	/** Default REST username */
+	private static final String DEFAULT_USERNAME = "admin";
+
+	/** Default REST password */
+	private static final String DEFAULT_PASSWORD = "password";
+
+	/** Indicates whether to write debug information to the console */
+	private static final boolean DEBUG_ENABLED = true;
+
 	/** Use CXF web client to send requests */
 	private RestTemplate client;
 
 	/** Base URL used for REST calls */
 	private String baseUrl = DEFAULT_BASE_URL;
 
+	/** Username used for REST calls */
+	private String username = DEFAULT_USERNAME;
+
+	/** Password used for REST calls */
+	private String password = DEFAULT_PASSWORD;
+
 	public SiteWhereClient() {
-		this(DEFAULT_BASE_URL);
+		this(DEFAULT_BASE_URL, DEFAULT_USERNAME, DEFAULT_PASSWORD);
 	}
 
-	public SiteWhereClient(String url) {
+	public SiteWhereClient(String url, String username, String password) {
+		if (DEBUG_ENABLED) {
+			enableDebugging();
+		}
 		this.client = new RestTemplate();
 		List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
 		converters.add(new MappingJackson2HttpMessageConverter());
 		client.setMessageConverters(converters);
 		client.setErrorHandler(new SiteWhereErrorHandler());
 		this.baseUrl = url;
+	}
+
+	/**
+	 * Set up basic authentication.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	protected ClientHttpRequestFactory createSecureTransport(String username, String password) {
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		Credentials credentials = new UsernamePasswordCredentials(username, password);
+		BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+		credentialsProvider.setCredentials(AuthScope.ANY, credentials);
+		httpClient.setCredentialsProvider(credentialsProvider);
+		return new HttpComponentsClientHttpRequestFactory(httpClient);
+	}
+
+	/**
+	 * Enable console debugging for messages sent by the client.
+	 */
+	protected void enableDebugging() {
+		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+		System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
+		System.setProperty("org.apache.commons.logging.simplelog.log.org.apache", "debug");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.sitewhere.spi.ISiteWhereClient#createSite(com.sitewhere.rest.model.device.request
+	 * .SiteCreateRequest)
+	 */
+	@Override
+	public Site createSite(SiteCreateRequest request) throws SiteWhereException {
+		Map<String, String> vars = new HashMap<String, String>();
+		return sendRest(getBaseUrl() + "sites", HttpMethod.POST, request, Site.class, vars);
 	}
 
 	/*
@@ -398,7 +466,9 @@ public class SiteWhereClient implements ISiteWhereClient {
 	protected <S, T> S sendRest(String url, HttpMethod method, T input, Class<S> clazz,
 			Map<String, String> vars) throws SiteWhereSystemException {
 		try {
-			HttpEntity<T> entity = new HttpEntity<T>(input);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Authorization", getAuthHeader());
+			HttpEntity<T> entity = new HttpEntity<T>(input, headers);
 			ResponseEntity<S> response = getClient().exchange(url, method, entity, clazz, vars);
 			return response.getBody();
 		} catch (ResourceAccessException e) {
@@ -407,6 +477,17 @@ public class SiteWhereClient implements ISiteWhereClient {
 			}
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * Encode the username and password to make the authorization header.
+	 * 
+	 * @return
+	 */
+	protected String getAuthHeader() {
+		String token = getUsername() + ":" + getPassword();
+		String encoded = DatatypeConverter.printBase64Binary(token.getBytes());
+		return "Basic " + encoded;
 	}
 
 	public RestTemplate getClient() {
@@ -423,5 +504,21 @@ public class SiteWhereClient implements ISiteWhereClient {
 
 	public void setBaseUrl(String baseUrl) {
 		this.baseUrl = baseUrl;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

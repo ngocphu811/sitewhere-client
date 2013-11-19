@@ -5,7 +5,7 @@
 		<sitewhere.version>0.9.2</sitewhere.version>
 		<mule.version>3.4.0</mule.version>
 	</properties>
-	
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>sitewhere</groupId>
 	<artifactId>sitewhere-client</artifactId>
@@ -43,6 +43,11 @@
 			<artifactId>spring-web</artifactId>
 			<version>3.2.1.RELEASE</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
