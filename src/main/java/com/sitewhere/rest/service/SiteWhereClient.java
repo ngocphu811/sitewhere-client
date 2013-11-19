@@ -17,17 +17,10 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
@@ -105,22 +98,6 @@ public class SiteWhereClient implements ISiteWhereClient {
 		client.setMessageConverters(converters);
 		client.setErrorHandler(new SiteWhereErrorHandler());
 		this.baseUrl = url;
-	}
-
-	/**
-	 * Set up basic authentication.
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	protected ClientHttpRequestFactory createSecureTransport(String username, String password) {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		Credentials credentials = new UsernamePasswordCredentials(username, password);
-		BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-		credentialsProvider.setCredentials(AuthScope.ANY, credentials);
-		httpClient.setCredentialsProvider(credentialsProvider);
-		return new HttpComponentsClientHttpRequestFactory(httpClient);
 	}
 
 	/**
