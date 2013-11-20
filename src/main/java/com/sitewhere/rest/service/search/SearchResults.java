@@ -20,7 +20,7 @@ import java.util.List;
 public class SearchResults<T> {
 
 	/** Number of total results */
-	private int numResults;
+	private long numResults;
 
 	/** List of results */
 	private List<T> results;
@@ -30,16 +30,16 @@ public class SearchResults<T> {
 		setResults(all);
 	}
 
-	public SearchResults(List<T> page, int total) {
+	public SearchResults(List<T> page, long total) {
 		setNumResults(total);
 		setResults(page);
 	}
 
-	public int getNumResults() {
+	public long getNumResults() {
 		return numResults;
 	}
 
-	public void setNumResults(int numResults) {
+	public void setNumResults(long numResults) {
 		this.numResults = numResults;
 	}
 
