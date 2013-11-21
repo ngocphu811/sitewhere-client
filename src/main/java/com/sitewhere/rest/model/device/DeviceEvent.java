@@ -10,13 +10,12 @@
 
 package com.sitewhere.rest.model.device;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sitewhere.rest.model.common.MetadataProvider;
 import com.sitewhere.rest.model.datatype.JsonDateSerializer;
+import com.sitewhere.spi.device.DeviceAssignmentType;
 import com.sitewhere.spi.device.IDeviceEvent;
 
 /**
@@ -32,14 +31,17 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 	/** Device assignment token */
 	private String deviceAssignmentToken;
 
+	/** Device assignment type */
+	private DeviceAssignmentType assignmentType;
+
+	/** Associated asset id */
+	private String assetId;
+
 	/** Date event occurred */
 	private Date eventDate;
 
 	/** Date event was received */
 	private Date receivedDate;
-
-	/** List of alert ids related to the event */
-	private List<String> alertIds = new ArrayList<String>();
 
 	/*
 	 * (non-Javadoc)
@@ -65,6 +67,32 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 
 	public void setDeviceAssignmentToken(String deviceAssignmentToken) {
 		this.deviceAssignmentToken = deviceAssignmentToken;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IDeviceEvent#getAssignmentType()
+	 */
+	public DeviceAssignmentType getAssignmentType() {
+		return assignmentType;
+	}
+
+	public void setAssignmentType(DeviceAssignmentType assignmentType) {
+		this.assignmentType = assignmentType;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IDeviceEvent#getAssetId()
+	 */
+	public String getAssetId() {
+		return assetId;
+	}
+
+	public void setAssetId(String assetId) {
+		this.assetId = assetId;
 	}
 
 	/*
@@ -98,19 +126,6 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.IDeviceEvent#getAlertIds()
-	 */
-	public List<String> getAlertIds() {
-		return alertIds;
-	}
-
-	public void setAlertIds(List<String> alertIds) {
-		this.alertIds = alertIds;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(IDeviceEvent other) {
@@ -129,14 +144,10 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 	public static void copy(IDeviceEvent source, DeviceEvent target) {
 		target.setSiteToken(source.getSiteToken());
 		target.setDeviceAssignmentToken(source.getDeviceAssignmentToken());
+		target.setAssignmentType(source.getAssignmentType());
+		target.setAssetId(source.getAssetId());
 		target.setReceivedDate(source.getReceivedDate());
 		target.setEventDate(source.getEventDate());
-		target.getAlertIds().clear();
-		if (source.getAlertIds() != null) {
-			for (String alertId : source.getAlertIds()) {
-				target.getAlertIds().add(alertId);
-			}
-		}
 		MetadataProvider.copy(source, target);
 	}
 }

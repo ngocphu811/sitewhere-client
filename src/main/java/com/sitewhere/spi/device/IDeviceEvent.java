@@ -11,7 +11,6 @@
 package com.sitewhere.spi.device;
 
 import java.util.Date;
-import java.util.List;
 
 import com.sitewhere.spi.common.IMetadataProvider;
 
@@ -37,6 +36,20 @@ public interface IDeviceEvent extends IMetadataProvider, Comparable<IDeviceEvent
 	public String getDeviceAssignmentToken();
 
 	/**
+	 * Get assignment type.
+	 * 
+	 * @return
+	 */
+	public DeviceAssignmentType getAssignmentType();
+
+	/**
+	 * Get id of asset if associated.
+	 * 
+	 * @return
+	 */
+	public String getAssetId();
+
+	/**
 	 * Get the date the event occurred.
 	 * 
 	 * @return
@@ -49,11 +62,4 @@ public interface IDeviceEvent extends IMetadataProvider, Comparable<IDeviceEvent
 	 * @return
 	 */
 	public Date getReceivedDate();
-
-	/**
-	 * Get ids of any alerts related to the event.
-	 * 
-	 * @return
-	 */
-	public List<String> getAlertIds();
 }

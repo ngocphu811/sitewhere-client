@@ -10,6 +10,8 @@
 package com.sitewhere.test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,11 +20,17 @@ import org.junit.Test;
 
 import com.sitewhere.rest.model.common.Location;
 import com.sitewhere.rest.model.device.Device;
+import com.sitewhere.rest.model.device.DeviceAlert;
 import com.sitewhere.rest.model.device.DeviceAssignment;
+import com.sitewhere.rest.model.device.DeviceLocation;
+import com.sitewhere.rest.model.device.DeviceMeasurements;
 import com.sitewhere.rest.model.device.Site;
 import com.sitewhere.rest.model.device.Zone;
+import com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceAssignmentCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
+import com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest;
+import com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest;
 import com.sitewhere.rest.model.device.request.SiteCreateRequest;
 import com.sitewhere.rest.model.device.request.ZoneCreateRequest;
 import com.sitewhere.rest.service.SiteWhereClient;
@@ -45,7 +53,10 @@ public class LargeDataset {
 	public static final int NUM_SITES = 1;
 
 	/** Number of devices to create */
-	public static final int ASSIGNMENTS_PER_SITE = 50;
+	public static final int ASSIGNMENTS_PER_SITE = 3;
+
+	/** Number of events per assignment */
+	public static final int EVENTS_PER_ASSIGNMENT = 150;
 
 	/** Number of devices to create */
 	public static final int ZONES_PER_SITE = 5;
@@ -64,7 +75,13 @@ public class LargeDataset {
 		for (Site site : sites) {
 			List<Device> devices = createDevices();
 			for (Device device : devices) {
-				createDeviceAssignment(device, site);
+				DeviceAssignment assignment = createDeviceAssignment(device, site);
+				Calendar cal = Calendar.getInstance();
+				cal.roll(Calendar.HOUR, false);
+				Date hourAgo = cal.getTime();
+				createDeviceAlerts(assignment, hourAgo);
+				createDeviceMeasurements(assignment, hourAgo);
+				createDeviceLocation(assignment, hourAgo);
 			}
 			createZones(site);
 		}
@@ -122,6 +139,72 @@ public class LargeDataset {
 		request.setAssignmentType(DeviceAssignmentType.Person);
 		request.setAssetId("1");
 		return client.createDeviceAssignment(request);
+	}
+
+	/**
+	 * Create device alerts associated with an assignment.
+	 * 
+	 * @param assignment
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public List<DeviceAlert> createDeviceAlerts(DeviceAssignment assignment, Date start)
+			throws SiteWhereException {
+		long current = start.getTime();
+		List<DeviceAlert> results = new ArrayList<DeviceAlert>();
+		for (int x = 0; x < EVENTS_PER_ASSIGNMENT; x++) {
+			DeviceAlertCreateRequest request = new DeviceAlertCreateRequest();
+			request.setType("fire.alarm");
+			request.setMessage("Fire alarm has been triggered on the third floor.");
+			request.setEventDate(new Date(current));
+			results.add(client.createDeviceAlert(assignment.getToken(), request));
+			current += 10000;
+		}
+		return results;
+	}
+
+	/**
+	 * Create device measurements associated with an assignment.
+	 * 
+	 * @param assignment
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public List<DeviceMeasurements> createDeviceMeasurements(DeviceAssignment assignment, Date start)
+			throws SiteWhereException {
+		long current = start.getTime();
+		List<DeviceMeasurements> results = new ArrayList<DeviceMeasurements>();
+		for (int x = 0; x < EVENTS_PER_ASSIGNMENT; x++) {
+			DeviceMeasurementsCreateRequest request = new DeviceMeasurementsCreateRequest();
+			request.addOrReplaceMeasurement("engine.temperature", 145.0);
+			request.setEventDate(new Date(current));
+			results.add(client.createDeviceMeasurements(assignment.getToken(), request));
+			current += 10000;
+		}
+		return results;
+	}
+
+	/**
+	 * Create device location associated with an assignment.
+	 * 
+	 * @param assignment
+	 * @return
+	 * @throws SiteWhereException
+	 */
+	public List<DeviceLocation> createDeviceLocation(DeviceAssignment assignment, Date start)
+			throws SiteWhereException {
+		long current = start.getTime();
+		List<DeviceLocation> results = new ArrayList<DeviceLocation>();
+		for (int x = 0; x < EVENTS_PER_ASSIGNMENT; x++) {
+			DeviceLocationCreateRequest request = new DeviceLocationCreateRequest();
+			request.setLatitude(33.7550);
+			request.setLongitude(-84.3900);
+			request.setElevation(0.0);
+			request.setEventDate(new Date(current));
+			results.add(client.createDeviceLocation(assignment.getToken(), request));
+			current += 10000;
+		}
+		return results;
 	}
 
 	/**
