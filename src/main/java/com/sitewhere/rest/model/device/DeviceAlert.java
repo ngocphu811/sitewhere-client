@@ -10,6 +10,7 @@
 
 package com.sitewhere.rest.model.device;
 
+import com.sitewhere.spi.device.AlertLevel;
 import com.sitewhere.spi.device.AlertSource;
 import com.sitewhere.spi.device.IDeviceAlert;
 
@@ -22,6 +23,9 @@ public class DeviceAlert extends DeviceEvent implements IDeviceAlert {
 
 	/** Alert source */
 	private AlertSource source;
+
+	/** Alert level */
+	private AlertLevel level;
 
 	/** Alert type */
 	private String type;
@@ -40,6 +44,19 @@ public class DeviceAlert extends DeviceEvent implements IDeviceAlert {
 
 	public void setSource(AlertSource source) {
 		this.source = source;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IDeviceAlert#getLevel()
+	 */
+	public AlertLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(AlertLevel level) {
+		this.level = level;
 	}
 
 	/*

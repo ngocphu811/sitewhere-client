@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * AlertLevel.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -7,19 +7,24 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-
 package com.sitewhere.spi.device;
 
 /**
- * Indicates source that generated an alert.
+ * Indicates severity of alert.
  * 
- * @author dadams
+ * @author Derek
  */
-public enum AlertSource {
+public enum AlertLevel {
 
-	/** Device generated */
-	Device,
+	/** Informational alert */
+	Info,
 
-	/** System generated */
-	System;
+	/** Warning condition */
+	Warning,
+
+	/** Error condition */
+	Error,
+
+	/** Critical error */
+	Critical;
 }

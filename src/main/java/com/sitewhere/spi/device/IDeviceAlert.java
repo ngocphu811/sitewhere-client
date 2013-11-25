@@ -25,6 +25,13 @@ public interface IDeviceAlert extends IDeviceEvent {
 	public AlertSource getSource();
 
 	/**
+	 * Get severity of alert.
+	 * 
+	 * @return
+	 */
+	public AlertLevel getLevel();
+
+	/**
 	 * Get the alert type indicator.
 	 * 
 	 * @return

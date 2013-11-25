@@ -10,6 +10,7 @@
 package com.sitewhere.rest.model.device.request;
 
 import com.sitewhere.rest.model.device.DeviceAlert;
+import com.sitewhere.spi.device.AlertLevel;
 import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
 
 /**
@@ -19,11 +20,27 @@ import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
  */
 public class DeviceAlertCreateRequest extends DeviceEventCreateRequest implements IDeviceAlertCreateRequest {
 
+	/** Alert level */
+	private AlertLevel level;
+
 	/** Alert type */
 	private String type;
 
 	/** Alert message */
 	private String message;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.request.IDeviceAlertCreateRequest#getLevel()
+	 */
+	public AlertLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(AlertLevel level) {
+		this.level = level;
+	}
 
 	/*
 	 * (non-Javadoc)

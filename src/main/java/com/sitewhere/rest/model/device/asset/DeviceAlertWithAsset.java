@@ -12,6 +12,7 @@ package com.sitewhere.rest.model.device.asset;
 import com.sitewhere.rest.model.device.DeviceAlert;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.asset.IAssetModuleManager;
+import com.sitewhere.spi.device.AlertLevel;
 import com.sitewhere.spi.device.AlertSource;
 import com.sitewhere.spi.device.IDeviceAlert;
 
@@ -35,6 +36,16 @@ public class DeviceAlertWithAsset extends DeviceEventWithAsset implements IDevic
 	@Override
 	public AlertSource getSource() {
 		return ((IDeviceAlert) getWrapped()).getSource();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IDeviceAlert#getLevel()
+	 */
+	@Override
+	public AlertLevel getLevel() {
+		return ((IDeviceAlert) getWrapped()).getLevel();
 	}
 
 	/*

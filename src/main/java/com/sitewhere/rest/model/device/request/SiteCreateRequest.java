@@ -32,7 +32,7 @@ public class SiteCreateRequest extends MetadataProvider implements ISiteCreateRe
 	private String mapType;
 
 	/** Map metadata */
-	private MetadataProvider mapMetadata;
+	private MetadataProvider mapMetadata = new MetadataProvider();
 
 	/*
 	 * (non-Javadoc)
