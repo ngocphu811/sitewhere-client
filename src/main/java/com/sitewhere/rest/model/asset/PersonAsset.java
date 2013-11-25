@@ -21,7 +21,7 @@ import com.sitewhere.spi.asset.IPersonAsset;
  */
 public class PersonAsset extends Asset implements IPersonAsset {
 
-	/** Asset uaername */
+	/** Asset username */
 	private String userName;
 
 	/** Asset email address */
