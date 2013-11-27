@@ -26,7 +26,7 @@ import com.sitewhere.rest.model.device.request.DeviceAssignmentCreateRequest;
 import com.sitewhere.rest.model.device.request.DeviceCreateRequest;
 import com.sitewhere.rest.model.device.request.ZoneCreateRequest;
 import com.sitewhere.rest.service.SiteWhereClient;
-import com.sitewhere.rest.service.search.ZoneSearchResults;
+import com.sitewhere.rest.service.search.SearchResults;
 import com.sitewhere.spi.ISiteWhereClient;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.SiteWhereSystemException;
@@ -160,7 +160,7 @@ public class ApiTests {
 		request.setCoordinates(coords);
 		Zone results = client.createZone(TEST_SITE_TOKEN, request);
 		System.out.println("Created zone: " + results.getName());
-		ZoneSearchResults search = client.listZonesForSite(TEST_SITE_TOKEN);
+		SearchResults<Zone> search = client.listZonesForSite(TEST_SITE_TOKEN);
 		System.out.println("Found " + search.getNumResults() + " results.");
 	}
 
