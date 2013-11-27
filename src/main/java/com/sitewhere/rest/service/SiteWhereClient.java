@@ -269,8 +269,9 @@ public class SiteWhereClient implements ISiteWhereClient {
 		vars.put("longitude", String.valueOf(longitude));
 		vars.put("maxDistance", String.valueOf(maxDistance));
 		vars.put("maxResults", String.valueOf(maxResults));
-		String url = getBaseUrl() + "assignments/near/{latitude}/{longitude}"
-				+ "?maxDistance={maxDistance}&maxResults={maxResults}";
+		String url =
+				getBaseUrl() + "assignments/near/{latitude}/{longitude}"
+						+ "?maxDistance={maxDistance}&maxResults={maxResults}";
 		return sendRest(url, HttpMethod.GET, null, DeviceAssignmentSearchResults.class, vars);
 	}
 
@@ -294,13 +295,13 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * 
 	 * @see
 	 * com.sitewhere.spi.ISiteWhereClient#updateDeviceAssignmentLocation(java.lang.String,
-	 * java.lang.String)
+	 * com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest)
 	 */
-	public DeviceAssignment updateDeviceAssignmentLocation(String token, DeviceLocation location)
+	public DeviceAssignment updateDeviceAssignmentLocation(String token, DeviceLocationCreateRequest request)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("token", token);
-		return sendRest(getBaseUrl() + "assignments/{token}/location", HttpMethod.PUT, location,
+		return sendRest(getBaseUrl() + "assignments/{token}/location", HttpMethod.PUT, request,
 				DeviceAssignment.class, vars);
 	}
 
