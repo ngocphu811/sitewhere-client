@@ -7,9 +7,9 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package com.sitewhere.rest.model.common;
+package com.sitewhere.rest.model.search;
 
-import com.sitewhere.spi.common.ISearchCriteria;
+import com.sitewhere.spi.search.ISearchCriteria;
 
 /**
  * Common criteria used in searches that return a list of results. Includes parameters for

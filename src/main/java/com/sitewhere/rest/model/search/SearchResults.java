@@ -8,16 +8,18 @@
  * LICENSE.txt file.
  */
 
-package com.sitewhere.rest.service.search;
+package com.sitewhere.rest.model.search;
 
 import java.util.List;
+
+import com.sitewhere.spi.search.ISearchResults;
 
 /**
  * Used to return search result metadata in response to AJAX calls.
  * 
  * @author dadams
  */
-public class SearchResults<T> {
+public class SearchResults<T> implements ISearchResults<T> {
 
 	/** Number of total results */
 	private long numResults;

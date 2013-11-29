@@ -7,11 +7,11 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package com.sitewhere.rest.model.common;
+package com.sitewhere.rest.model.search;
 
 import java.util.Date;
 
-import com.sitewhere.spi.common.IDateRangeSearchCriteria;
+import com.sitewhere.spi.search.IDateRangeSearchCriteria;
 
 /**
  * Extends search criteria with ability to specify a date range.

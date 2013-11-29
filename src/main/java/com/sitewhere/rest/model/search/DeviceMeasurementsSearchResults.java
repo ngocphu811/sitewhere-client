@@ -8,7 +8,7 @@
  * LICENSE.txt file.
  */
 
-package com.sitewhere.rest.service.search;
+package com.sitewhere.rest.model.search;
 
 import java.util.ArrayList;
 import java.util.List;

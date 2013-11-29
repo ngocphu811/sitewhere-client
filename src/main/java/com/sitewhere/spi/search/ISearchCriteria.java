@@ -7,7 +7,7 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package com.sitewhere.spi.common;
+package com.sitewhere.spi.search;
 
 /**
  * Common base class for searching that includes support for paging.

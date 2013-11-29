@@ -1,5 +1,5 @@
 /*
- * IDateRangeSearchCriteria.java 
+ * ISearchResults.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -7,28 +7,30 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package com.sitewhere.spi.common;
+package com.sitewhere.spi.search;
 
-import java.util.Date;
+import java.util.List;
 
 /**
- * Extends basic search criteria with ability to search by a date range.
+ * Base interface for results returned from paged queries.
  * 
  * @author Derek
+ * 
+ * @param <T>
  */
-public interface IDateRangeSearchCriteria extends ISearchCriteria {
+public interface ISearchResults<T> {
 
 	/**
-	 * Get date range start.
+	 * Get the total number of results.
 	 * 
 	 * @return
 	 */
-	public Date getStartDate();
+	public long getNumResults();
 
 	/**
-	 * Get date range end.
+	 * Get the results.
 	 * 
 	 * @return
 	 */
-	public Date getEndDate();
+	public List<T> getResults();
 }

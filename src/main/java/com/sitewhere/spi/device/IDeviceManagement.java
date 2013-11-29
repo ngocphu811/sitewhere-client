@@ -10,12 +10,9 @@ package com.sitewhere.spi.device;
 
 import java.util.List;
 
-import com.sitewhere.rest.service.search.SearchResults;
 import com.sitewhere.spi.ISiteWhereLifecycle;
 import com.sitewhere.spi.SiteWhereException;
-import com.sitewhere.spi.common.IDateRangeSearchCriteria;
 import com.sitewhere.spi.common.IMetadataProvider;
-import com.sitewhere.spi.common.ISearchCriteria;
 import com.sitewhere.spi.device.request.IDeviceAlertCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceAssignmentCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceCreateRequest;
@@ -23,6 +20,9 @@ import com.sitewhere.spi.device.request.IDeviceLocationCreateRequest;
 import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
 import com.sitewhere.spi.device.request.ISiteCreateRequest;
 import com.sitewhere.spi.device.request.IZoneCreateRequest;
+import com.sitewhere.spi.search.IDateRangeSearchCriteria;
+import com.sitewhere.spi.search.ISearchCriteria;
+import com.sitewhere.spi.search.ISearchResults;
 
 /**
  * Interface for device operations.
@@ -76,7 +76,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDevice> listDevices(boolean includeDeleted, ISearchCriteria criteria)
+	public ISearchResults<IDevice> listDevices(boolean includeDeleted, ISearchCriteria criteria)
 			throws SiteWhereException;
 
 	/**
@@ -86,7 +86,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDevice> listUnassignedDevices(ISearchCriteria criteria) throws SiteWhereException;
+	public ISearchResults<IDevice> listUnassignedDevices(ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Delete an existing device.
@@ -207,7 +207,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceAssignment> getDeviceAssignmentHistory(String hardwareId,
+	public ISearchResults<IDeviceAssignment> getDeviceAssignmentHistory(String hardwareId,
 			ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -218,7 +218,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceAssignment> getDeviceAssignmentsForSite(String siteToken,
+	public ISearchResults<IDeviceAssignment> getDeviceAssignmentsForSite(String siteToken,
 			ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -231,7 +231,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceAssignment> getDeviceAssignmentsNear(double latitude, double longitude,
+	public ISearchResults<IDeviceAssignment> getDeviceAssignmentsNear(double latitude, double longitude,
 			double maxDistance, ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -253,7 +253,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceMeasurements> listDeviceMeasurements(String siteToken,
+	public ISearchResults<IDeviceMeasurements> listDeviceMeasurements(String siteToken,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -264,7 +264,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceMeasurements> listDeviceMeasurementsForSite(String siteToken,
+	public ISearchResults<IDeviceMeasurements> listDeviceMeasurementsForSite(String siteToken,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -286,7 +286,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceLocation> listDeviceLocations(String assignmentToken,
+	public ISearchResults<IDeviceLocation> listDeviceLocations(String assignmentToken,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -297,7 +297,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceLocation> listDeviceLocationsForSite(String siteToken,
+	public ISearchResults<IDeviceLocation> listDeviceLocationsForSite(String siteToken,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -310,7 +310,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceLocation> listDeviceLocations(List<String> assignmentTokens,
+	public ISearchResults<IDeviceLocation> listDeviceLocations(List<String> assignmentTokens,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -332,7 +332,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceAlert> listDeviceAlerts(String assignmentToken,
+	public ISearchResults<IDeviceAlert> listDeviceAlerts(String assignmentToken,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -343,7 +343,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IDeviceAlert> listDeviceAlertsForSite(String siteToken,
+	public ISearchResults<IDeviceAlert> listDeviceAlertsForSite(String siteToken,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**
@@ -392,7 +392,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<ISite> listSites(ISearchCriteria criteria) throws SiteWhereException;
+	public ISearchResults<ISite> listSites(ISearchCriteria criteria) throws SiteWhereException;
 
 	/**
 	 * Create a new zone.
@@ -431,7 +431,7 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public SearchResults<IZone> listZones(String siteToken, ISearchCriteria criteria)
+	public ISearchResults<IZone> listZones(String siteToken, ISearchCriteria criteria)
 			throws SiteWhereException;
 
 	/**

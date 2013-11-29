@@ -8,25 +8,25 @@
 * LICENSE.txt file.
 */
 
-package com.sitewhere.rest.service.search;
+package com.sitewhere.rest.model.search;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sitewhere.rest.model.device.DeviceAlert;
+import com.sitewhere.rest.model.device.DeviceLocation;
 
 /**
- * Search results that contain device alerts.
+ * Search results that contain device locations.
  * 
  * @author dadams
  */
-public class DeviceAlertSearchResults extends SearchResults<DeviceAlert> {
+public class DeviceLocationSearchResults extends SearchResults<DeviceLocation> {
 
-	public DeviceAlertSearchResults() {
-		super(new ArrayList<DeviceAlert>());
+	public DeviceLocationSearchResults() {
+		super(new ArrayList<DeviceLocation>());
 	}
 
-	public DeviceAlertSearchResults(List<DeviceAlert> results) {
+	public DeviceLocationSearchResults(List<DeviceLocation> results) {
 		super(results);
 	}
 }
