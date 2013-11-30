@@ -248,12 +248,12 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 	/**
 	 * Gets device measurement entries for an assignment based on criteria.
 	 * 
-	 * @param siteToken
+	 * @param assignmentToken
 	 * @param criteria
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public ISearchResults<IDeviceMeasurements> listDeviceMeasurements(String siteToken,
+	public ISearchResults<IDeviceMeasurements> listDeviceMeasurements(String assignmentToken,
 			IDateRangeSearchCriteria criteria) throws SiteWhereException;
 
 	/**

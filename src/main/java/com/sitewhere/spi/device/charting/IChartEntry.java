@@ -18,7 +18,7 @@ import java.util.Date;
  * 
  * @param <T>
  */
-public interface IChartEntry<T> {
+public interface IChartEntry<T> extends Comparable<IChartEntry<T>> {
 
 	/**
 	 * Get value for the entry.

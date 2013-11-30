@@ -14,14 +14,14 @@ import java.util.Date;
 import com.sitewhere.spi.device.charting.IChartEntry;
 
 /**
- * Chart entry that has a {@link Double} value.
+ * Chart entry implementation.
  * 
  * @author Derek
  */
-public class DoubleChartEntry implements IChartEntry<Double> {
+public class ChartEntry<T> implements IChartEntry<T> {
 
 	/** Entry value */
-	private Double value;
+	private T value;
 
 	/** Date of measurement */
 	private Date measurementDate;
@@ -32,11 +32,11 @@ public class DoubleChartEntry implements IChartEntry<Double> {
 	 * @see com.sitewhere.spi.device.charting.IChartEntry#getValue()
 	 */
 	@Override
-	public Double getValue() {
+	public T getValue() {
 		return value;
 	}
 
-	public void setValue(Double value) {
+	public void setValue(T value) {
 		this.value = value;
 	}
 
@@ -52,5 +52,15 @@ public class DoubleChartEntry implements IChartEntry<Double> {
 
 	public void setMeasurementDate(Date measurementDate) {
 		this.measurementDate = measurementDate;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(IChartEntry<T> other) {
+		return this.getMeasurementDate().compareTo(other.getMeasurementDate());
 	}
 }

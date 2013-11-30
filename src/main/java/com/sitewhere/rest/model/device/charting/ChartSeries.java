@@ -15,13 +15,18 @@ import java.util.List;
 import com.sitewhere.spi.device.charting.IChartEntry;
 import com.sitewhere.spi.device.charting.IChartSeries;
 
-public class DoubleChartSeries implements IChartSeries<Double> {
+/**
+ * Chart series implementation.
+ * 
+ * @author Derek
+ */
+public class ChartSeries<T> implements IChartSeries<T> {
 
 	/** Measurement id */
 	private String measurementId;
 
 	/** Entries for the chart series */
-	private List<IChartEntry<Double>> entries = new ArrayList<IChartEntry<Double>>();
+	private List<IChartEntry<T>> entries = new ArrayList<IChartEntry<T>>();
 
 	/*
 	 * (non-Javadoc)
@@ -43,11 +48,11 @@ public class DoubleChartSeries implements IChartSeries<Double> {
 	 * @see com.sitewhere.spi.device.charting.IChartSeries#getEntries()
 	 */
 	@Override
-	public List<IChartEntry<Double>> getEntries() {
+	public List<IChartEntry<T>> getEntries() {
 		return entries;
 	}
 
-	public void setEntries(List<IChartEntry<Double>> entries) {
+	public void setEntries(List<IChartEntry<T>> entries) {
 		this.entries = entries;
 	}
 }

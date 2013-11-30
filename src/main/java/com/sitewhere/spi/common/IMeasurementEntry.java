@@ -17,14 +17,14 @@ package com.sitewhere.spi.common;
 public interface IMeasurementEntry {
 
 	/**
-	 * Get metadata field name.
+	 * Get measurement name.
 	 * 
 	 * @return
 	 */
 	public String getName();
 
 	/**
-	 * Get metadata field value.
+	 * Get measurement value.
 	 * 
 	 * @return
 	 */
