@@ -183,14 +183,14 @@ public interface ISiteWhereClient {
 			throws SiteWhereException;
 
 	/**
-	 * Update the location for an existing device assignment.
+	 * Update assignment state based on a batch of events.
 	 * 
 	 * @param token
-	 * @param request
+	 * @param batch
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public DeviceAssignment updateDeviceAssignmentLocation(String token, DeviceLocationCreateRequest request)
+	public DeviceAssignment updateDeviceAssignmentState(String token, DeviceEventBatch batch)
 			throws SiteWhereException;
 
 	/**

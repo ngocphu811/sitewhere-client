@@ -97,6 +97,7 @@ public class DeviceAlert extends DeviceEvent implements IDeviceAlert {
 		result.setSource(input.getSource());
 		result.setType(input.getType());
 		result.setMessage(input.getMessage());
+		result.setLevel(input.getLevel());
 		return result;
 	}
 }

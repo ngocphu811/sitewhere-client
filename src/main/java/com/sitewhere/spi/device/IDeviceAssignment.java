@@ -79,9 +79,9 @@ public interface IDeviceAssignment extends IMetadataProviderEntity {
 	public Date getReleasedDate();
 
 	/**
-	 * Get the last known location of the assignment.
+	 * Get latest state information for the assignment.
 	 * 
 	 * @return
 	 */
-	public IDeviceLocation getLastLocation();
+	public IDeviceAssignmentState getState();
 }

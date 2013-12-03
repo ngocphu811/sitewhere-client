@@ -169,15 +169,15 @@ public interface IDeviceManagement extends ISiteWhereLifecycle {
 			throws SiteWhereException;
 
 	/**
-	 * Updates the current location of a device assignment.
+	 * Updates the state of a device assignment based on a batch of new events.
 	 * 
 	 * @param token
-	 * @param location
+	 * @param batch
 	 * @return
 	 * @throws SiteWhereException
 	 */
-	public IDeviceAssignment updateDeviceAssignmentLocation(String token,
-			IDeviceLocationCreateRequest location) throws SiteWhereException;
+	public IDeviceAssignment updateDeviceAssignmentState(String token, IDeviceEventBatch batch)
+			throws SiteWhereException;
 
 	/**
 	 * Add a batch of events for the given assignment.

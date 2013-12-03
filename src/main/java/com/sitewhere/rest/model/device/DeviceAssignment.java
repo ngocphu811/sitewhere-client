@@ -68,7 +68,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	private Date releasedDate;
 
 	/** Last known location */
-	private DeviceLocation lastLocation;
+	private DeviceAssignmentState state;
 
 	/** Associated person asset */
 	private PersonAsset associatedPerson;
@@ -81,6 +81,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getToken()
 	 */
+	@Override
 	public String getToken() {
 		return token;
 	}
@@ -102,6 +103,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getDeviceHardwareId()
 	 */
+	@Override
 	public String getDeviceHardwareId() {
 		return deviceHardwareId;
 	}
@@ -115,6 +117,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getAssignmentType()
 	 */
+	@Override
 	public DeviceAssignmentType getAssignmentType() {
 		return assignmentType;
 	}
@@ -128,6 +131,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getAssetId()
 	 */
+	@Override
 	public String getAssetId() {
 		return assetId;
 	}
@@ -165,6 +169,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getSiteToken()
 	 */
+	@Override
 	public String getSiteToken() {
 		return siteToken;
 	}
@@ -178,6 +183,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * 
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getStatus()
 	 */
+	@Override
 	public DeviceAssignmentStatus getStatus() {
 		return status;
 	}
@@ -192,6 +198,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getActiveDate()
 	 */
 	@JsonSerialize(using = JsonDateSerializer.class)
+	@Override
 	public Date getActiveDate() {
 		return activeDate;
 	}
@@ -206,6 +213,7 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	 * @see com.sitewhere.spi.device.IDeviceAssignment#getReleasedDate()
 	 */
 	@JsonSerialize(using = JsonDateSerializer.class)
+	@Override
 	public Date getReleasedDate() {
 		return releasedDate;
 	}
@@ -217,14 +225,15 @@ public class DeviceAssignment extends MetadataProviderEntity implements IDeviceA
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.IDeviceAssignment#getLastLocation()
+	 * @see com.sitewhere.spi.device.IDeviceAssignment#getState()
 	 */
-	public DeviceLocation getLastLocation() {
-		return lastLocation;
+	@Override
+	public DeviceAssignmentState getState() {
+		return state;
 	}
 
-	public void setLastLocation(DeviceLocation lastLocation) {
-		this.lastLocation = lastLocation;
+	public void setState(DeviceAssignmentState state) {
+		this.state = state;
 	}
 
 	public PersonAsset getAssociatedPerson() {

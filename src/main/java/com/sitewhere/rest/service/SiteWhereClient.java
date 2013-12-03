@@ -129,6 +129,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * com.sitewhere.spi.ISiteWhereClient#createDevice(com.sitewhere.rest.model.device
 	 * .request.DeviceCreateRequest )
 	 */
+	@Override
 	public Device createDevice(DeviceCreateRequest request) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		return sendRest(getBaseUrl() + "devices", HttpMethod.POST, request, Device.class, vars);
@@ -139,6 +140,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * 
 	 * @see com.sitewhere.spi.ISiteWhereClient#getDeviceByHardwareId(java.lang.String)
 	 */
+	@Override
 	public Device getDeviceByHardwareId(String hardwareId) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("hardwareId", hardwareId);
@@ -151,6 +153,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#updateDevice(java.lang.String,
 	 * com.sitewhere.rest.model.device.request.DeviceCreateRequest)
 	 */
+	@Override
 	public Device updateDevice(String hardwareId, DeviceCreateRequest request) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("hardwareId", hardwareId);
@@ -162,6 +165,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * 
 	 * @see com.sitewhere.spi.ISiteWhereClient#deleteDevice(java.lang.String, boolean)
 	 */
+	@Override
 	public Device deleteDevice(String hardwareId, boolean force) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("hardwareId", hardwareId);
@@ -178,6 +182,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see
 	 * com.sitewhere.spi.ISiteWhereClient#getCurrentAssignmentForDevice(java.lang.String)
 	 */
+	@Override
 	public DeviceAssignment getCurrentAssignmentForDevice(String hardwareId) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("hardwareId", hardwareId);
@@ -192,6 +197,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * com.sitewhere.spi.ISiteWhereClient#createDeviceAssignment(com.sitewhere.spi.device
 	 * .request. IDeviceAssignmentCreateRequest)
 	 */
+	@Override
 	public DeviceAssignment createDeviceAssignment(IDeviceAssignmentCreateRequest request)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -204,6 +210,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see
 	 * com.sitewhere.spi.ISiteWhereClient#getDeviceAssignmentByToken(java.lang.String)
 	 */
+	@Override
 	public DeviceAssignment getDeviceAssignmentByToken(String assignmentToken) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("assignmentToken", assignmentToken);
@@ -217,6 +224,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#deleteDeviceAssignment(java.lang.String,
 	 * boolean)
 	 */
+	@Override
 	public DeviceAssignment deleteDeviceAssignment(String assignmentToken, boolean force)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -234,6 +242,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see
 	 * com.sitewhere.spi.ISiteWhereClient#listDeviceAssignmentHistory(java.lang.String)
 	 */
+	@Override
 	public DeviceAssignmentSearchResults listDeviceAssignmentHistory(String hardwareId)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -248,6 +257,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#addDeviceEventBatch(java.lang.String,
 	 * com.sitewhere.rest.model.device.DeviceEventBatch)
 	 */
+	@Override
 	public DeviceEventBatchResponse addDeviceEventBatch(String hardwareId, DeviceEventBatch batch)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -262,6 +272,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#findDeviceAssignmentsNear(double, double,
 	 * double, int)
 	 */
+	@Override
 	public DeviceAssignmentSearchResults findDeviceAssignmentsNear(double latitude, double longitude,
 			double maxDistance, int maxResults) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -282,6 +293,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * com.sitewhere.spi.ISiteWhereClient#updateDeviceAssignmentMetadata(java.lang.String,
 	 * com.sitewhere.rest.model.device.MetadataProvider)
 	 */
+	@Override
 	public DeviceAssignment updateDeviceAssignmentMetadata(String token, MetadataProvider metadata)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -294,14 +306,15 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.sitewhere.spi.ISiteWhereClient#updateDeviceAssignmentLocation(java.lang.String,
-	 * com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest)
+	 * com.sitewhere.spi.ISiteWhereClient#updateDeviceAssignmentState(java.lang.String,
+	 * com.sitewhere.rest.model.device.DeviceEventBatch)
 	 */
-	public DeviceAssignment updateDeviceAssignmentLocation(String token, DeviceLocationCreateRequest request)
+	@Override
+	public DeviceAssignment updateDeviceAssignmentState(String token, DeviceEventBatch batch)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("token", token);
-		return sendRest(getBaseUrl() + "assignments/{token}/location", HttpMethod.PUT, request,
+		return sendRest(getBaseUrl() + "assignments/{token}/state", HttpMethod.PUT, batch,
 				DeviceAssignment.class, vars);
 	}
 
@@ -311,6 +324,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceMeasurements(java.lang.String,
 	 * com.sitewhere.rest.model.device.request.DeviceMeasurementsCreateRequest)
 	 */
+	@Override
 	public DeviceMeasurements createDeviceMeasurements(String assignmentToken,
 			DeviceMeasurementsCreateRequest request) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -325,6 +339,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceMeasurements(java.lang.String,
 	 * int)
 	 */
+	@Override
 	public SearchResults<DeviceMeasurements> listDeviceMeasurements(String assignmentToken, int maxCount)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -340,6 +355,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceLocation(java.lang.String,
 	 * com.sitewhere.rest.model.device.request.DeviceLocationCreateRequest)
 	 */
+	@Override
 	public DeviceLocation createDeviceLocation(String assignmentToken, DeviceLocationCreateRequest request)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -353,6 +369,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * 
 	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceLocations(java.lang.String, int)
 	 */
+	@Override
 	public DeviceLocationSearchResults listDeviceLocations(String assignmentToken, int maxCount)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -369,6 +386,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * com.sitewhere.spi.ISiteWhereClient#associateAlertWithDeviceLocation(java.lang.String
 	 * , java.lang.String)
 	 */
+	@Override
 	public DeviceLocation associateAlertWithDeviceLocation(String alertId, String locationId)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -384,6 +402,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#createDeviceAlert(java.lang.String,
 	 * com.sitewhere.rest.model.device.request.DeviceAlertCreateRequest)
 	 */
+	@Override
 	public DeviceAlert createDeviceAlert(String assignmentToken, DeviceAlertCreateRequest request)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -397,6 +416,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * 
 	 * @see com.sitewhere.spi.ISiteWhereClient#listDeviceAlerts(java.lang.String, int)
 	 */
+	@Override
 	public DeviceAlertSearchResults listDeviceAlerts(String assignmentToken, int maxCount)
 			throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
@@ -412,6 +432,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * @see com.sitewhere.spi.ISiteWhereClient#createZone(java.lang.String,
 	 * com.sitewhere.rest.model.device.request.ZoneCreateRequest)
 	 */
+	@Override
 	public Zone createZone(String siteToken, ZoneCreateRequest request) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("siteToken", siteToken);
@@ -423,6 +444,7 @@ public class SiteWhereClient implements ISiteWhereClient {
 	 * 
 	 * @see com.sitewhere.spi.ISiteWhereClient#listZonesForSite(java.lang.String)
 	 */
+	@Override
 	public ZoneSearchResults listZonesForSite(String siteToken) throws SiteWhereException {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("siteToken", siteToken);
