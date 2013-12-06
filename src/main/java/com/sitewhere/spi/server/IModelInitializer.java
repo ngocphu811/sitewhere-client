@@ -1,5 +1,5 @@
 /*
- * IDeviceModelInitializer.java 
+ * IModelInitializer.java 
  * --------------------------------------------------------------------------------------
  * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
  *
@@ -7,24 +7,23 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package com.sitewhere.spi.server.device;
+package com.sitewhere.spi.server;
 
 import com.sitewhere.spi.SiteWhereException;
-import com.sitewhere.spi.device.IDeviceManagement;
-import com.sitewhere.spi.server.IModelInitializer;
 
 /**
- * Class that initializes the device model with data needed to bootstrap the system.
+ * Common interface for model initializers.
  * 
  * @author Derek
  */
-public interface IDeviceModelInitializer extends IModelInitializer {
+public interface IModelInitializer {
 
 	/**
-	 * Initialize the device model.
+	 * Indicates whether model should be initialized if no console is available for user
+	 * input.
 	 * 
-	 * @param deviceManagement
+	 * @return
 	 * @throws SiteWhereException
 	 */
-	public void initialize(IDeviceManagement deviceManagement) throws SiteWhereException;
+	public boolean isInitializeIfNoConsole() throws SiteWhereException;
 }
