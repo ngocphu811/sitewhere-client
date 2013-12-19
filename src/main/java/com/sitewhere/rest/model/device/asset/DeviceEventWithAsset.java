@@ -109,6 +109,16 @@ public class DeviceEventWithAsset implements IDeviceEventWithAsset {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.sitewhere.spi.device.IDeviceEvent#getId()
+	 */
+	@Override
+	public String getId() {
+		return getWrapped().getId();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.sitewhere.spi.device.IDeviceEvent#getSiteToken()
 	 */
 	@Override

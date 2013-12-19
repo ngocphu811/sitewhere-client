@@ -25,6 +25,9 @@ import com.sitewhere.spi.device.IDeviceEvent;
  */
 public abstract class DeviceEvent extends MetadataProvider implements IDeviceEvent, Comparable<IDeviceEvent> {
 
+	/** Unqiue id for event */
+	private String id;
+
 	/** Site token */
 	private String siteToken;
 
@@ -42,6 +45,19 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 
 	/** Date event was received */
 	private Date receivedDate;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IDeviceEvent#getId()
+	 */
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	/*
 	 * (non-Javadoc)
