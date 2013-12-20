@@ -158,6 +158,7 @@ public abstract class DeviceEvent extends MetadataProvider implements IDeviceEve
 	 * @param target
 	 */
 	public static void copy(IDeviceEvent source, DeviceEvent target) {
+		target.setId(source.getId());
 		target.setSiteToken(source.getSiteToken());
 		target.setDeviceAssignmentToken(source.getDeviceAssignmentToken());
 		target.setAssignmentType(source.getAssignmentType());
