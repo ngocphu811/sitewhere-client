@@ -10,14 +10,13 @@
 package com.sitewhere.rest.model.device.asset;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sitewhere.rest.model.datatype.JsonDateSerializer;
 import com.sitewhere.spi.SiteWhereException;
 import com.sitewhere.spi.asset.IAsset;
 import com.sitewhere.spi.asset.IAssetModuleManager;
-import com.sitewhere.spi.common.IMetadataEntry;
 import com.sitewhere.spi.device.DeviceAssignmentType;
 import com.sitewhere.spi.device.IDeviceEvent;
 import com.sitewhere.spi.device.asset.IDeviceEventWithAsset;
@@ -72,7 +71,7 @@ public class DeviceEventWithAsset implements IDeviceEventWithAsset {
 	 * @see com.sitewhere.spi.common.IMetadataProvider#removeMetadata(java.lang.String)
 	 */
 	@Override
-	public IMetadataEntry removeMetadata(String name) {
+	public String removeMetadata(String name) {
 		return getWrapped().removeMetadata(name);
 	}
 
@@ -82,7 +81,7 @@ public class DeviceEventWithAsset implements IDeviceEventWithAsset {
 	 * @see com.sitewhere.spi.common.IMetadataProvider#getMetadata(java.lang.String)
 	 */
 	@Override
-	public IMetadataEntry getMetadata(String name) {
+	public String getMetadata(String name) {
 		return getWrapped().getMetadata(name);
 	}
 
@@ -92,8 +91,18 @@ public class DeviceEventWithAsset implements IDeviceEventWithAsset {
 	 * @see com.sitewhere.spi.common.IMetadataProvider#getMetadata()
 	 */
 	@Override
-	public List<IMetadataEntry> getMetadata() {
+	public Map<String, String> getMetadata() {
 		return getWrapped().getMetadata();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.common.IMetadataProvider#clearMetadata()
+	 */
+	@Override
+	public void clearMetadata() {
+		getWrapped().clearMetadata();
 	}
 
 	/*

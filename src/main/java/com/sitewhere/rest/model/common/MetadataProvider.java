@@ -10,10 +10,9 @@
 
 package com.sitewhere.rest.model.common;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.sitewhere.spi.common.IMetadataEntry;
 import com.sitewhere.spi.common.IMetadataProvider;
 
 /**
@@ -23,26 +22,18 @@ import com.sitewhere.spi.common.IMetadataProvider;
  */
 public class MetadataProvider implements IMetadataProvider {
 
-	/** List of metadata entries */
-	private List<MetadataEntry> entries = new ArrayList<MetadataEntry>();
+	/** Map of metadata entries */
+	private Map<String, String> entries = new HashMap<String, String>();
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.IMetadataProvider#addOrReplaceMetadata(java.lang.String,
+	 * @see
+	 * com.sitewhere.spi.device.IMetadataProvider#addOrReplaceMetadata(java.lang.String,
 	 * java.lang.String)
 	 */
 	public void addOrReplaceMetadata(String name, String value) {
-		for (MetadataEntry entry : entries) {
-			if (entry.getName().equals(name)) {
-				entry.setValue(value);
-				return;
-			}
-		}
-		MetadataEntry entry = new MetadataEntry();
-		entry.setName(name);
-		entry.setValue(value);
-		entries.add(entry);
+		entries.put(name, value);
 	}
 
 	/*
@@ -50,18 +41,8 @@ public class MetadataProvider implements IMetadataProvider {
 	 * 
 	 * @see com.sitewhere.spi.device.IMetadataProvider#removeMetadata(java.lang.String)
 	 */
-	public IMetadataEntry removeMetadata(String name) {
-		MetadataEntry toRemove = null;
-		for (MetadataEntry entry : entries) {
-			if (entry.getName().equals(name)) {
-				toRemove = entry;
-				break;
-			}
-		}
-		if (toRemove != null) {
-			entries.remove(toRemove);
-		}
-		return toRemove;
+	public String removeMetadata(String name) {
+		return entries.remove(name);
 	}
 
 	/*
@@ -69,13 +50,8 @@ public class MetadataProvider implements IMetadataProvider {
 	 * 
 	 * @see com.sitewhere.spi.device.IMetadataProvider#getMetadata(java.lang.String)
 	 */
-	public IMetadataEntry getMetadata(String name) {
-		for (MetadataEntry entry : entries) {
-			if (entry.getName().equals(name)) {
-				return entry;
-			}
-		}
-		return null;
+	public String getMetadata(String name) {
+		return entries.get(name);
 	}
 
 	/*
@@ -83,13 +59,22 @@ public class MetadataProvider implements IMetadataProvider {
 	 * 
 	 * @see com.sitewhere.spi.device.IMetadataProvider#getMetadata()
 	 */
-	@SuppressWarnings("unchecked")
-	public List<IMetadataEntry> getMetadata() {
-		return (List<IMetadataEntry>) (List<? extends IMetadataEntry>) entries;
+	public Map<String, String> getMetadata() {
+		return entries;
 	}
 
-	public void setMetadata(List<MetadataEntry> entries) {
+	public void setMetadata(Map<String, String> entries) {
 		this.entries = entries;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.common.IMetadataProvider#clearMetadata()
+	 */
+	@Override
+	public void clearMetadata() {
+		entries.clear();
 	}
 
 	/**
@@ -100,9 +85,8 @@ public class MetadataProvider implements IMetadataProvider {
 	 */
 	public static void copy(IMetadataProvider source, MetadataProvider target) {
 		if (source != null) {
-			List<IMetadataEntry> sourceEntries = source.getMetadata();
-			for (IMetadataEntry entry : sourceEntries) {
-				target.addOrReplaceMetadata(entry.getName(), entry.getValue());
+			for (String key : source.getMetadata().keySet()) {
+				target.addOrReplaceMetadata(key, source.getMetadata(key));
 			}
 		}
 	}
