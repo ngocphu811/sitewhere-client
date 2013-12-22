@@ -1,18 +1,17 @@
 /*
-* $Id$
-* --------------------------------------------------------------------------------------
-* Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
-*
-* The software in this package is published under the terms of the CPAL v1.0
-* license, a copy of which has been included with this distribution in the
-* LICENSE.txt file.
-*/
+ * $Id$
+ * --------------------------------------------------------------------------------------
+ * Copyright (c) Reveal Technologies, LLC. All rights reserved. http://www.reveal-tech.com
+ *
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
+ */
 
 package com.sitewhere.rest.model.device;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.sitewhere.rest.model.common.MetadataProvider;
 import com.sitewhere.rest.model.common.MetadataProviderEntity;
 import com.sitewhere.spi.device.ISite;
 
@@ -36,11 +35,8 @@ public class Site extends MetadataProviderEntity implements ISite {
 	/** Image URL */
 	private String imageUrl;
 
-	/** Map type */
-	private String mapType;
-
-	/** Map metadata */
-	private MetadataProvider mapMetadata = new MetadataProvider();
+	/** Map data */
+	private SiteMapData map = new SiteMapData();
 
 	public String getToken() {
 		return token;
@@ -77,27 +73,14 @@ public class Site extends MetadataProviderEntity implements ISite {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.ISite#getMapType()
+	 * @see com.sitewhere.spi.device.ISite#getMap()
 	 */
-	public String getMapType() {
-		return mapType;
+	public SiteMapData getMap() {
+		return map;
 	}
 
-	public void setMapType(String mapType) {
-		this.mapType = mapType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.device.ISite#getMapMetadata()
-	 */
-	public MetadataProvider getMapMetadata() {
-		return mapMetadata;
-	}
-
-	public void setMapMetadata(MetadataProvider mapMetadata) {
-		this.mapMetadata = mapMetadata;
+	public void setMap(SiteMapData map) {
+		this.map = map;
 	}
 
 	/**
@@ -112,8 +95,7 @@ public class Site extends MetadataProviderEntity implements ISite {
 		result.setName(input.getName());
 		result.setDescription(input.getDescription());
 		result.setImageUrl(input.getImageUrl());
-		result.setMapType(input.getMapType());
-		MetadataProviderEntity.copy(input.getMapMetadata(), result.getMapMetadata());
+		result.setMap(SiteMapData.copy(input.getMap()));
 		MetadataProviderEntity.copy(input, result);
 		return result;
 	}

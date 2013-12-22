@@ -62,7 +62,8 @@ public class LargeDataset {
 	public static final int ZONES_PER_SITE = 5;
 
 	/** Image URL assocaited with sites */
-	public static final String SITE_IMAGE_URL = "http://i.telegraph.co.uk/multimedia/archive/01809/satellite_1809335c.jpg";
+	public static final String SITE_IMAGE_URL =
+			"http://i.telegraph.co.uk/multimedia/archive/01809/satellite_1809335c.jpg";
 
 	@Before
 	public void setup() {
@@ -100,7 +101,7 @@ public class LargeDataset {
 			siteCreate.setName("Test Site");
 			siteCreate.setDescription("Sample description for Test Site.");
 			siteCreate.setImageUrl(SITE_IMAGE_URL);
-			siteCreate.setMapType("mapquest");
+			siteCreate.getMap().setType("mapquest");
 			results.add(client.createSite(siteCreate));
 		}
 		return results;

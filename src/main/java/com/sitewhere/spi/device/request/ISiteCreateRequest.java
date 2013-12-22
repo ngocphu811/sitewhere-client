@@ -10,6 +10,7 @@
 package com.sitewhere.spi.device.request;
 
 import com.sitewhere.spi.common.IMetadataProvider;
+import com.sitewhere.spi.device.ISiteMapData;
 
 /**
  * Interface for arguments needed to create a site.
@@ -40,16 +41,9 @@ public interface ISiteCreateRequest extends IMetadataProvider {
 	public String getImageUrl();
 
 	/**
-	 * Get map type.
+	 * Get map information.
 	 * 
 	 * @return
 	 */
-	public String getMapType();
-
-	/**
-	 * Get map metadata.
-	 * 
-	 * @return
-	 */
-	public IMetadataProvider getMapMetadata();
+	public ISiteMapData getMap();
 }

@@ -10,11 +10,11 @@
 
 package com.sitewhere.spi.device;
 
-import com.sitewhere.spi.common.IMetadataProvider;
 import com.sitewhere.spi.common.IMetadataProviderEntity;
 
 /**
- * A construct that groups together related device assignments and provides common settings for them.
+ * A construct that groups together related device assignments and provides common
+ * settings for them.
  * 
  * @author Derek
  */
@@ -49,16 +49,9 @@ public interface ISite extends IMetadataProviderEntity {
 	public String getImageUrl();
 
 	/**
-	 * Get map type.
+	 * Get map information.
 	 * 
 	 * @return
 	 */
-	public String getMapType();
-
-	/**
-	 * Get map metadata.
-	 * 
-	 * @return
-	 */
-	public IMetadataProvider getMapMetadata();
+	public ISiteMapData getMap();
 }

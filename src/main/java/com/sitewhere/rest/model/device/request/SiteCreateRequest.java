@@ -10,6 +10,7 @@
 package com.sitewhere.rest.model.device.request;
 
 import com.sitewhere.rest.model.common.MetadataProvider;
+import com.sitewhere.rest.model.device.SiteMapData;
 import com.sitewhere.spi.device.request.ISiteCreateRequest;
 
 /**
@@ -28,11 +29,8 @@ public class SiteCreateRequest extends MetadataProvider implements ISiteCreateRe
 	/** Logo image URL */
 	private String imageUrl;
 
-	/** Map type */
-	private String mapType;
-
-	/** Map metadata */
-	private MetadataProvider mapMetadata = new MetadataProvider();
+	/** Map data */
+	private SiteMapData map = new SiteMapData();
 
 	/*
 	 * (non-Javadoc)
@@ -76,26 +74,13 @@ public class SiteCreateRequest extends MetadataProvider implements ISiteCreateRe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sitewhere.spi.device.request.ISiteCreateRequest#getMapType()
+	 * @see com.sitewhere.spi.device.request.ISiteCreateRequest#getMap()
 	 */
-	public String getMapType() {
-		return mapType;
+	public SiteMapData getMap() {
+		return map;
 	}
 
-	public void setMapType(String mapType) {
-		this.mapType = mapType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sitewhere.spi.device.request.ISiteCreateRequest#getMapMetadata()
-	 */
-	public MetadataProvider getMapMetadata() {
-		return mapMetadata;
-	}
-
-	public void setMapMetadata(MetadataProvider mapMetadata) {
-		this.mapMetadata = mapMetadata;
+	public void setMap(SiteMapData map) {
+		this.map = map;
 	}
 }
