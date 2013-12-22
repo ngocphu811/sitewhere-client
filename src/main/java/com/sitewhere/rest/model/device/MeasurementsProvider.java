@@ -9,10 +9,9 @@
  */
 package com.sitewhere.rest.model.device;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.sitewhere.spi.common.IMeasurementEntry;
 import com.sitewhere.spi.device.IMeasurementsProvider;
 
 /**
@@ -23,7 +22,7 @@ import com.sitewhere.spi.device.IMeasurementsProvider;
 public class MeasurementsProvider implements IMeasurementsProvider {
 
 	/** List of measurement entries */
-	private List<MeasurementEntry> entries = new ArrayList<MeasurementEntry>();
+	private Map<String, Double> measurements = new HashMap<String, Double>();
 
 	/*
 	 * (non-Javadoc)
@@ -32,17 +31,9 @@ public class MeasurementsProvider implements IMeasurementsProvider {
 	 * com.sitewhere.spi.device.IMeasurementsProvider#addOrReplaceMeasurement(java.lang
 	 * .String, java.lang.Double)
 	 */
+	@Override
 	public void addOrReplaceMeasurement(String name, Double value) {
-		for (MeasurementEntry entry : entries) {
-			if (entry.getName().equals(name)) {
-				entry.setValue(value);
-				return;
-			}
-		}
-		MeasurementEntry entry = new MeasurementEntry();
-		entry.setName(name);
-		entry.setValue(value);
-		entries.add(entry);
+		measurements.put(name, value);
 	}
 
 	/*
@@ -51,18 +42,8 @@ public class MeasurementsProvider implements IMeasurementsProvider {
 	 * @see
 	 * com.sitewhere.spi.device.IMeasurementsProvider#removeMeasurement(java.lang.String)
 	 */
-	public IMeasurementEntry removeMeasurement(String name) {
-		MeasurementEntry toRemove = null;
-		for (MeasurementEntry entry : entries) {
-			if (entry.getName().equals(name)) {
-				toRemove = entry;
-				break;
-			}
-		}
-		if (toRemove != null) {
-			entries.remove(toRemove);
-		}
-		return toRemove;
+	public Double removeMeasurement(String name) {
+		return measurements.remove(name);
 	}
 
 	/*
@@ -71,13 +52,9 @@ public class MeasurementsProvider implements IMeasurementsProvider {
 	 * @see
 	 * com.sitewhere.spi.device.IMeasurementsProvider#getMeasurement(java.lang.String)
 	 */
-	public IMeasurementEntry getMeasurement(String name) {
-		for (MeasurementEntry entry : entries) {
-			if (entry.getName().equals(name)) {
-				return entry;
-			}
-		}
-		return null;
+	@Override
+	public Double getMeasurement(String name) {
+		return measurements.get(name);
 	}
 
 	/*
@@ -85,26 +62,35 @@ public class MeasurementsProvider implements IMeasurementsProvider {
 	 * 
 	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurements()
 	 */
-	@SuppressWarnings("unchecked")
-	public List<IMeasurementEntry> getMeasurements() {
-		return (List<IMeasurementEntry>) (List<? extends IMeasurementEntry>) entries;
+	@Override
+	public Map<String, Double> getMeasurements() {
+		return measurements;
 	}
 
-	public void setMeasurements(List<MeasurementEntry> entries) {
-		this.entries = entries;
+	public void setMeasurements(Map<String, Double> measurements) {
+		this.measurements = measurements;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#clearMeasurements()
+	 */
+	@Override
+	public void clearMeasurements() {
+		measurements.clear();
 	}
 
 	/**
-	 * Copy contents of one metadata provider to another.
+	 * Copy contents of one measurements provider to another.
 	 * 
 	 * @param source
 	 * @param target
 	 */
 	public static void copy(IMeasurementsProvider source, MeasurementsProvider target) {
 		if (source != null) {
-			List<IMeasurementEntry> sourceEntries = source.getMeasurements();
-			for (IMeasurementEntry entry : sourceEntries) {
-				target.addOrReplaceMeasurement(entry.getName(), entry.getValue());
+			for (String key : source.getMeasurements().keySet()) {
+				target.addOrReplaceMeasurement(key, source.getMeasurement(key));
 			}
 		}
 	}

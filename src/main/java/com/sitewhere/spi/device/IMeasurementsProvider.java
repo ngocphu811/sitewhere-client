@@ -9,9 +9,7 @@
  */
 package com.sitewhere.spi.device;
 
-import java.util.List;
-
-import com.sitewhere.spi.common.IMeasurementEntry;
+import java.util.Map;
 
 /**
  * Class that stores measurement metadata.
@@ -34,20 +32,25 @@ public interface IMeasurementsProvider {
 	 * @param name
 	 * @return
 	 */
-	public IMeasurementEntry removeMeasurement(String name);
+	public Double removeMeasurement(String name);
 
 	/**
-	 * Get measurement field.
+	 * Get measurement by name.
 	 * 
 	 * @param name
 	 * @return
 	 */
-	public IMeasurementEntry getMeasurement(String name);
+	public Double getMeasurement(String name);
 
 	/**
-	 * Get all measurement entries.
+	 * Get map of all measurements.
 	 * 
 	 * @return
 	 */
-	public List<IMeasurementEntry> getMeasurements();
+	public Map<String, Double> getMeasurements();
+
+	/**
+	 * Clear all measurements.
+	 */
+	public void clearMeasurements();
 }

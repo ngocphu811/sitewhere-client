@@ -9,15 +9,13 @@
  */
 package com.sitewhere.rest.model.device.request;
 
-import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sitewhere.rest.model.device.DeviceMeasurements;
-import com.sitewhere.rest.model.device.MeasurementEntry;
 import com.sitewhere.rest.model.device.MeasurementsProvider;
-import com.sitewhere.spi.common.IMeasurementEntry;
 import com.sitewhere.spi.device.request.IDeviceMeasurementsCreateRequest;
 
 /**
@@ -31,7 +29,7 @@ public class DeviceMeasurementsCreateRequest extends DeviceEventCreateRequest im
 		IDeviceMeasurementsCreateRequest {
 
 	/** Measurements metadata */
-	private MeasurementsProvider measurementsMetadata = new MeasurementsProvider();
+	private MeasurementsProvider measurements = new MeasurementsProvider();
 
 	/*
 	 * (non-Javadoc)
@@ -40,8 +38,9 @@ public class DeviceMeasurementsCreateRequest extends DeviceEventCreateRequest im
 	 * com.sitewhere.spi.device.IMeasurementsProvider#addOrReplaceMeasurement(java.lang
 	 * .String, java.lang.Double)
 	 */
+	@Override
 	public void addOrReplaceMeasurement(String name, Double value) {
-		measurementsMetadata.addOrReplaceMeasurement(name, value);
+		measurements.addOrReplaceMeasurement(name, value);
 	}
 
 	/*
@@ -50,8 +49,9 @@ public class DeviceMeasurementsCreateRequest extends DeviceEventCreateRequest im
 	 * @see
 	 * com.sitewhere.spi.device.IMeasurementsProvider#removeMeasurement(java.lang.String)
 	 */
-	public IMeasurementEntry removeMeasurement(String name) {
-		return measurementsMetadata.removeMeasurement(name);
+	@Override
+	public Double removeMeasurement(String name) {
+		return measurements.removeMeasurement(name);
 	}
 
 	/*
@@ -60,8 +60,9 @@ public class DeviceMeasurementsCreateRequest extends DeviceEventCreateRequest im
 	 * @see
 	 * com.sitewhere.spi.device.IMeasurementsProvider#getMeasurement(java.lang.String)
 	 */
-	public IMeasurementEntry getMeasurement(String name) {
-		return measurementsMetadata.getMeasurement(name);
+	@Override
+	public Double getMeasurement(String name) {
+		return measurements.getMeasurement(name);
 	}
 
 	/*
@@ -69,8 +70,9 @@ public class DeviceMeasurementsCreateRequest extends DeviceEventCreateRequest im
 	 * 
 	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurements()
 	 */
-	public List<IMeasurementEntry> getMeasurements() {
-		return measurementsMetadata.getMeasurements();
+	@Override
+	public Map<String, Double> getMeasurements() {
+		return measurements.getMeasurements();
 	}
 
 	/**
@@ -78,8 +80,18 @@ public class DeviceMeasurementsCreateRequest extends DeviceEventCreateRequest im
 	 * 
 	 * @param entries
 	 */
-	public void setMeasurements(List<MeasurementEntry> entries) {
-		this.measurementsMetadata = new MeasurementsProvider();
-		measurementsMetadata.setMeasurements(entries);
+	public void setMeasurements(Map<String, Double> measurements) {
+		this.measurements = new MeasurementsProvider();
+		this.measurements.setMeasurements(measurements);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#clearMeasurements()
+	 */
+	@Override
+	public void clearMeasurements() {
+		measurements.clearMeasurements();
 	}
 }

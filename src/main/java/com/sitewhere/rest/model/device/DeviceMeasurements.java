@@ -10,12 +10,11 @@
 
 package com.sitewhere.rest.model.device;
 
-import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.sitewhere.spi.common.IMeasurementEntry;
 import com.sitewhere.spi.device.IDeviceMeasurements;
 
 /**
@@ -30,9 +29,6 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	/** Holder for measurements */
 	private MeasurementsProvider measurementsMetadata = new MeasurementsProvider();
 
-	/** Used for list presentation */
-	private String propertiesSummary;
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -40,6 +36,7 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	 * com.sitewhere.spi.device.IMeasurementsProvider#addOrReplaceMeasurement(java.lang
 	 * .String, java.lang.Double)
 	 */
+	@Override
 	public void addOrReplaceMeasurement(String name, Double value) {
 		measurementsMetadata.addOrReplaceMeasurement(name, value);
 	}
@@ -50,7 +47,8 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	 * @see
 	 * com.sitewhere.spi.device.IMeasurementsProvider#removeMeasurement(java.lang.String)
 	 */
-	public IMeasurementEntry removeMeasurement(String name) {
+	@Override
+	public Double removeMeasurement(String name) {
 		return measurementsMetadata.removeMeasurement(name);
 	}
 
@@ -60,7 +58,8 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	 * @see
 	 * com.sitewhere.spi.device.IMeasurementsProvider#getMeasurement(java.lang.String)
 	 */
-	public IMeasurementEntry getMeasurement(String name) {
+	@Override
+	public Double getMeasurement(String name) {
 		return measurementsMetadata.getMeasurement(name);
 	}
 
@@ -69,8 +68,19 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	 * 
 	 * @see com.sitewhere.spi.device.IMeasurementsProvider#getMeasurements()
 	 */
-	public List<IMeasurementEntry> getMeasurements() {
+	@Override
+	public Map<String, Double> getMeasurements() {
 		return measurementsMetadata.getMeasurements();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IMeasurementsProvider#clearMeasurements()
+	 */
+	@Override
+	public void clearMeasurements() {
+		measurementsMetadata.clearMeasurements();
 	}
 
 	/**
@@ -78,34 +88,36 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	 * 
 	 * @param entries
 	 */
-	public void setMeasurements(List<MeasurementEntry> entries) {
+	public void setMeasurements(Map<String, Double> entries) {
 		this.measurementsMetadata = new MeasurementsProvider();
 		measurementsMetadata.setMeasurements(entries);
 	}
 
-	public String getPropertiesSummary() {
-		return propertiesSummary;
-	}
-
-	public void setPropertiesSummary(String propertiesSummary) {
-		this.propertiesSummary = propertiesSummary;
-	}
-
-	/**
-	 * Calculate a properties summary.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.sitewhere.spi.device.IDeviceMeasurements#getMeasurementsSummary()
 	 */
-	public void calculatePropertiesSummary() {
+	public String getMeasurementsSummary() {
 		String result = "";
 		boolean isFirst = true;
-		for (IMeasurementEntry entry : measurementsMetadata.getMeasurements()) {
+		for (String key : measurementsMetadata.getMeasurements().keySet()) {
 			if (!isFirst) {
 				result += ", ";
 			} else {
 				isFirst = false;
 			}
-			result += entry.getName() + ": " + entry.getValue();
+			result += key + ": " + measurementsMetadata.getMeasurement(key);
 		}
-		this.propertiesSummary = result;
+		return result;
+	}
+
+	/**
+	 * For Jackson marshalling.
+	 * 
+	 * @param value
+	 */
+	public void setMeasurementsSummary(String value) {
 	}
 
 	/**
@@ -117,10 +129,9 @@ public class DeviceMeasurements extends DeviceEvent implements IDeviceMeasuremen
 	public static DeviceMeasurements copy(IDeviceMeasurements input) {
 		DeviceMeasurements result = new DeviceMeasurements();
 		DeviceEvent.copy(input, result);
-		for (IMeasurementEntry entry : input.getMeasurements()) {
-			result.addOrReplaceMeasurement(entry.getName(), entry.getValue());
+		for (String key : input.getMeasurements().keySet()) {
+			result.addOrReplaceMeasurement(key, input.getMeasurement(key));
 		}
-		result.calculatePropertiesSummary();
 		return result;
 	}
 }

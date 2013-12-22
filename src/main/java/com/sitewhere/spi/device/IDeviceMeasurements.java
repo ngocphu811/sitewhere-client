@@ -16,4 +16,11 @@ package com.sitewhere.spi.device;
  * @author Derek
  */
 public interface IDeviceMeasurements extends IDeviceEvent, IMeasurementsProvider {
+
+	/**
+	 * Get a simple string that lists the measurements.
+	 * 
+	 * @return
+	 */
+	public String getMeasurementsSummary();
 }
